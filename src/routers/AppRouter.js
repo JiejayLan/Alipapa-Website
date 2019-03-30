@@ -6,7 +6,7 @@ import NotFoundPage from '../components/NotFoundPage';
 import LoginPage from '../components/LoginPage';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
-import sellingForm from '../components/sellingForm';
+import sellingForm from '../components/sellItemForm';
 
 
 export const history = createHistory();
