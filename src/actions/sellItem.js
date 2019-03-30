@@ -1,5 +1,6 @@
 import database from '../firebase/firebase';
 
+//i think no need to add this to state
 export const addItem = (
     {
         priceNature= "",
@@ -7,16 +8,18 @@ export const addItem = (
         keyWord="",
         price=0
     } = {}
-  ) => ({
-    type: 'add_item',
-    item: {
-        priceNature,
-        title,
-        keyWord,
-        price
-    }
-  });
+  ) => {
+    return {
+        type: 'add_item',
+        item: {
+            priceNature,
+            title,
+            keyWord,
+            price
+        }
+  }};
   
+
 
 // export const startAddItem  = (item) => {  
 //     console.log("gfg");
