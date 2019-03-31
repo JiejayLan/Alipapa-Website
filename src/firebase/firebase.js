@@ -1,5 +1,8 @@
 import * as firebase from 'firebase';
 
+// require('dotenv').config();
+// console.log('config',process.env.FIREBASE_API_KEY);
+
 const config = {
   apiKey: process.env.FIREBASE_API_KEY,
   authDomain: process.env.FIREBASE_AUTH_DOMAIN,
@@ -12,9 +15,10 @@ const config = {
 firebase.initializeApp(config);
 
 const database = firebase.database();
+const storage = firebase.storage();
 const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
 
-export {firebase, googleAuthProvider, database as default};
+export {firebase,storage, googleAuthProvider, database };
 
 
 
