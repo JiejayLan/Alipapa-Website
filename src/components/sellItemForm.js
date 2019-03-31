@@ -28,7 +28,7 @@ class sellItemForm extends React.Component {
                  return fileData.ref.getDownloadURL();
               }).then(imageURL=>{
                 this.setState({pictureURL:imageURL});
-                // upload to firebase database 
+            // upload to firebase database 
                 database.ref('itemApplication').push({sellerID,...this.state});  
             });         
         }
@@ -55,7 +55,6 @@ class sellItemForm extends React.Component {
         return (
             <div>
             <h1>New Item Application</h1>
-            {/* <img src={"https://firebasestorage.googleapis.com/v0/b/mini-ebymazon-test.appspot.com/o/itemApplication%2Faccba561-68b1-4542-949d-311ebc42a479WeChat%20Image_20190330170628.png?alt=media&token=6addc1d2-89e9-422f-94a3-6bb89532476b"}></img> */}
             <form >
                 <label>
                     Title:
@@ -103,6 +102,7 @@ class sellItemForm extends React.Component {
     }
 }
 
+//get sellerID from redux state
 const mapStateToProps = (state, props) => ({
     sellerID: state.auth
   });

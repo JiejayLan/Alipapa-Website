@@ -1,3 +1,4 @@
+//not using this reducer now
 export default (state = {}, action) => {
   switch (action.type) {
     case 'LOGIN':
