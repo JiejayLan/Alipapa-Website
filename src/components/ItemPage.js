@@ -13,6 +13,13 @@ class ItemPage extends React.Component {
 	
 	render() {
 		
+		//	Data below will reside in state
+		const PAGE_TITLE = 'simplehuman Profile Step Trash Can, Brushed Stainless Steel, 10 Liters';
+		//	Rating stars need own component that returns different # of stars
+		const RATING_STARS = <img className='img-fluid' src='http://css-stars.com/wp-content/uploads/2013/12/4-stars.jpg' />;
+		const PRICE = '$25.99';
+		const KEYWORDS = 'Garbage Can, Trash, Stainless, Step';
+		
 		return (
 		
 			<div className='container'>
@@ -23,26 +30,26 @@ class ItemPage extends React.Component {
 							<img className='img-fluid' src='https://images-na.ssl-images-amazon.com/images/I/91t4TlUrzuL._SL1500_.jpg' />
 						</div>
 						<div>
-							Garbage Can, Trash, Stainless, Step
+							{KEYWORDS}
 						</div>
 					</div>
 					<div className='col-sm-6'>
 						<div className='row'>
 							<div className='col-sm'>
 									<h1 className='display-3'>
-										simplehuman Profile Step Trash Can, Brushed Stainless Steel, 10 Liters
+									{PAGE_TITLE}
 									</h1>
 							</div>
 						</div>
 						<div className='row'>
 							<div className='col-sm-4'>
-								<img className='img-fluid' src='http://css-stars.com/wp-content/uploads/2013/12/4-stars.jpg' />
+								{RATING_STARS}
 							</div>
 						</div>
 						<div className='row'>
 							<div className='col-sm'>
 								<span className='display-4 text-danger'>
-									$25.99
+									{PRICE}
 								</span>
 							</div>
 						</div>
