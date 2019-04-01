@@ -9,6 +9,8 @@ import './styles/styles.scss';
 import 'react-dates/lib/css/_datepicker.css';
 import {firebase} from './firebase/firebase';
 import LoadingPage from './components/LoadingPage';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap';
 
 const store = configureStore();
 
