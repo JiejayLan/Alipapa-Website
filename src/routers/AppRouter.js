@@ -8,6 +8,7 @@ import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 import sellingForm from '../components/sellItemForm';
 import ItemPage from '../components/ItemPage';
+import HomePage from '../components/HomePage';
 
 
 export const history = createHistory();
@@ -18,6 +19,7 @@ const AppRouter = () => (
     <Switch>
       
       <PublicRoute path="/" component={LoginPage} exact={true}/>
+      <PrivateRoute path="/home" component={HomePage} exact={true}/>
       <PrivateRoute path="/sellnewitem" component={sellingForm} exact={true}/>
       <PrivateRoute path="/dashboard" component={DashboardPage}/>
 	  <PrivateRoute path="/items/:id" component={ItemPage} exact={true}/>
