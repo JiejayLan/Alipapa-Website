@@ -1,8 +1,21 @@
 import React from 'react'
 
 const ItemList = (props) =>{
+    
+    const keyword = props.keyword
 
-    let itemlist = [...props.items];
+    let itemlist = [];
+    let itemlt = [...props.items];
+
+    if(keyword !== ''){
+        itemlist = itemlt.filter( (stuff) =>
+            stuff.name.toLowerCase().includes( keyword.toLowerCase() )
+        )
+    }
+
+    else{
+        itemlist = itemlt;
+    }
 
     let display = itemlist.map( (item) =>
         <div className='col-9 mx-auto col-md-6 col-lg-3 my-3 rounded float-left'>
