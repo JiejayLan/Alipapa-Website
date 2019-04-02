@@ -1,4 +1,5 @@
 import React from 'react';
+import ItemList from './ItemList';
 
 class Homepage extends React.Component {
     
@@ -67,6 +68,8 @@ class Homepage extends React.Component {
             </div>
             </form>
 
+            <ItemList items={this.state.ItemID} keyword={this.state.searchKeyword} />
+            
         </div>
         );
     }
