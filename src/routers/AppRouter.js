@@ -7,10 +7,7 @@ import LoginPage from '../components/LoginPage';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 import sellingForm from '../components/sellItemForm';
-<<<<<<< HEAD
 import ItemPage from '../components/ItemPage';
-=======
->>>>>>> 9807621bd029a2bbc54fa5531729615125950392
 import RegisterPage from '../components/RegisterPage';
 
 export const history = createHistory();
