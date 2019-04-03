@@ -25,4 +25,8 @@ export const startAddApplication = (applicationData = {}) => {
       }));
     });
   };
+<<<<<<< HEAD
 };
+=======
+};
+>>>>>>> 9807621bd029a2bbc54fa5531729615125950392
