@@ -8,7 +8,7 @@ import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 import sellingForm from '../components/sellItemForm';
 import ItemPage from '../components/ItemPage';
-
+import RegisterPage from '../components/RegisterPage';
 
 export const history = createHistory();
 
@@ -16,7 +16,7 @@ const AppRouter = () => (
   <Router history={history}>
   <div>
     <Switch>
-      
+      <PrivateRoute path="/register" component={RegisterPage}/>
       <PublicRoute path="/" component={LoginPage} exact={true}/>
       <PrivateRoute path="/sellnewitem" component={sellingForm} exact={true}/>
       <PrivateRoute path="/dashboard" component={DashboardPage}/>
