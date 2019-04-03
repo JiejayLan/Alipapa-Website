@@ -2,6 +2,10 @@ import React from 'react';
 import uuid from "uuid";
 import { connect } from 'react-redux';
 import {database,storage} from '../firebase/firebase';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
 
 class ItemPage extends React.Component {
 	
@@ -22,44 +26,44 @@ class ItemPage extends React.Component {
 		
 		return (
 		
-			<div className='container'>
+			<Container>
 				
-				<div className='row'>
-					<div className='col-sm-6'>
+				<Row>
+					<Col sm={6}>
 						<div>
 							<img className='img-fluid' src='https://images-na.ssl-images-amazon.com/images/I/91t4TlUrzuL._SL1500_.jpg' />
 						</div>
 						<div>
 							{KEYWORDS}
 						</div>
-					</div>
-					<div className='col-sm-6'>
-						<div className='row'>
-							<div className='col-sm'>
-									<h1 className='display-3'>
-									{PAGE_TITLE}
-									</h1>
-							</div>
-						</div>
-						<div className='row'>
-							<div className='col-sm-4'>
+					</Col>
+					<Col sm={6}>
+						<Row>
+							<Col sm>
+								<h1 className='display-3'>
+								{PAGE_TITLE}
+								</h1>
+							</Col>
+						</Row>
+						<Row>
+							<Col sm={4}>
 								{RATING_STARS}
-							</div>
-						</div>
-						<div className='row'>
-							<div className='col-sm'>
+							</Col>
+						</Row>
+						<Row>
+							<Col sm>
 								<span className='display-4 text-danger'>
 									{PRICE}
 								</span>
-							</div>
-						</div>
-						<div className='row pt-4'>
-							<div className='col-sm'>
+							</Col>
+						</Row>
+						<Row className='pt-4'>
+							<Col sm>
 								<button className='btn btn-lg btn-warning col-sm-6'>
 									<span> BUY </span>
 								</button>
-							</div>
-						</div>
+							</Col>
+						</Row>
 						
 						<form className='row pt-4 ml-1'>
 							
@@ -76,9 +80,9 @@ class ItemPage extends React.Component {
 								</button>
 								
 						</form>
-					</div>
-				</div>
-			</div>
+					</Col>
+				</Row>
+			</Container>
 		
 		)
 		
