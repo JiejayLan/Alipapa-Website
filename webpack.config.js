@@ -11,7 +11,7 @@ if(process.env.NODE_ENV === 'test') {
 }
 
 module.exports = (env) => {
-  const isProduction = process.env.NODE_ENV === 'production' ? "warning" : false;
+  const isProduction = env === 'production';
   const CSSExtract = new ExtractTextPlugin('styles.css');
 
   return {
