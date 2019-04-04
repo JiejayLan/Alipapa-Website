@@ -7,7 +7,6 @@
   "scripts": {
     "build:dev": "webpack",
     "build:prod": "webpack -p --env production",
-    "deve": "start build:dev && start nodemon server/server.js",
     "dev-server": "webpack-dev-server",
     "test": "cross-env NODE_ENV=test jest --config=jest.config.json",
     "start": "nodemon server/server.js",
@@ -47,12 +46,10 @@
     "redux": "4.0.1",
     "redux-mock-store": "1.2.3",
     "redux-thunk": "2.2.0",
-    "reload": "^2.4.0",
     "sass-loader": "^7.1.0",
     "style-loader": "0.23.1",
     "uuid": "3.1.0",
     "validator": "10.11.0",
-    "watch": "^1.0.2",
     "webpack": "4.29.6",
     "webpack-cli": "^3.3.0"
   },
