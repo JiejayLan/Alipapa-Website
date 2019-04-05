@@ -15,13 +15,13 @@ export const PrivateRoute = ({
         <Component {...props}/>
       </div>
     ) : (
-      <Redirect to="/"/>
+      <Redirect to="/home"/>
     )
   )}/>
 );
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: !!state.auth.uid
+  isAuthenticated: !!state.auth.userID
 });
 
 export default connect(mapStateToProps)(PrivateRoute);

@@ -1,9 +1,9 @@
-//not using this reducer now
+
 export default (state = {}, action) => {
   switch (action.type) {
     case 'LOGIN':
       return {
-        uid: action.uid
+        ... action.userData
       };
     case 'LOGOUT':
       return {};
