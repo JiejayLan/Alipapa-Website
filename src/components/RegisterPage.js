@@ -4,13 +4,6 @@ import RegisterForm from './RegisterForm';
 import {startAddApplication} from '../actions/application';
 
 const RegisterPage = (props) => {
-  // onSubmit = (application) => {
-  //   //router properties to programmatically 
-  //   //switch to dashboard page
-  //   console.log('reaches before start add app');
-  //   this.props.startAddApplication(application); //ERR this line
-  //   this.props.history.push('/dashboard');
-  // }
     return (
       <div>
         <div className="page-header">
@@ -23,7 +16,7 @@ const RegisterPage = (props) => {
             onSubmit={ (application) => {
               console.log('reaches before start add app');
               props.startAddApplication(application); 
-              props.history.push('/dashboard');
+              props.history.push('/home');
             }}
           />
         </div>
