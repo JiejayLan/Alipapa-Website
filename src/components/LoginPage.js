@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {login} from '../actions/auth';
 import uuid from "uuid";
+import axios from 'axios';
 import {database,storage} from '../firebase/firebase';
 
 
@@ -15,23 +16,33 @@ class LoginPage extends React.Component {
     }
 
     handleSubmit() {  
-      database.ref('/users').once('value').then((snapshot)=> {       
-          let USERS = snapshot.val()
-          let if_exist = false;
-          let userID ="";
-          for(let id in USERS){
-            if(USERS[id]["username"]===this.state.username && USERS[id]["password"] === this.state.password){
-              if_exist = true;
-              userID = id;
-              break;
-            }              
-          }
-          console.log(USERS);
-          let {address ,phone_number,user_type,username}={...USERS[userID]};
-          console.log({address ,phone_number,user_type,username,userID});
-          if(if_exist)
-           this.props.startLogin({address ,phone_number,user_type,username,userID}); 
+      axios.post('/login', {
+        firstName: 'Fred',
+        lastName: 'Flintstone'
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
       });
+      // database.ref('/users').once('value').then((snapshot)=> {       
+      //     let USERS = snapshot.val()
+      //     let if_exist = false;
+      //     let userID ="";
+      //     for(let id in USERS){
+      //       if(USERS[id]["username"]===this.state.username && USERS[id]["password"] === this.state.password){
+      //         if_exist = true;
+      //         userID = id;
+      //         break;
+      //       }              
+      //     }
+      //     console.log(USERS);
+      //     let {address ,phone_number,user_type,username}={...USERS[userID]};
+      //     console.log({address ,phone_number,user_type,username,userID});
+      //     if(if_exist)
+      //      this.props.startLogin({address ,phone_number,user_type,username,userID}); 
+      // });
  
     }
   

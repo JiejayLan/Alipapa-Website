@@ -3,22 +3,6 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {logout} from '../actions/auth';
 
-let loginHeader =  (<header className="header">
-<div className="content-container">
-  <div className="header__content">
-    <Link className="header__title" to="/dashboard">
-      <h1>Alipapa</h1>
-    </Link>
-    <Link className="header__title" to="/register">
-      <h1>sign up</h1>
-    </Link>
-    <Link className="header__title" to="/login">
-      <h1>sign in</h1>
-    </Link>
-  </div>
-</div>
-</header>);
-
 
 export const Header = ({startLogout,isAuthenticated}) => {
   if (isAuthenticated){
