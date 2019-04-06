@@ -6,15 +6,15 @@
       "user_type": "SU",
       "credit_card": "54535",
       "address": "2978 avenue J",
-      "phone number": "34-545-545"
+      "phone_number": "34-545-545"
     },
     "userID2": {
-      "name": "jie lan",
+      "username": "jie_lan",
       "password": "hfh",
       "user_type": "SU",
       "credit_card": "54535",
       "address": "2978 avenue J",
-      "phone number": "34-545-545"
+      "phone_number": "34-545-545"
     }
   },
   "friend_list": {
