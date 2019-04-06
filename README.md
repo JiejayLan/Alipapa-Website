@@ -26,3 +26,7 @@ IV. setup .env.development and .env.test by heading to console of firebase
 
 ### Suggested Tools
 React Developer Tools and Redux DevTools installed for Google Chrome
+
+
+### how to login
+For login page, you dont't need to enter any username or password, because I set up a corrrect default username(jie lan) and password("hfh") in login-page react state.
