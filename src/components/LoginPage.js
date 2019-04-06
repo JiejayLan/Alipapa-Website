@@ -15,9 +15,7 @@ class LoginPage extends React.Component {
     }
 
     handleSubmit() {  
-
-      database.ref('/users').once('value').then((snapshot)=> {
-          
+      database.ref('/users').once('value').then((snapshot)=> {       
           let USERS = snapshot.val()
           let if_exist = false;
           let userID ="";
@@ -37,7 +35,6 @@ class LoginPage extends React.Component {
  
     }
   
-
     render() {
       return (
         <div className="box-layout">
