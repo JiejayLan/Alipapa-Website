@@ -2,13 +2,22 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {logout} from '../actions/auth';
-import { Redirect } from 'react-router-dom'
 
-let renderRedirect = () => {
-
-    return <Redirect to='/login' />
-  
-}
+let loginHeader =  (<header className="header">
+<div className="content-container">
+  <div className="header__content">
+    <Link className="header__title" to="/dashboard">
+      <h1>Alipapa</h1>
+    </Link>
+    <Link className="header__title" to="/register">
+      <h1>sign up</h1>
+    </Link>
+    <Link className="header__title" to="/login">
+      <h1>sign in</h1>
+    </Link>
+  </div>
+</div>
+</header>);
 
 
 export const Header = ({startLogout,isAuthenticated}) => {
@@ -18,14 +27,12 @@ export const Header = ({startLogout,isAuthenticated}) => {
       <div className="header__content">
         <Link className="header__title" to="/dashboard">
           <h1>Alipapa</h1>
-        </Link>
-        
+        </Link>     
         <button className="button button--link" onClick={startLogout}>Logout</button>
       </div>
     </div>
   </header>)
   }
-
   else{
     return (  <header className="header">
     <div className="content-container">
@@ -33,8 +40,12 @@ export const Header = ({startLogout,isAuthenticated}) => {
         <Link className="header__title" to="/dashboard">
           <h1>Alipapa</h1>
         </Link>
-        <button className="button button--link" onClick={renderRedirect}>sign up</button>
-        <button className="button button--link" onClick={renderRedirect}>Login</button>
+        <Link className="header__title" to="/register">
+          <h1>sign up</h1>
+        </Link>
+        <Link className="header__title" to="/login">
+          <h1>sign in</h1>
+        </Link>
       </div>
     </div>
   </header>);
