@@ -15,34 +15,34 @@ class LoginPage extends React.Component {
       };
     }
 
-    handleSubmit() {  
-      axios.post('/login', {
-        firstName: 'Fred',
-        lastName: 'Flintstone'
-      })
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-      // database.ref('/users').once('value').then((snapshot)=> {       
-      //     let USERS = snapshot.val()
-      //     let if_exist = false;
-      //     let userID ="";
-      //     for(let id in USERS){
-      //       if(USERS[id]["username"]===this.state.username && USERS[id]["password"] === this.state.password){
-      //         if_exist = true;
-      //         userID = id;
-      //         break;
-      //       }              
-      //     }
-      //     console.log(USERS);
-      //     let {address ,phone_number,user_type,username}={...USERS[userID]};
-      //     console.log({address ,phone_number,user_type,username,userID});
-      //     if(if_exist)
-      //      this.props.startLogin({address ,phone_number,user_type,username,userID}); 
+    handleSubmit= ()=> {  
+      // axios.post('/login', {
+      //   "username":"jie lan",
+      //   "password":"hfh"
+      // })
+      // .then(function (response) {
+      //   if(response.userID !="")
+      //     this.props.startLogin(response); 
+      // })
+      // .catch(function (error) {
+      //   console.log(error);
       // });
+
+      database.ref('/users').once('value').then((snapshot)=> {       
+          let USERS = snapshot.val()
+          let if_exist = false;
+          let userID ="";
+          for(let id in USERS){
+            if(USERS[id]["username"]===this.state.username && USERS[id]["password"] === this.state.password){
+              if_exist = true;
+              userID = id;
+              break;
+            }              
+          }
+          let {address ,phone_number,user_type,username}={...USERS[userID]};
+          if(if_exist)
+           this.props.startLogin({address ,phone_number,user_type,username,userID}); 
+      });
  
     }
   
