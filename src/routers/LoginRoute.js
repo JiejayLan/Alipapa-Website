@@ -9,7 +9,7 @@ export const LoginRoute = ({
 }) => (
   <Route {...rest} component={(props) => (
     isAuthenticated ? (
-      <Redirect to="/dashboard"/>
+      <Redirect to="/"/>
     ) : (
       <Component {...props}/>
     )
@@ -19,9 +19,8 @@ export const LoginRoute = ({
 const mapStateToProps = (state) => {
 
   let isAuthenticated = {
-    isAuthenticated: state.userID !==""
+    isAuthenticated: !!state.auth.userID
   }
-  console.log(isAuthenticated,state);
   return isAuthenticated ;
 }
 

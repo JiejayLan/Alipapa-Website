@@ -3,7 +3,7 @@ import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import thunk from 'redux-thunk';
 import authReducer from '../reducers/auth';
-// import applicationReducer from '../reducers/application';
+import applicationReducer from '../reducers/application';
 
 // const persistConfig = {
 //   key: 'root',
@@ -25,7 +25,12 @@ console.log("reductor")
 const persistedReducer = persistReducer(persistConfig, authReducer)
 
 export default () => {
-  let store = createStore(persistedReducer,composeEnhancers(applyMiddleware(thunk)))
+  let store = createStore(
+              combineReducers({
+              application: applicationReducer,
+              auth: persistedReducer
+  }),
+  composeEnhancers(applyMiddleware(thunk)))
   let persistor = persistStore(store)
   return { store, persistor }
 }

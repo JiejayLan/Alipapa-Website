@@ -6,7 +6,8 @@ export default (state = {}, action) => {
         ... action.userData
       };
     case 'LOGOUT':
-      return {};
+      return     {
+      };
     default:
       return state;
   }
