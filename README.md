@@ -26,3 +26,9 @@ IV. setup .env.development and .env.test by heading to console of firebase
 
 ### Suggested Tools
 React Developer Tools and Redux DevTools installed for Google Chrome
+
+###Suggestion for development
+1."npm run deve" for development //still can't set up the reload package to reload the page automatically
+2.put component and pages into different folders
+3.don't connet to firebase from client side.You should add a route controller on the server folder. You can take a look at how I write the login page
+
