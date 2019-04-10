@@ -14,7 +14,6 @@ class ItemPage extends React.Component {
 		
 	}
 	
-	
 	render() {
 		
 		//	Data below will reside in state
