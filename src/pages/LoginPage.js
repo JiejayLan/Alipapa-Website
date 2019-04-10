@@ -13,17 +13,14 @@ class LoginPage extends React.Component {
       };
     }
     
-    loginFunction = (response)=>{
-      this.props.startLogin(response); 
-    }
-
     handleSubmit= ()=> {  
+      //Set up correct username and password for login convenience
       axios.post('/login', {
-        "username":"jie lan",
-        "password":"hfh"
+        "username":this.state.username,
+        "password":this.state.password
       })
       .then( (response)=> {
-        this.loginFunction(response.data); 
+        this.props.startLogin(response.data); 
       })
       .catch(function (error) {
         console.log(error);
