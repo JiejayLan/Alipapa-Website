@@ -9,15 +9,9 @@ export const Header = ({startLogout,isAuthenticated}) => {
     return (  <header className="header">
     <div className="content-container">
       <div className="header__content">
-<<<<<<< HEAD
-        <Link className="header__title" to="/home">
-          <h1>AliPaPa</h1>
-        </Link>
-=======
         <Link className="header__title" to="/dashboard">
           <h1>Alipapa</h1>
         </Link>     
->>>>>>> 2d143c8d9b8b5b16626a0054d05825b6c69807d4
         <button className="button button--link" onClick={startLogout}>Logout</button>
       </div>
     </div>
