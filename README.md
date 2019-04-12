@@ -1,3 +1,7 @@
+### Report and Documents
+visit [our Wiki Page](https://github.com/JiejayLan/CSC322_group_project/wiki/Documents)
+
+---
 ### Getting started
 I. clone repo
 
@@ -23,15 +27,17 @@ IV. setup .env.development and .env.test by heading to console of firebase
 5. click Mini-eByMazon Test and click </>
 6. setup key-value pair inside .env.test in the same format in step 4 with values for Mini-eByMazon Test
 
-
+---
 ### Suggested Tools
 React Developer Tools and Redux DevTools installed for Google Chrome
 
+---
 ### How to login
 For login page, you dont't need to enter any username or password, because I set up a corrrect default username(jie lan) and password("hfh") in login-page react state.
 
-###Suggestion for development
-1."npm run deve" for development //still can't set up the reload package to reload the page automatically
-2.put component and pages into different folders
-3.don't connet to firebase from client side.You should add a route controller on the server folder. You can take a look at how I write the login page
+---
+### Suggestion for development
+1. "npm run deve" for development //still can't set up the reload package to reload the page automatically
+2. put component and pages into different folders
+3. don't connet to firebase from client side.You should add a route controller on the server folder. You can take a look at how I write the login page
 

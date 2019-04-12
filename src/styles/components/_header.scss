@@ -15,4 +15,9 @@
   h1 {
     margin: 0;
   }
+  &:hover {
+    background: $dark-blue;
+    text-decoration: none;
+    color: white;
+  }
 }

@@ -54,50 +54,62 @@ class sellItemForm extends React.Component {
     render() {
         return (
             <div>
-            <h1>New Item Application</h1>
-            <form >
-                <label>
+                <div className="page-header">
+                    <div className="content-container">
+                    <h1 className="page-header__title">New Item Application</h1>
+                    </div>
+                </div>
+            <div className="content-container">
+            <form className="form">
+                <label className="label">
                     Title:
-                    <input type="text" name={"title"} onChange={()=>{
+                    <input type="text" name={"title"} className="text-input"
+                        size="25"
+                        onChange={()=>{
                         this.setState({ "title": event.target.value });
                     }} />
                 </label> 
 
                 <input type="file"
-                    id="itemPicture" name="itemPicture"
+                    id="itemPicture" name="itemPicture" 
+                    className="file-input"
                     onChange={this.fileSelect}
                     accept="image/png, image/jpeg, image/jpg">
                 </input>
 
-                <label>
+                <label className="label">
                     Key word:
-                    <input type="text" name={"keyWord"} onChange={()=>{
+                    <input type="text" name={"keyWord"} className="text-input"
+                        onChange={()=>{
                         this.setState({ "keyWord": event.target.value });
                     }}  />
                 </label>
-                <label>
+                <label className="label">
                     price:
-                    <input type="number" name={"price"} onChange={()=>{
+                    <input type="number" name={"price"} className="number-input"
+                        onChange={()=>{
                         this.setState({ "price": event.target.value });
                     }}  />
                 </label>
                 
                 <div className="radio">
-                    <label>
+                    <label className="label">
                         <input type="radio" value="Fixed_Price" checked={this.state.priceNature === 'Fixed_Price'} onChange={this.handleOptionChange} />
                         Fixed Price
                     </label>
                 </div>
                 <div className="radio">
-                    <label>
+                    <label className="label">
                         <input type="radio" value="Range_Price" checked={this.state.priceNature === 'Range_Price'} onChange={this.handleOptionChange} />
                         Range Price
                     </label>
                 </div>
-
-                <button type="button" onClick={()=>this.handleSubmit()} >submit</button>
+                <div>
+                <button className="button" type="button" onClick={()=>this.handleSubmit()} >submit</button>
+                </div>
             </form>
             </div>
+        </div>
         );
     }
 }

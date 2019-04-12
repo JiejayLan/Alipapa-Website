@@ -19,13 +19,16 @@ const AppRouter = () => (
   <Router history={history}>
   <div>
     <Switch>
+
       <PublicRoute path="/register" component={RegisterPage}/>
       <LoginRoute path="/login" component={LoginPage} exact={true}/>
       <PublicRoute path="/" component={HomePage} exact={true}/>
       <PrivateRoute path="/sellnewitem" component={sellingForm} exact={true}/>
       <PrivateRoute path="/message" component={MessagePage} exact={true}/>
       <PrivateRoute path="/dashboard" component={DashboardPage}/>
-	    <PrivateRoute path="/items/:id" component={ItemPage} exact={true}/>
+      <PrivateRoute path="/items/:id" component={ItemPage} exact={true}/>
+      <PrivateRoute path="/editProfile/:id" component={EditProfilePage}/>
+      <PrivateRoute path="/profile" component={ProfilePage}/>
       <Route component={NotFoundPage}/>
     </Switch>
   </div>

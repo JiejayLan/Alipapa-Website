@@ -7,8 +7,6 @@ import 'normalize.css/normalize.css';
 import './styles/styles.scss';
 import 'react-dates/lib/css/_datepicker.css';
 import { PersistGate } from 'redux-persist/integration/react'
-
-
 const { store, persistor } = configureStore();
 
 const jsx = (
