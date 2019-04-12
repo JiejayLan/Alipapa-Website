@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import RegisterForm from './RegisterForm';
+import RegisterForm from '../components/RegisterForm';
 import {startEditProfile} from '../actions/userProfile';
 
 const EditProfilePage = (props) => {

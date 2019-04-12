@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import  MessageType from "../components/messgePage/MessageType.js"
-import  MessageForm from "../components/messgePage/MessageForm.js"
+import  Message from "../components/messgePage/MessageForm.js"
 class MessageForm extends React.Component {
     constructor(props) {
         super(props);

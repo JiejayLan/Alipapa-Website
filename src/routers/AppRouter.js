@@ -11,8 +11,9 @@ import sellingForm from '../pages/sellItemForm';
 import ItemPage from '../pages/ItemPage';
 import HomePage from '../pages/HomePage';
 import RegisterPage from '../pages/RegisterPage';
-import MessagePage from '../pages/MessagePage'
-
+import MessagePage from '../pages/MessagePage';
+import EditProfilePage from '../pages/EditProfilePage';
+import ProfilePage from '../pages/ProfilePage'
 export const history = createHistory();
 
 const AppRouter = () => (
