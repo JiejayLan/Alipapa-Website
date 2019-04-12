@@ -11,3 +11,4 @@ export default (state = applicationReducerDefaultState, action) => {
       return state;
   }
 };
+

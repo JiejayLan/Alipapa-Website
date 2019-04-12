@@ -11,6 +11,8 @@ import sellingForm from '../pages/sellItemForm';
 import ItemPage from '../components/ItemPage';
 import HomePage from '../components/HomePage';
 import RegisterPage from '../components/RegisterPage';
+import ProfilePage from '../components/ProfilePage';
+import EditProfilePage from '../components/EditProfilePage';
 
 export const history = createHistory();
 
@@ -18,12 +20,15 @@ const AppRouter = () => (
   <Router history={history}>
   <div>
     <Switch>
+
       <PublicRoute path="/register" component={RegisterPage}/>
       <LoginRoute path="/login" component={LoginPage} exact={true}/>
       <PublicRoute path="/" component={HomePage} exact={true}/>
-      <PrivateRoute path="/sellnewitem" component={sellingForm} exact={true}/>
+      <PublicRoute path="/sellnewitem" component={sellingForm} exact={true}/>
       <PrivateRoute path="/dashboard" component={DashboardPage}/>
-	    <PrivateRoute path="/items/:id" component={ItemPage} exact={true}/>
+      <PrivateRoute path="/items/:id" component={ItemPage} exact={true}/>
+      <PrivateRoute path="/editProfile/:id" component={EditProfilePage}/>
+      <PrivateRoute path="/profile" component={ProfilePage}/>
       <Route component={NotFoundPage}/>
     </Switch>
   </div>
