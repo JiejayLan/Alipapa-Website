@@ -1,5 +1,5 @@
 import React from 'react';
-import ItemList from './ItemList';
+import ItemList from '../components/ItemList';
 
 class Homepage extends React.Component {
     
