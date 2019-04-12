@@ -1,3 +1,7 @@
+### Report and Documents
+visit [our Wiki Page](https://github.com/JiejayLan/CSC322_group_project/wiki/Documents)
+
+
 ### Getting started
 I. clone repo
 
