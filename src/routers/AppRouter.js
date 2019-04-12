@@ -1,16 +1,17 @@
 import React from 'react';
 import {Router, Route, Switch} from 'react-router-dom';
 import createHistory from 'history/createBrowserHistory';
-import DashboardPage from '../components/DashboardPage';
-import NotFoundPage from '../components/NotFoundPage';
+import DashboardPage from '../pages/DashboardPage';
+import NotFoundPage from '../pages/NotFoundPage';
 import LoginPage from '../pages/LoginPage';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 import LoginRoute from './LoginRoute';
 import sellingForm from '../pages/sellItemForm';
-import ItemPage from '../components/ItemPage';
-import HomePage from '../components/HomePage';
-import RegisterPage from '../components/RegisterPage';
+import ItemPage from '../pages/ItemPage';
+import HomePage from '../pages/HomePage';
+import RegisterPage from '../pages/RegisterPage';
+import MessagePage from '../pages/MessagePage'
 
 export const history = createHistory();
 
@@ -22,6 +23,7 @@ const AppRouter = () => (
       <LoginRoute path="/login" component={LoginPage} exact={true}/>
       <PublicRoute path="/" component={HomePage} exact={true}/>
       <PrivateRoute path="/sellnewitem" component={sellingForm} exact={true}/>
+      <PrivateRoute path="/message" component={MessagePage} exact={true}/>
       <PrivateRoute path="/dashboard" component={DashboardPage}/>
 	    <PrivateRoute path="/items/:id" component={ItemPage} exact={true}/>
       <Route component={NotFoundPage}/>

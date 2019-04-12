@@ -20,7 +20,7 @@ class sellItemForm extends React.Component {
         if(this.state.title!="" &&this.state.priceNature!=""&&this.state.keyWord!=""
         &&this.state.price>0 && this.state.picture!=null){    
             
-            let sellerID = this.props.sellerID.uid;
+            let sellerID = this.props.seller.uid;
             var storageRef = storage.ref("itemApplication/"+ uuid.v4() + this.state.picture.name);
 
             //upload picture to firebase storage
@@ -104,7 +104,7 @@ class sellItemForm extends React.Component {
 
 //get sellerID from redux state
 const mapStateToProps = (state, props) => ({
-    sellerID: state.auth
+    seller: state.auth
   });
 
 // const mapDispatchToProps = (dispatch) => ({
