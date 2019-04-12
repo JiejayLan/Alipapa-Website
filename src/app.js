@@ -3,22 +3,22 @@ import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import AppRouter, {history} from './routers/AppRouter';
 import configureStore from './store/configureStore';
-import {login, logout} from './actions/auth';
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
 import 'react-dates/lib/css/_datepicker.css';
-import {firebase} from './firebase/firebase';
-import LoadingPage from './components/LoadingPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {startSetProfile} from './actions/userProfile';
 //after logic for login process is fully setup integrate
 //startSetProfile so firebase retrive user profile after login
 
-const store = configureStore();
+import { PersistGate } from 'redux-persist/integration/react'
+const { store, persistor } = configureStore();
 
 const jsx = (
   <Provider store={store}>
+  <PersistGate persistor={persistor}>
     <AppRouter/>
+    </PersistGate>
   </Provider>
 );
 
@@ -30,18 +30,18 @@ const renderApp = () => {
   }
 };
 
-ReactDOM.render(<LoadingPage/>, document.getElementById('app'));
+ReactDOM.render(jsx, document.getElementById('app'));
 
-firebase.auth().onAuthStateChanged((user) => {
-  if (user) {
-    store.dispatch(login(user.uid));
-    renderApp();
-    if (history.location.pathname === '/') {
-      history.push('/dashboard');
-    }
-  } else {
-    store.dispatch(logout());
-    renderApp();
-    history.push('/');
-  }
-});
+// firebase.auth().onAuthStateChanged((user) => {
+//   if (user) {
+//     store.dispatch(login(user.uid));
+//     renderApp();
+//     if (history.location.pathname === '/') {
+//       history.push('/dashboard');
+//     }
+//   } else {
+//     store.dispatch(logout());
+//     renderApp();
+//     history.push('/');
+//   }
+// });
