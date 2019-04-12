@@ -8,8 +8,8 @@ class LoginPage extends React.Component {
   constructor(props) {
       super(props);
       this.state = {
-        "username":"jie lan",
-        "password":"hfh"
+        "username":"jay",
+        "password":"123"
       };
     }
     
