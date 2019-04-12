@@ -26,6 +26,8 @@
   transition: background .3s ease;
   &:hover {
     background: $off-white;
+    text-decoration: none;
+    color: $dark-grey;
   }
 
   @media (min-width: $desktop-breakpoint) {
@@ -43,6 +45,27 @@
   padding: $m-size;
   &:hover {
     background: none;
+  }
+}
+
+.list-item--column {
+  border: 1px solid darken($off-white, 7%);
+  border-top: none;
+  color: $dark-grey;
+  display: flex;
+  flex-direction: column;
+  padding: $s-size;
+  text-decoration: none;
+  transition: background .3s ease;
+  &:hover {
+    background: $off-white;
+    text-decoration: none;
+    color: $dark-grey;
+  }
+
+  flex-direction: column;
+  @media (min-width: $desktop-breakpoint) {
+    padding: $m-size;
   }
 }
 

@@ -102,7 +102,7 @@ export default class RegisterForm extends React.Component {
           title="American 10 digits phone number"
         />
         <div>
-          <button className="button">Submit Application</button>
+          <button className="button">Submit</button>
         </div>
       </form>
     );

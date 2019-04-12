@@ -10,8 +10,9 @@ import 'react-dates/lib/css/_datepicker.css';
 import {firebase} from './firebase/firebase';
 import LoadingPage from './components/LoadingPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-
+import {startSetProfile} from './actions/userProfile';
+//after logic for login process is fully setup integrate
+//startSetProfile so firebase retrive user profile after login
 
 const store = configureStore();
 
