@@ -1,5 +1,5 @@
 import React from 'react';
-import ItemList from './ItemList';
+import ItemList from '../components/ItemList';
 import { connect } from 'react-redux';
 import * as firebase from "firebase";
 import {database,storage} from '../firebase/firebase';
@@ -8,7 +8,7 @@ class Homepage extends React.Component {
     constructor(){
         super();
         this.state = {
-            total_items = {},
+            total_items : [],
                 /*{
                     name: 'Garbage Can',
                     img:'https://images-na.ssl-images-amazon.com/images/I/91t4TlUrzuL._SL1500_.jpg',
@@ -50,7 +50,6 @@ class Homepage extends React.Component {
           rootRef.on("value", (snapshot) => {
             //let terms = snapshot.val();
             // Store all the itemIDs in array
-            console.log(snapshot.val());
             let items = snapshot.val();
             /*snapshot.forEach( (snap)=>{
                 let row = snap.val();
@@ -71,9 +70,9 @@ class Homepage extends React.Component {
 
         //simple in-line style for search area
         const divstyle = {
-        display:'table',
-        padding: '20px',
-        margin: 'auto'
+        //padding: '10px',
+        margin: 'auto',
+        textAlign: 'center'
         }
 
         //simple in-line style for search bar
@@ -82,10 +81,10 @@ class Homepage extends React.Component {
         height: '30px',
         border: '2px solid aqua'
         }
-
+        
         return (
         <div>
-            <div className='text-center'>
+            <div className='text-center' style={divstyle}>
               <h1>AliPaPa</h1>
               <p>Let shopping sets you free</p>
             </div>
@@ -96,7 +95,7 @@ class Homepage extends React.Component {
             </div>
             </form>
 
-            {/*<ItemList items={this.state.total_items} keyword={this.state.searchKeyword} />*/}
+            <ItemList items={this.state.total_items} keyword={this.state.searchKeyword} />
             
         </div>
         );

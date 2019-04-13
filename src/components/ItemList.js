@@ -2,22 +2,37 @@ import React from 'react'
 
 const ItemList = (props) =>{
     
-    const keyword = props.keyword
+    const keyword = props.keyword;
 
-    let itemlist = [];
-    let itemlt = [...props.items];
+    let itemlist = { };
+    let itemlt = {...props.items};
+
+    Object.filter = (obj, func) => 
+    Object.assign(...Object.keys(obj)
+        .filter( key => func(obj[key]) )
+        .map( key => ({ [key]: obj[key] }) ) );
 
     if(keyword !== ''){
-        itemlist = itemlt.filter( (stuff) =>
-            stuff[0].name.toLowerCase().includes( keyword.toLowerCase() )
-        )
+        itemlist = Object.filter(itemlt, item => 
+            item.name.toLowerCase().includes( keyword.toLowerCase() ) );
     }
-
     else{
         itemlist = itemlt;
     }
 
-    let display = itemlist.map( (item) =>
+    let keys = [];
+    keys = Object.keys(itemlist);
+
+    let fianlist = [];
+
+    for( let i = 0; i < keys.length; i++){
+        if(itemlist[keys[i]].hasOwnProperty('price') ===false){
+          itemlist[keys[i]].price = "let's bid";
+        }
+        fianlist.push(itemlist[keys[i]]);
+    }
+
+    let display = fianlist.map( (item) =>
         <div className='col-9 mx-auto col-md-6 col-lg-3 my-3 rounded float-left'>
             <div className='card'>
                 {/*<div className='img-container p-5'>
