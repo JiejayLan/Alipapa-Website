@@ -5,8 +5,7 @@ const MessageType = (props)=>{
     let options ="";
     if(props.userType=="SU")
         options =            
-         <select name="messageType">
-       
+         <select name="messageType">      
             <option value="warning">warning</option>
             <option value="message">message</option>
         </select>
@@ -17,7 +16,6 @@ const MessageType = (props)=>{
                 <option value="complaint">complaint</option>
                 <option value="message">message</option>
             </select>
-
 
     return (
         <div onChange={ props.changed }>
