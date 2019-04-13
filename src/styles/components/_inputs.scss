@@ -14,3 +14,13 @@
   @extend .text-input;
   height: 10rem;
 }
+
+.file-input {
+  @extend .text-input;
+  border: none;
+}
+
+.number-input {
+  @extend .text-input;
+  width: 25rem;
+}

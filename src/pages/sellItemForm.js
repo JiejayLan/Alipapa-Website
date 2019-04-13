@@ -20,7 +20,7 @@ class sellItemForm extends React.Component {
         if(this.state.title!="" &&this.state.priceNature!=""&&this.state.keyWord!=""
         &&this.state.price>0 && this.state.picture!=null){    
             
-            let sellerID = this.props.sellerID.uid;
+            let sellerID = this.props.seller.uid;
             var storageRef = storage.ref("itemApplication/"+ uuid.v4() + this.state.picture.name);
 
             //upload picture to firebase storage
@@ -54,57 +54,69 @@ class sellItemForm extends React.Component {
     render() {
         return (
             <div>
-            <h1>New Item Application</h1>
-            <form >
-                <label>
+                <div className="page-header">
+                    <div className="content-container">
+                    <h1 className="page-header__title">New Item Application</h1>
+                    </div>
+                </div>
+            <div className="content-container">
+            <form className="form">
+                <label className="label">
                     Title:
-                    <input type="text" name={"title"} onChange={()=>{
+                    <input type="text" name={"title"} className="text-input"
+                        size="25"
+                        onChange={()=>{
                         this.setState({ "title": event.target.value });
                     }} />
                 </label> 
 
                 <input type="file"
-                    id="itemPicture" name="itemPicture"
+                    id="itemPicture" name="itemPicture" 
+                    className="file-input"
                     onChange={this.fileSelect}
                     accept="image/png, image/jpeg, image/jpg">
                 </input>
 
-                <label>
+                <label className="label">
                     Key word:
-                    <input type="text" name={"keyWord"} onChange={()=>{
+                    <input type="text" name={"keyWord"} className="text-input"
+                        onChange={()=>{
                         this.setState({ "keyWord": event.target.value });
                     }}  />
                 </label>
-                <label>
+                <label className="label">
                     price:
-                    <input type="number" name={"price"} onChange={()=>{
+                    <input type="number" name={"price"} className="number-input"
+                        onChange={()=>{
                         this.setState({ "price": event.target.value });
                     }}  />
                 </label>
                 
                 <div className="radio">
-                    <label>
+                    <label className="label">
                         <input type="radio" value="Fixed_Price" checked={this.state.priceNature === 'Fixed_Price'} onChange={this.handleOptionChange} />
                         Fixed Price
                     </label>
                 </div>
                 <div className="radio">
-                    <label>
+                    <label className="label">
                         <input type="radio" value="Range_Price" checked={this.state.priceNature === 'Range_Price'} onChange={this.handleOptionChange} />
                         Range Price
                     </label>
                 </div>
-
-                <button type="button" onClick={()=>this.handleSubmit()} >submit</button>
+                <div>
+                <button className="button" type="button" onClick={()=>this.handleSubmit()} >submit</button>
+                </div>
             </form>
             </div>
+        </div>
         );
     }
 }
 
 //get sellerID from redux state
 const mapStateToProps = (state, props) => ({
-    sellerID: state.auth
+    seller: state.auth
   });
 
 // const mapDispatchToProps = (dispatch) => ({
