@@ -23,7 +23,7 @@ firebase.database.ref('/users').once('value').then((snapshot)=> {
 app.use(express.static(publicPath));
 
 //login a user
-app.post("/login",require('./controller/login_controller.js')(firebase));
+app.post("/login",require('./controller/login_controller.js')( { firebase }));
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(publicPath, 'index.html'));
