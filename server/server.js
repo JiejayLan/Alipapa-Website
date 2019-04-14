@@ -4,6 +4,7 @@ const app = express();
 const publicPath = path.join(__dirname, '..', 'public');
 const port = process.env.PORT || 3000;
 const firebase = require("./firebase");
+const ITEM_MANAGER = require('./service/ItemManager')({ firebase });
 let bodyParser = require('body-parser');
 // const reload = require("reload");
 const watch = require('watch');
@@ -23,7 +24,8 @@ firebase.database.ref('/users').once('value').then((snapshot)=> {
 app.use(express.static(publicPath));
 
 //login a user
-app.post("/login",require('./controller/login_controller.js')( { firebase }));
+app.post("/login",require('./controller/login_controller.js')({ firebase }));
+app.get('/controllers/items/:id', require('./controller/item_page_controller.js')({ itemManager: ITEM_MANAGER }));
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(publicPath, 'index.html'));
