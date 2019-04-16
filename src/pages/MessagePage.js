@@ -1,17 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import  MessageType from "../components/messgePage/MessageType.js"
-import  Message from "../components/messgePage/MessageForm.js"
+import  MessageOption from "../components/messgePage/MessageOption.js"
+
 class MessageForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            messageType:"",
+            messageType:"appeal",
             sender:'',
-            complaintUserID:'',
+            complaintedUserID:'',
             receiver:'',
             description:"",
-            confirmedType:false,
+            confirmedType:"false",
             userType:'SU'
         };
     }
@@ -23,31 +24,37 @@ class MessageForm extends React.Component {
     }
 
     handleUpdate = (event) => {
-        console.log("update state",event.target.name,event.target.value)
+        // console.log("update state",event.target.name," ",event.target.value)
         this.setState({
           [event.target.name]: event.target.value
         })
       }
 
-    handleSubmit() {  
-
-    
+    handleSubmit(event) {  
+        event.preventDefault();
+        console.log("submit");
+        this.props.history.push('/message')
     }
-
 
     render() {
         let renderComonent ="";
-        if(this.state.confirmedType)
-            renderComonent =<form >
-                                <button type="button" onClick={()=>this.handleSubmit()} >submit</button>
-                            </form>
-        else
+        if(this.state.confirmedType ==="false")
             renderComonent = 
-            <MessageType changed={(event)=>{this.handleUpdate(event)}} userType = {this.state.userType}/>
+                <MessageType changed={(event)=>{this.handleUpdate(event)}}
+                            userType = {this.state.userType}  
+                             
+                />
+        else
+            renderComonent =
+                <MessageOption userType = {this.state.userType}
+                    changed={(event)=>{this.handleUpdate(event)}}  
+                    messageType={this.state.messageType}
+                    handleSubmit={(event)=>{this.handleSubmit(event)}}>
+                </MessageOption>
 
         return (
-            <div>
-                <h1>Message Form</h1>               
+            <div className="content-container">
+                <h1 className="page-header">Message Form</h1>               
                 {renderComonent}
             </div>
         );
@@ -56,7 +63,7 @@ class MessageForm extends React.Component {
 
 const mapStateToProps = (state, props) => ({
     user: state.auth
-  });
+});
 
 
 export default connect(mapStateToProps)(MessageForm);
