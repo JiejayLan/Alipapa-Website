@@ -1,6 +1,9 @@
 
 
-module.exports=(firebase)=>{
+module.exports=(data)=>{
+	
+		let firebase = data.firebase;
+	
     return(req,res)=>{
     firebase.database.ref('/users').once('value').then((snapshot)=> {       
         let USERS = snapshot.val()

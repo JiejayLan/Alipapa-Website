@@ -5,7 +5,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import firebase from 'firebase';
-
+import axios from 'axios';
 
 
 
@@ -26,37 +26,52 @@ class ItemPage extends React.Component {
 			seller: '',
 		}
 		
-		const ITEM_ID = props.match.params.id;
+		const URL = '/controllers/items/' +
+								props.match.params.id;
 		
-		const ITEMS_STORAGE_REF = firebase.database().ref('total_items');
-		ITEMS_STORAGE_REF.child(ITEM_ID).once('value').then((snapshot) => {
-			
-			const ITEM = snapshot.val()
-			
-			if (ITEM === null) {
+		axios
+			.get(URL)
+			.then( (response) => {
 				
-				//	redirect to not found page
-			
-			} else {
+				const RESPONSE_STATUS_CODE = response.status;
 				
+				switch (RESPONSE_STATUS_CODE) {
 				
-				this.setState({
-					title: ITEM.name,
-					price: {
-						type: ITEM.price_type,
-						min: ITEM.min_price,
-						max: ITEM.max_price,
-						current: ITEM.current_price
-					},
-					description: ITEM.description,
-					seller: ITEM.seller,
-				})
+					case 200: {
+						
+						//	found item
+						const ITEM = response.data
+						
+						const newState = {
+							title: ITEM.name,
+							price: {
+								type: ITEM.price_type,
+								min: ITEM.min_price,
+								max: ITEM.max_price,
+								current: ITEM.current_price
+							},
+							description: ITEM.description,
+							seller: ITEM.seller,
+						}
+						
+						this.setState(newState);
+						
+					}
+					
+					case 204: {
+						
+						//	redirect
+						
+					}
 				
+				}
+					
+			})
+			.catch( (error) => {
 				
+				console.log(error)
 				
-			}
-			
-		});
+			})
 		
 	}
 

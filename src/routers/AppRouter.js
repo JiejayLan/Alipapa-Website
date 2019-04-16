@@ -14,16 +14,17 @@ import RegisterPage from '../pages/RegisterPage';
 import MessagePage from '../pages/MessagePage';
 import EditProfilePage from '../pages/EditProfilePage';
 import ProfilePage from '../pages/ProfilePage'
+import SUHomePage from '../pages/SUhomePage';
 export const history = createHistory();
 
 const AppRouter = () => (
   <Router history={history}>
   <div>
     <Switch>
-
       <PublicRoute path="/register" component={RegisterPage}/>
       <LoginRoute path="/login" component={LoginPage} exact={true}/>
       <PublicRoute path="/" component={HomePage} exact={true}/>
+      <PrivateRoute path="/suhome" component={SUHomePage} exact={true}/>
       <PrivateRoute path="/sellnewitem" component={sellingForm} exact={true}/>
       <PrivateRoute path="/message" component={MessagePage} exact={true}/>
       <PrivateRoute path="/dashboard" component={DashboardPage}/>
