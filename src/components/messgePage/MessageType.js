@@ -20,7 +20,7 @@ const MessageType = (props)=>{
     return (
         <div onChange={ props.changed }>
                 {options}
-            <button name = "confirmedType" value={true} onClick={props.changed}> Next</button>
+            <button name = "confirmedType" value={"true"} onClick={props.changed}> Next</button>
         </div>
     )
 };

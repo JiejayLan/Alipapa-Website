@@ -19,7 +19,7 @@ const MessageForm = (props)=>{
           
     // console.log(props.userType, props.messageType)
 
-    if(props.userType === "OU" && props.messageType=== "appeal"){
+    if(props.userType == "OU" && props.messageType== "appeal"){
         formOption = description;
     }
     else if(props.userType === "OU" && props.messageType == "complaint"){
@@ -34,15 +34,13 @@ const MessageForm = (props)=>{
                         {description}                  
                     </div>
     }
-
     return (
         <div>
             <button name = "confirmedType" value={false} onClick={props.changed}> back</button>
-            <form onSubmit={props.handleSubmit}>
-                {formOption}
-                
+            <form onSubmit={props.handleSubmit} className="form">
+                {formOption} 
                 <br/>
-                <button type="submit"  >submit</button>
+                <button type="submit"  className="button" >submit</button>
             </form>
         </div>
     )

@@ -24,7 +24,7 @@ class MessageForm extends React.Component {
     }
 
     handleUpdate = (event) => {
-        console.log("update state",event.target.name," ",event.target.value)
+        // console.log("update state",event.target.name," ",event.target.value)
         this.setState({
           [event.target.name]: event.target.value
         })
@@ -53,8 +53,8 @@ class MessageForm extends React.Component {
                 </MessageOption>
 
         return (
-            <div>
-                <h1>Message Form</h1>               
+            <div className="content-container">
+                <h1 className="page-header">Message Form</h1>               
                 {renderComonent}
             </div>
         );
