@@ -9,7 +9,7 @@ const MessageForm = (props)=>{
                         <textarea required name = "description" onChange={ props.changed } />
                     </label> 
     let compliant = <label>
-                        Who you want to compliant
+                        Who you want to compliant/explain?
                         <input required name = "complaintedUserID" onChange={ props.changed } />
                     </label> 
     let receiver =  <label>

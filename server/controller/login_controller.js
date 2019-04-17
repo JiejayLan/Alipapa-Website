@@ -14,8 +14,8 @@ module.exports=(data)=>{
             break;
           }              
         }
-        let {address ,phone_number,user_type,username}={...USERS[userID]};
-        res.json({address ,phone_number,user_type,username,userID}); 
+        let {address ,phone_number,user_type,username,status}={...USERS[userID]};
+        res.json({address ,phone_number,user_type,username,userID,status}); 
     })
     }
 }

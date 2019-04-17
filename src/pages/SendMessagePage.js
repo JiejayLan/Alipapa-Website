@@ -79,7 +79,7 @@ class MessageForm extends React.Component {
                             userType = {this.state.userType}                     
                 />
         else
-            renderComonent =
+            renderComponent =
                 <MessageOption userType = {this.state.userType}
                     changed={(event)=>{this.handleUpdate(event)}}  
                     back={()=>{this.handleback()}}  
