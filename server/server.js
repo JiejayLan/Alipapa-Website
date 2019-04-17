@@ -25,6 +25,7 @@ app.use(express.static(publicPath));
 
 //login a user
 app.post("/login",require('./controller/login_controller.js')({ firebase }));
+app.post("/message",require('./controller/sendmessage_controller.js')({ firebase }));
 app.get('/controllers/items/:id', require('./controller/item_page_controller.js')({ itemManager: ITEM_MANAGER }));
 
 app.get('*', (req, res) => {

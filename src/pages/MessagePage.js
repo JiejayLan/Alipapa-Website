@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import  MessageType from "../components/messgePage/MessageType.js"
 import  MessageOption from "../components/messgePage/MessageOption.js"
+import axios from 'axios';
 
 class MessageForm extends React.Component {
     constructor(props) {
@@ -19,35 +20,69 @@ class MessageForm extends React.Component {
 
     componentWillMount(){
         this.setState({
-            userType:this.props.user.user_type
+            userType:this.props.user.user_type,
+            sender:this.props.user.userID
         })
+        if(this.props.user.user_type == 'SU')
+            this.setState({messageType:"warning"});
     }
 
     handleUpdate = (event) => {
-        // console.log("update state",event.target.name," ",event.target.value)
         this.setState({
           [event.target.name]: event.target.value
         })
-      }
+    }
+
+    //event for back button
+    handleback = () => {
+        if(this.props.user.user_type == 'OU')
+            this.setState({messageType:"appeal",confirmedType:"false"});
+        esle
+            this.setState({messageType:"warning",confirmedType:"false"});
+    }
 
     handleSubmit(event) {  
         event.preventDefault();
-        console.log("submit");
-        this.props.history.push('/message')
+        let message ={};
+
+        if(this.state.messageType === "complaint"){
+            message.receiver = "SU";
+            message.complaintedUserID = this.state.complaintedUserID;
+        }
+        else if(this.state.messageType ==="warning" || this.state.messageType ==="message"){
+            message.receiver= this.state.receiver;
+        }
+        else if(this.state.messageType ==="appeal")
+            message.receiver = "SU";
+
+        message.description = this.state.description;
+        message.messageType = this.state.messageType;
+        message.senderUserType = this.state.userType;
+
+        axios.post('/message', {
+            ...message
+          })
+          .then( (response)=> {
+            console.log(response);
+            this.props.history.push('/message')
+          })
+          .catch(function (error) {
+            console.log(error);
+          });    
     }
 
     render() {
-        let renderComonent ="";
+        let renderComponent ="";
         if(this.state.confirmedType ==="false")
-            renderComonent = 
+            renderComponent = 
                 <MessageType changed={(event)=>{this.handleUpdate(event)}}
-                            userType = {this.state.userType}  
-                             
+                            userType = {this.state.userType}                     
                 />
         else
             renderComonent =
                 <MessageOption userType = {this.state.userType}
                     changed={(event)=>{this.handleUpdate(event)}}  
+                    back={()=>{this.handleback()}}  
                     messageType={this.state.messageType}
                     handleSubmit={(event)=>{this.handleSubmit(event)}}>
                 </MessageOption>
@@ -55,7 +90,7 @@ class MessageForm extends React.Component {
         return (
             <div className="content-container">
                 <h1 className="page-header">Message Form</h1>               
-                {renderComonent}
+                {renderComponent}
             </div>
         );
     }

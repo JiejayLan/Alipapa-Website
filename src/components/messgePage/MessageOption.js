@@ -36,7 +36,7 @@ const MessageForm = (props)=>{
     }
     return (
         <div>
-            <button name = "confirmedType" value={false} onClick={props.changed}> back</button>
+            <button name = "confirmedType" value={false} onClick={props.back}> back</button>
             <form onSubmit={props.handleSubmit} className="form">
                 {formOption} 
                 <br/>
