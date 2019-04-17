@@ -6,7 +6,8 @@ export const login = (
       address = "",
       phone_number = "",
       user_type = "", 
-      userID=""
+      userID="",
+      status=""
     } = {}
   ) => {
     return ({
@@ -15,7 +16,8 @@ export const login = (
       address,
       phone_number,
       user_type,
-      userID
+      userID,
+      status
     }
   })};
 

@@ -11,7 +11,7 @@ import sellingForm from '../pages/sellItemForm';
 import ItemPage from '../pages/ItemPage';
 import HomePage from '../pages/HomePage';
 import RegisterPage from '../pages/RegisterPage';
-import MessagePage from '../pages/MessagePage';
+import SendMessagePage from '../pages/SendMessagePage';
 import EditProfilePage from '../pages/EditProfilePage';
 import ProfilePage from '../pages/ProfilePage'
 import SUHomePage from '../pages/SUhomePage';
@@ -26,7 +26,7 @@ const AppRouter = () => (
       <PublicRoute path="/" component={HomePage} exact={true}/>
       <PrivateRoute path="/suhome" component={SUHomePage} exact={true}/>
       <PrivateRoute path="/sellnewitem" component={sellingForm} exact={true}/>
-      <PrivateRoute path="/message" component={MessagePage} exact={true}/>
+      <PrivateRoute path="/message" component={SendMessagePage} exact={true}/>
       <PrivateRoute path="/dashboard" component={DashboardPage}/>
       <PrivateRoute path="/items/:id" component={ItemPage} exact={true}/>
       <PrivateRoute path="/editProfile/:id" component={EditProfilePage}/>

@@ -2,11 +2,14 @@
   background: $blue;
   border: none;
   color: white;
+  border-radius:0.5; 
   display: inline-block;
   font-size: $font-size-large;
   font-weight: 300;
   line-height: 1;
   padding: $s-size;
+  margin:0;
+  max-width: 10%;
   text-decoration: none;
 }
 
