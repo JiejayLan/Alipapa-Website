@@ -20,7 +20,6 @@ const AppRouter = () => (
   <Router history={history}>
   <div>
     <Switch>
-
       <PublicRoute path="/register" component={RegisterPage}/>
       <LoginRoute path="/login" component={LoginPage} exact={true}/>
       <PublicRoute path="/" component={HomePage} exact={true}/>
