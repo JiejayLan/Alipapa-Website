@@ -69,6 +69,27 @@
   }
 }
 
+.list-item--rectangle {
+  border: 1px solid darken($off-white, 7%);
+  color: $dark-grey;
+  display: flex;
+  flex-direction: column;
+  padding: $m-size;
+  text-decoration: none;
+  transition: background .3s ease;
+  &:hover {
+    background: $off-white;
+    text-decoration: none;
+    color: $dark-grey;
+  }
+
+  flex-direction: column;
+  @media (min-width: $desktop-breakpoint) {
+    padding: $m-size;
+  }
+}
+
+
 .list-item__title {
   margin: 0;
   word-break: break-all;
