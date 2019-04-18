@@ -9,8 +9,12 @@ const MessageForm = (props)=>{
                         <textarea required name = "description" onChange={ props.changed } />
                     </label> 
     let compliant = <label>
-                        Who you want to compliant/explain?
-                        <input required name = "complaintedUserID" onChange={ props.changed } />
+                        Who you want to compliant?
+                        <input required name = "complaintedUsername" onChange={ props.changed } />
+                    </label> 
+    let explain =   <label>
+                        Who you want to explain?
+                        <input required name = "explainUsername" onChange={ props.changed } />
                     </label> 
     let receiver =  <label>
                         receiver
@@ -25,6 +29,12 @@ const MessageForm = (props)=>{
     else if(props.userType === "OU" && props.messageType == "complaint"){
         formOption = <div>
                         {compliant}
+                        {description}    
+                    </div>
+    }
+    else if(props.userType === "OU" && props.messageType == "explain"){
+        formOption = <div>
+                        {explain}
                         {description}    
                     </div>
     }

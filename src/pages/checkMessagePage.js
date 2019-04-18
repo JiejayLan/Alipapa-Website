@@ -32,24 +32,37 @@ class MessageForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            messageType:"appeal",
-            sender:'',
-            complaintedUserID:'',
-            receiver:'',
-            description:"",
-            confirmedType:"false",
+            userID:'',
             userType:'SU',
-            value:0
+            value:0,
+            message:{}
         };
     }
 
     componentWillMount(){
+
+        //get auth data from redux
         this.setState({
             userType:this.props.user.user_type,
-            sender:this.props.user.userID
+            userID:this.props.user.userID
         })
-        if(this.props.user.user_type == 'SU')
-            this.setState({messageType:"warning"});
+
+        //get message from firebase   
+        axios.post('/checkReceiveMessage', {
+          username:this.props.user.username
+        })
+        .then( (response)=> {
+          let message = [];
+          let data =response.data;
+          for(let id in data){
+            message.push(data[id]);
+          }
+          console.log(message);
+          this.setState({message})
+        })
+        .catch(function (error) {
+          console.log(error);
+        });  
     }
 
     handleUpdate = (event) => {

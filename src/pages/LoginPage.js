@@ -20,6 +20,7 @@ class LoginPage extends React.Component {
         "password":this.state.password
       })
       .then( (response)=> {
+        console.log(response.data);
         this.props.startLogin(response.data); 
       })
       .catch(function (error) {

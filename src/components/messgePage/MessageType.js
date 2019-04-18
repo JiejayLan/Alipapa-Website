@@ -14,6 +14,7 @@ const MessageType = (props)=>{
             <select name="messageType">          
                 <option value="appeal">appeal</option>
                 <option value="complaint">complaint</option>
+                <option value="explain">explain</option>
                 <option value="message">message</option>
             </select>
 

@@ -10,7 +10,8 @@ class MessageForm extends React.Component {
         this.state = {
             messageType:"appeal",
             sender:'',
-            complaintedUserID:'',
+            complaintedUsername:'',
+            explainUsername:'',
             receiver:'',
             description:"",
             confirmedType:"false",
@@ -37,7 +38,7 @@ class MessageForm extends React.Component {
     handleback = () => {
         if(this.props.user.user_type == 'OU')
             this.setState({messageType:"appeal",confirmedType:"false"});
-        esle
+        else
             this.setState({messageType:"warning",confirmedType:"false"});
     }
 
@@ -47,7 +48,11 @@ class MessageForm extends React.Component {
 
         if(this.state.messageType === "complaint"){
             message.receiver = "SU";
-            message.complaintedUserID = this.state.complaintedUserID;
+            message.complaintedUsername = this.state.complaintedUsername;
+        }
+        else if(this.state.messageType ==="explain"){
+            message.receiver = "SU";
+            message.explainUsername = this.state.explainUsername;
         }
         else if(this.state.messageType ==="warning" || this.state.messageType ==="message"){
             message.receiver= this.state.receiver;
@@ -55,10 +60,11 @@ class MessageForm extends React.Component {
         else if(this.state.messageType ==="appeal")
             message.receiver = "SU";
 
+
         message.description = this.state.description;
         message.messageType = this.state.messageType;
         message.senderUserType = this.state.userType;
-
+        message.sender = this.state.sender;
         axios.post('/message', {
             ...message
           })
