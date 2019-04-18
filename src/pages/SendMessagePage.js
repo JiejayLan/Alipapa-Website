@@ -22,7 +22,7 @@ class MessageForm extends React.Component {
     componentWillMount(){
         this.setState({
             userType:this.props.user.user_type,
-            sender:this.props.user.userID
+            sender:this.props.user.username
         })
         if(this.props.user.user_type == 'SU')
             this.setState({messageType:"warning"});
@@ -46,7 +46,7 @@ class MessageForm extends React.Component {
         event.preventDefault();
         let message ={};
 
-        if(this.state.messageType === "complaint"){
+        if(this.state.messageType === "complain"){
             message.receiver = "SU";
             message.complaintedUsername = this.state.complaintedUsername;
         }
@@ -65,7 +65,7 @@ class MessageForm extends React.Component {
         message.messageType = this.state.messageType;
         message.senderUserType = this.state.userType;
         message.sender = this.state.sender;
-        axios.post('/message', {
+        axios.post('/message/send', {
             ...message
           })
           .then( (response)=> {

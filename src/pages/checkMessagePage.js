@@ -1,12 +1,20 @@
 import { connect } from 'react-redux';
 import axios from 'axios';
 import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
+import Message from "../components/checkMessagePage/Message"
+import MessageHeader from "../components/checkMessagePage/MessageHeader"
+import TableHead from '@material-ui/core/TableHead';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 
 function TabContainer(props) {
   return (
@@ -26,54 +34,94 @@ const styles = theme => ({
     width: '100%',
     backgroundColor: theme.palette.background.paper,
   },
+  table:{
+    width: '30%',
+  }
 });
 
 class MessageForm extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            userID:'',
-            userType:'SU',
-            value:0,
-            message:{}
-        };
+  constructor(props) {
+      super(props);
+      this.state = {
+          userID:'',
+          userType:'',
+          value:0,
+          message:[],
+          complain:[],
+          appeal:[],
+          warning:[]
+      };
+  }
+
+  classifyMessage(data){
+    let message = [];
+    let appeal = [];
+    let warning = [];
+    for(let id in data){
+      data[id]["messageID"] = id;
+      if(data[id]["messageType"] === "message")
+        message.push(data[id])
+      else if(data[id]["messageType"] === "warning")
+        warning.push(data[id]);
+      else
+        appeal.push(data[id]);
     }
+    this.setState({message});
+    this.setState({appeal});
+    this.setState({warning});
 
-    componentWillMount(){
+  }
 
-        //get auth data from redux
-        this.setState({
-            userType:this.props.user.user_type,
-            userID:this.props.user.userID
-        })
+  componentWillMount(){
 
-        //get message from firebase   
-        axios.post('/checkReceiveMessage', {
-          username:this.props.user.username
-        })
-        .then( (response)=> {
-          let message = [];
-          let data =response.data;
-          for(let id in data){
-            message.push(data[id]);
-          }
-          console.log(message);
-          this.setState({message})
-        })
-        .catch(function (error) {
-          console.log(error);
-        });  
-    }
+      //get auth data from redux
+      this.setState({
+          userType:this.props.user.user_type,
+          userID:this.props.user.userID
+      })
 
-    handleUpdate = (event) => {
-        this.setState({
-          [event.target.name]: event.target.value
-        })
-    }
+      //get regular message from firebase   
+      axios.post('/message/checkReceive', {
+            username:this.props.user.username
+          })
+          .then( (response)=> {
+            let data =response.data;
+            this.classifyMessage(data);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });  
+
+          //check received complain messages
+          axios.post('/message/checkComplain',{
+            username:this.props.user.username
+          })
+          .then( (response)=> {
+            let complain = [];
+            let data =response.data;
+            for(let id in data){
+              data[id]["messageID"] = id;
+              complain.push(data[id]);
+            }
+            // console.log(complain);
+            this.setState({complain})
+          })
+          .catch(function (error) {
+            console.log(error);
+          });    
+  }
+
+  handleUpdate = (event) => {
+      this.setState({
+        [event.target.name]: event.target.value
+      })
+  }
 
   handleChange = (event, value) => {
     this.setState({ value });
   };
+
+
 
   render() {
     const { classes } = this.props;
@@ -90,14 +138,31 @@ class MessageForm extends React.Component {
             variant="scrollable"
             scrollButtons="auto"
           >
-            <Tab label="Item One" />
-            <Tab label="Item Two" />
-            <Tab label="Item Three" />
+            <Tab label="Message" />
+            <Tab label="Appeal" />
+            <Tab label="Warning" />
+            <Tab label="Complain / Explain" />
           </Tabs>
         </AppBar>
-        {value === 0 && <TabContainer><button>fdf</button></TabContainer>}
+        {value === 0 && <TabContainer>
+                          <Paper className={classes.table} >
+                            <Table >
+                            <TableHead><MessageHeader/></TableHead>                
+                            <div>
+                                {this.state.message.map((message)=>{
+                                    return <Message
+                                        description = {message.description}
+                                        sender = {message.sender}
+                                    />
+                                })}
+                            </div>
+                            </Table>
+                          </Paper>
+                          
+                        </TabContainer>}
         {value === 1 && <TabContainer>Item Two</TabContainer>}
         {value === 2 && <TabContainer>Item Three</TabContainer>}
+        {value === 3 && <TabContainer>Item Three</TabContainer>}
       </div>
     );
   }

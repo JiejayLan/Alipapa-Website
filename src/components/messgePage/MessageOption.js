@@ -26,7 +26,7 @@ const MessageForm = (props)=>{
     if(props.userType == "OU" && props.messageType== "appeal"){
         formOption = description;
     }
-    else if(props.userType === "OU" && props.messageType == "complaint"){
+    else if(props.userType === "OU" && props.messageType == "complain"){
         formOption = <div>
                         {compliant}
                         {description}    

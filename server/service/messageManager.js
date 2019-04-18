@@ -11,15 +11,18 @@ module.exports = (firebase) => {
                         if (error) {
                             res
                             .status(204)
-                            .json({"status":"error", "message":error})
+                            .json({"status":"error", "message":error});
+                            res.end();
                           } 
                         else {
                             res
                             .status(200)
-                            .json({"status":"success", "postMessage":data})
+                            .json({"status":"success", "postMessage":data});
+                            res.end();
                         }         
                 });    
         },
+
         //	check messages
 		checkReceiveMessage: (username ,res) => {            
             DATABASE.ref('/message')
@@ -32,14 +35,37 @@ module.exports = (firebase) => {
                         res
                         .status(204)
                         .json(message);
+                        res.end();
                     }
                     else{
                         res
                         .status(200)
-                        .json(message);             
+                        .json(message);
+                        res.end();             
                     }                       
                 });
-        }        		
+        },
+        //	check received complain messages
+		checkReceiveComplain: (username ,res) => {            
+            DATABASE.ref('/message')
+                .orderByChild("complaintedUsername")
+                .equalTo(username)
+                .on('value', (snapshot)=>{
+                    let message = snapshot.val();
+                    if(message === undefined){
+                        res
+                        .status(204)
+                        .json(message);
+                        res.end();
+                    }
+                    else{
+                        res
+                        .status(200)
+                        .json(message);  
+                        res.end();           
+                    }                       
+            });
+        }          		
 	}
 	
 	return MESSAGE_SYSTEM;
