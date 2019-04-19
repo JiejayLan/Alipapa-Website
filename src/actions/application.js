@@ -1,6 +1,4 @@
-//import database from '../firebase/firebase';
-import * as firebase from 'firebase';
-const database = firebase.database();
+import {database} from '../firebase/firebase';
 
 export const addApplication = (application) => ({
   type: 'ADD_APPLICATION',
@@ -18,7 +16,7 @@ export const startAddApplication = (applicationData = {}) => {
     } = applicationData;
     const application = { name, password, creditCard, address, phoneNumber };
 
-   return database.ref('usersApplication').push(application).then((ref) => {
+   return database.ref('user_application').push(application).then((ref) => {
       dispatch(addApplication({
         id: ref.key,
         ...application
