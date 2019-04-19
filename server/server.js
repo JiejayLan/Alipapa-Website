@@ -6,25 +6,17 @@ const port = process.env.PORT || 3000;
 const firebase = require("./firebase");
 const ITEM_MANAGER = require('./service/ItemManager')({ firebase });
 let bodyParser = require('body-parser');
-// const reload = require("reload");
-const watch = require('watch');
-// const reload_server = reload(app);
-// watch.watchTree(__dirname + '/../src', function (f, curr, prev) {
-//   reload_server.reload();
-// });
-
+let message_controller= require("./controller/message_controller.js")
+const MESSAGE_SYSTEM = require('./service/messageManager');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-firebase.database.ref('/users').once('value').then((snapshot)=> {   
-  console.log("connect successfully");  
-});
-
 app.use(express.static(publicPath));
 
 //login a user
-app.post("/login",require('./controller/login_controller.js')({ firebase }));
+app.post("/login",require('./controller/login_controller.js')({firebase}));
+//a route to control all message request
+app.use("/message",message_controller(MESSAGE_SYSTEM(firebase)));
 app.get('/controllers/items/:id', require('./controller/item_page_controller.js')({ itemManager: ITEM_MANAGER }));
 
 //	test endpoints
