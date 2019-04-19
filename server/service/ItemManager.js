@@ -8,30 +8,35 @@ module.exports = (data) => {
 	const APPLICATIONS = {
 		
 		//	creates an application
-		create: (data) => {
+		create: (itemData) => {
 			
 			/*
-				data = {
-					title: <String>,
-					keywords: [keywords]
-					price_type: "fixed" | "ranged",
-					price: 
-						<Float> | 
-						{
-							min: <Float>,
-							max: <Float>
-						}
-				}
+				PARAMETERS
+					itemData = {
+						title: <String>,
+						keywords: [keywords]
+						price_type: "fixed" | "ranged",
+						price: 
+							<Float> | 
+							{
+								min: <Float>,
+								max: <Float>
+							}
+					}
+				RETURN VALUE
+					Undefined if the application is successfully created
 			
 			*/
 			
-			const ITEM_TITLE = data.title;
-			const KEYWORDS = data.keywords.reduce((prev, current) => {
+			//	TODO
+			//		Throw an error if the data is not valid
+			const ITEM_TITLE = itemData.title;
+			const KEYWORDS = itemData.keywords.reduce((prev, current) => {
 				prev[current] = true
 				return prev;
 			}, {})
-			const PRICE_TYPE = data.price_type;
-			const PRICE = data.price;
+			const PRICE_TYPE = itemData.price_type;
+			const PRICE = itemData.price;
 			
 			
 			let application = {
