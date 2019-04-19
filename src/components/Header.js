@@ -9,7 +9,7 @@ export const Header = ({startLogout,isAuthenticated}) => {
     return (  <header className="header">
     <div className="content-container">
       <div className="header__content">
-        <Link className="header__title" to="/dashboard">
+        <Link className="header__title" to="/">
           <h1>Alipapa</h1>
         </Link>     
         <button className="button button--link" onClick={startLogout}>Logout</button>
@@ -21,7 +21,7 @@ export const Header = ({startLogout,isAuthenticated}) => {
     return (  <header className="header">
     <div className="content-container">
       <div className="header__content">
-        <Link className="header__title" to="/dashboard">
+        <Link className="header__title" to="/">
           <h1>Alipapa</h1>
         </Link>
         <Link className="header__title" to="/register">
