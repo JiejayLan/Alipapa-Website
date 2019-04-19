@@ -27,6 +27,9 @@ app.use(express.static(publicPath));
 app.post("/login",require('./controller/login_controller.js')({ firebase }));
 app.get('/controllers/items/:id', require('./controller/item_page_controller.js')({ itemManager: ITEM_MANAGER }));
 
+//	test endpoints
+app.post('/test', require('./controller/test.js')( {itemManager: ITEM_MANAGER} ));
+
 app.get('*', (req, res) => {
   res.sendFile(path.join(publicPath, 'index.html'));
 });
