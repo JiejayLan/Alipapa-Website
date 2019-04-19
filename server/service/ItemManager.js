@@ -8,7 +8,51 @@ module.exports = (data) => {
 	const APPLICATIONS = {
 		
 		//	creates an application
-		create: (config) => {
+		create: (data) => {
+			
+			/*
+				data = {
+					title: <String>,
+					keywords: [keywords]
+					price_type: "fixed" | "ranged",
+					price: 
+						<Float> | 
+						{
+							min: <Float>,
+							max: <Float>
+						}
+				}
+			
+			*/
+			
+			const ITEM_TITLE = data.title;
+			const KEYWORDS = data.keywords.reduce((prev, current) => {
+				prev[current] = true
+				return prev;
+			}, {})
+			const PRICE_TYPE = data.price_type;
+			const PRICE = data.price;
+			
+			
+			let application = {
+				title: ITEM_TITLE,
+				keywords: KEYWORDS,
+				price_type: PRICE_TYPE,
+				price: PRICE
+			}
+			
+			return new Promise((resolve, reject) => {
+				
+				DATABASE
+					.ref('item_application')
+					.push(application)
+					.then( (dataRef) => {
+						
+						resolve();
+						
+					})
+					
+			})
 			
 		},
 		
