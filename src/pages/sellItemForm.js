@@ -8,31 +8,34 @@ class sellItemForm extends React.Component {
         super(props);
         this.state = {
             title: "",
-            priceNature: "",
-            keyWord:"",
+            priceNature: "Fixed_Price",
+            keywords:[],
             price:0,
             picture:null,
             pictureURL:""
         };
     }
 
-    handleSubmit() {  
-        if(this.state.title!="" &&this.state.priceNature!=""&&this.state.keyWord!=""
-        &&this.state.price>0 && this.state.picture!=null){    
-            
-            let sellerID = this.props.seller.uid;
-            var storageRef = storage.ref("itemApplication/"+ uuid.v4() + this.state.picture.name);
+    handleSubmit =(e)=>{
+        e.preventDefault();  
+        alert("Submit Successfully");
+        let sellerID = this.props.seller.userID;
+        var storageRef = storage.ref("item_application/"+ uuid.v4() + this.state.picture.name);
 
-            //upload picture to firebase storage
-            storageRef.put(this.state.picture).then(fileData => {
-                 return fileData.ref.getDownloadURL();
-              }).then(imageURL=>{
-                this.setState({pictureURL:imageURL});
-            // upload to firebase database 
-                database.ref('itemApplication').push({sellerID,...this.state});  
-            });         
-        }
-    
+        //upload picture to firebase storage
+        storageRef.put(this.state.picture).then(fileData => {
+                console.log("submit file");
+                return fileData.ref.getDownloadURL();
+            }).then(imageURL=>{
+            this.setState({pictureURL:imageURL});
+            //upload to firebase database 
+            database.ref('item_application')
+                    .push({sellerID,...this.state})
+                    .then(snapshot=>{
+                        console.log(snapshot);
+                        // <Redirect to='/sellnewitem' />
+                    });  
+        });          
     }
 
     handleOptionChange = (changeEvent) => {
@@ -40,15 +43,17 @@ class sellItemForm extends React.Component {
             priceNature: changeEvent.target.value
         });
     };
-    getInitialState =  ()=> {
-        return {
-            priceNature: 'Fixed_Price'
-        };
-      };
 
     fileSelect=e=>{
-        console.log(e.target.files[0]);
         this.setState({picture:e.target.files[0]});
+    }
+
+    handleKeywords = event=>{
+        let keywords = event.target.value;
+        keywords = keywords.split(/(\s+)/)
+                         .filter( function(e) { return e.trim().length > 0; } );;
+        console.log(keywords);
+        this.setState({keywords});
     }
 
     render() {
@@ -60,10 +65,14 @@ class sellItemForm extends React.Component {
                     </div>
                 </div>
             <div className="content-container">
-            <form className="form">
+            <form className="form" onSubmit={this.handleSubmit}>
                 <label className="label">
                     Title:
-                    <input type="text" name={"title"} className="text-input"
+                    <input 
+                        type="text" 
+                        required
+                        name={"title"} 
+                        className="text-input"
                         size="25"
                         onChange={()=>{
                         this.setState({ "title": event.target.value });
@@ -71,22 +80,29 @@ class sellItemForm extends React.Component {
                 </label> 
 
                 <input type="file"
-                    id="itemPicture" name="itemPicture" 
+                    id="itemPicture"  
+                    required 
+                    name="itemPicture" 
                     className="file-input"
                     onChange={this.fileSelect}
                     accept="image/png, image/jpeg, image/jpg">
                 </input>
 
                 <label className="label">
-                    Key word:
-                    <input type="text" name={"keyWord"} className="text-input"
-                        onChange={()=>{
-                        this.setState({ "keyWord": event.target.value });
-                    }}  />
+                    Keywords:
+                    <input 
+                        type="text" 
+                        required 
+                        name={"keyWord"} 
+                        className="text-input"
+                        onChange={this.handleKeywords}
+                    />
+                    <br/>
+                    (seperate by space ^ ^)
                 </label>
                 <label className="label">
                     price:
-                    <input type="number" name={"price"} className="number-input"
+                    <input type="number" required name={"price"} className="number-input"
                         onChange={()=>{
                         this.setState({ "price": event.target.value });
                     }}  />
@@ -94,7 +110,7 @@ class sellItemForm extends React.Component {
                 
                 <div className="radio">
                     <label className="label">
-                        <input type="radio" value="Fixed_Price" checked={this.state.priceNature === 'Fixed_Price'} onChange={this.handleOptionChange} />
+                        <input type="radio" selected value="Fixed_Price" checked={this.state.priceNature === 'Fixed_Price'} onChange={this.handleOptionChange} />
                         Fixed Price
                     </label>
                 </div>
@@ -105,7 +121,7 @@ class sellItemForm extends React.Component {
                     </label>
                 </div>
                 <div>
-                <button className="button" type="button" onClick={()=>this.handleSubmit()} >submit</button>
+                <button className="button"  >submit</button>
                 </div>
             </form>
             </div>
