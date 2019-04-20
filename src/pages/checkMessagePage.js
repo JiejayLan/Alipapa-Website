@@ -126,6 +126,16 @@ class MessageForm extends React.Component {
   render() {
     const { classes } = this.props;
     const { value } = this.state;
+    // let Tabs = (this.state.userType === "SU")?
+    //           <div>
+    //             <Tab label = "Message" />
+    //             <Tab label= "Complain / Explain" />
+    //           </div>: 
+    //           <div>          
+    //             <Tab label="Message" />
+    //             <Tab label="Warning" />
+    //             <Tab label="Complain / Explain" />
+    //           </div>;
 
     return (
       <div className={classes.root}>
@@ -139,7 +149,6 @@ class MessageForm extends React.Component {
             scrollButtons="auto"
           >
             <Tab label="Message" />
-            <Tab label="Appeal" />
             <Tab label="Warning" />
             <Tab label="Complain / Explain" />
           </Tabs>
@@ -152,17 +161,43 @@ class MessageForm extends React.Component {
                                 {this.state.message.map((message)=>{
                                     return <Message
                                         description = {message.description}
-                                        sender = {message.sender}
+                                        sender = { message.sender}
                                     />
                                 })}
                             </div>
                             </Table>
-                          </Paper>
-                          
+                          </Paper>               
                         </TabContainer>}
-        {value === 1 && <TabContainer>Item Two</TabContainer>}
-        {value === 2 && <TabContainer>Item Three</TabContainer>}
-        {value === 3 && <TabContainer>Item Three</TabContainer>}
+        {value === 1 && <TabContainer>
+                          <Paper className={classes.table} >
+                            <Table >
+                            <TableHead><MessageHeader/></TableHead>                
+                            <div>
+                                {this.state.warning.map((message)=>{
+                                    return <Message
+                                        description = {message.description}
+                                        sender = { message.sender}
+                                    />
+                                })}
+                            </div>
+                            </Table>
+                          </Paper> 
+                        </TabContainer>}
+        {value === 2 && <TabContainer>
+                          <Paper className={classes.table} >
+                            <Table >
+                            <TableHead><MessageHeader/></TableHead>                
+                            <div>
+                                {this.state.complain.map((message)=>{
+                                    return <Message
+                                        description = {message.description}
+                                        sender = { message.sender}
+                                    />
+                                })}
+                            </div>
+                            </Table>
+                          </Paper> 
+                        </TabContainer>}
       </div>
     );
   }
