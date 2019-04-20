@@ -29,7 +29,7 @@ module.exports = (firebase) => {
                 .orderByChild("receiver")
                 .equalTo(username)
                 .on('value', (snapshot)=>{
-                    console.log("snapshot",snapshot.val());  
+                    // console.log("snapshot",snapshot.val());  
                     let message = snapshot.val();
                     if(message === undefined){
                         res
