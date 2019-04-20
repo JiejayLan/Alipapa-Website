@@ -14,9 +14,8 @@ const RegisterPage = (props) => {
         <div className="content-container">
           <RegisterForm
             onSubmit={ (application) => {
-              console.log('reaches before start add app');
               props.startAddApplication(application); 
-              props.history.push('/home');
+              props.history.push('/');
             }}
           />
         </div>
