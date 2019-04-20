@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import {logout} from '../actions/auth';
 
 
-export const Header = ({startLogout,isAuthenticated}) => {
+export const Header = ({startLogout,isAuthenticated,status,userID}={}) => {
   if (isAuthenticated){
     return (  <header className="header">
     <div className="content-container">
@@ -12,7 +12,7 @@ export const Header = ({startLogout,isAuthenticated}) => {
         <Link className="header__title" to="/">
           <h1>Alipapa</h1>
         </Link>     
-        <button className="button button--link" onClick={startLogout}>Logout</button>
+        <button className="button button--link" onClick={()=>startLogout({status,userID})}>Logout</button>
       </div>
     </div>
   </header>)
@@ -35,18 +35,17 @@ export const Header = ({startLogout,isAuthenticated}) => {
   </header>);
   }
 
-}
-
-;
+};
 
 const mapDispatchToProps = (dispatch) => ({
-  startLogout: () => dispatch(logout())
+  startLogout: (data) => dispatch(logout(data))
 });
 
 const mapStateToProps = (state) => {
-  let isAuthenticated = {
-    isAuthenticated: !!state.auth.userID
-  }
-  return isAuthenticated ;
+  
+  let isAuthenticated = !!state.auth.userID
+  let status = state.auth.status;
+  let userID = state.auth.userID;
+  return {isAuthenticated,status,userID};
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

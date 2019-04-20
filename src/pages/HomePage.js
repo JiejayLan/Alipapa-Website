@@ -62,7 +62,7 @@ class Homepage extends React.Component {
             this.setState({total_items:addinstate});
             
             //checking 
-            console.log(this.state);
+            // console.log(this.state);
         });
     }
     
