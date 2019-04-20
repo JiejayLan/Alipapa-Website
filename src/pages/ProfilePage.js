@@ -3,31 +3,37 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {setProfile} from '../actions/userProfile';
 import axios from 'axios';
-import { func } from 'prop-types';
 
 class ProfilePage extends React.Component {
+  
   constructor(props) {
     super(props);
 
+    //figure out a way to do it dynamically 
     this.state = {
-      address: props.profile ? props.profile.address : '',
-      phone_number: props.profile ? props.profile.phone_number : '', 
-      username: props.profile ? props.profile.username : '', 
-      password: props.profile ? props.profile.password : '', 
-      credit_card: props.profile ? props.profile.credit_card : ''
+      address:  '',
+      phone_number: '',
+      username: 'SU',
+      password: '123',
+      credit_card: ''
     };
 
-    axios.get('/profile').then((response) => {
+    axios.post('/profile', {
+      "username": this.state.username,
+      "password": this.state.password 
+    })
+    .then((response) => {
+      console.log(response.data);
       this.props.setProfile(response.data);
       this.setState(() => ({...response.data}));
     })
     .catch((error) => {
       console.log(error);
     });
-  }
+ }
 
   render() {
-    const NAME = this.state.name;
+    const NAME = this.state.username;
     const PASSWORD = this.state.password;
     const CREDIT_CARD = this.state.credit_card;
     const ADDRESS = this.state.address;
@@ -35,9 +41,9 @@ class ProfilePage extends React.Component {
     return (
       <div className="content-container">
         <div className="list-header">
-          <div className="list-item__title">Profile</div>
+          <h2 className="list-item__title">Profile</h2>
         </div>
-    
+
         <div className="list-body">
           <Link className="list-item--column" to={`/editProfile`}>
             <h3 className="list-item__title">Name: {NAME}</h3>

@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 app.use(express.static(publicPath));
 
 
-app.get("/profile", require('./controller/profile_controller.js')({firebase}));
+app.post("/profile", require('./controller/profile_controller.js')({firebase}));
 
 app.post("/login",auth.login({firebase}));
 //delete a user
