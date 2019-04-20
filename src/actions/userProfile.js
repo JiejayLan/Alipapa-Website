@@ -1,8 +1,4 @@
-import * as firebase from 'firebase';
-const database = firebase.database();
-
-//change the reference point when the basic firebase
-//structure is set up
+import {database} from '../firebase/firebase';
 
 //a profile is used to be an application
 //once application get approved by SU
@@ -17,7 +13,7 @@ export const editProfile = (id, updates) => ({
 export const startEditProfile = (id, updates) => {
   return (dispatch, getState) => {
     const uid = getState().auth.uid;
-    return database.ref(`users/${uid}/profile`).update(updates).then(() => {
+    return database.ref(`users/${uid}`).update(updates).then(() => {
       dispatch(editProfile(id, updates));
     });
   };
@@ -28,11 +24,10 @@ export const setProfile = (profile) => ({
   profile
 });
 
-//fetch user profile from firebase at the start of app after they login
 export const startSetProfile = () => {
   return (dispatch, getState) => {
     const uid = getState().auth.uid;
-    return database.ref(`users/${uid}/profile`).once('value').then((snapshot) => {
+    return database.ref(`users/${uid}`).once('value').then((snapshot) => {
       const profile = snapshot.val();
       dispatch(setProfile(profile));
     });

@@ -15,6 +15,9 @@ app.use(express.static(publicPath));
 
 //login a user
 app.post("/login",require('./controller/login_controller.js')({firebase}));
+
+app.get("/profile", require('./controller/profile_controller.js')({firebase}));
+
 //a route to control all message request
 app.use("/message",message_controller(MESSAGE_SYSTEM(firebase)));
 app.get('/controllers/items/:id', require('./controller/item_page_controller.js')({ itemManager: ITEM_MANAGER }));
