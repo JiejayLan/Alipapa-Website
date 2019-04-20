@@ -8,17 +8,17 @@ export const addApplication = (application) => ({
 export const startAddApplication = (applicationData = {}) => {
   return (dispatch) => {
     const {
-      name = '',
+      username = '',
       password = '',
-      creditCard = '', 
+      credit_card = '', 
       address = '',
-      phoneNumber = '' 
+      phone_number = '' 
     } = applicationData;
-    const application = { name, password, creditCard, address, phoneNumber };
+    const application = { username, password, credit_card, address, phone_number };
 
    return database.ref('user_application').push(application).then((ref) => {
       dispatch(addApplication({
-        id: ref.key,
+        userID: ref.key,
         ...application
       }));
     });

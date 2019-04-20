@@ -14,7 +14,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(publicPath));
 
-//login a user
+
+app.get("/profile", require('./controller/profile_controller.js')({firebase}));
+
 app.post("/login",auth.login({firebase}));
 //delete a user
 app.post("/delete",auth.delete({firebase}));
