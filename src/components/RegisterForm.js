@@ -3,19 +3,19 @@ import React from 'react';
 export default class RegisterForm extends React.Component {
   constructor(props){
     super(props);
-
+    //may need to change props.application to props.profile
     this.state={
-      name: props.application ? props.application.name : '',
+      username: props.application ? props.application.username : '',
       password: props.application ? props.application.password : '',
-      creditCard: props.application ? props.application.creditCard : '',
+      credit_card: props.application ? props.application.credit_card : '',
       address: props.application ? props.application.address : '',
-      phoneNumber: props.application ? props.application.phoneNumber : ''
+      phone_number: props.application ? props.application.phone_number : ''
     };
   }
 
   onNameChange = (e) => {
-    const name = e.target.value;
-    this.setState(() => ({name}));
+    const username = e.target.value;
+    this.setState(() => ({username}));
   };
 
   onPasswordChange = (e) => {
@@ -24,8 +24,8 @@ export default class RegisterForm extends React.Component {
   };
 
   onCreditCardChange = (e) => {
-    const creditCard = e.target.value;
-      this.setState(() => ({creditCard}));
+    const credit_card = e.target.value;
+      this.setState(() => ({credit_card}));
   };
 
   onAddressChange = (e) => {
@@ -34,18 +34,18 @@ export default class RegisterForm extends React.Component {
   };
 
   onPhoneNumberChange = (e) => {
-    const phoneNumber = e.target.value;
-      this.setState(() => ({phoneNumber}));
+    const phone_number = e.target.value;
+      this.setState(() => ({phone_number}));
   };
 
   onSubmit = (e) => {
     e.preventDefault();
       this.props.onSubmit({
-        name: this.state.name,
+        username: this.state.username,
         password: this.state.password,
-        creditCard: this.state.creditCard,
+        credit_card: this.state.credit_card,
         address: this.state.address,
-        phoneNumber: this.state.phoneNumber
+        phone_number: this.state.phone_number
       });
     
   };
@@ -59,7 +59,7 @@ export default class RegisterForm extends React.Component {
           placeholder="Name"
           autoFocus
           className="text-input"
-          value={this.state.name}
+          value={this.state.username}
           onChange={this.onNameChange}
           required
         />
@@ -75,7 +75,7 @@ export default class RegisterForm extends React.Component {
           type="text"
           placeholder="Credit Card"
           className="text-input"
-          value={this.state.creditCard}
+          value={this.state.credit_card}
           onChange={this.onCreditCardChange}
           required
           pattern="\b(?:3[47]\d|(?:4\d|5[1-5]|65)\d{2}|6011)\d{12}\b"
@@ -95,7 +95,7 @@ export default class RegisterForm extends React.Component {
           type="text"
           placeholder="Phone number"
           className="text-input"
-          value={this.state.phoneNumber}
+          value={this.state.phone_number}
           onChange={this.onPhoneNumberChange}
           required
           pattern="\d{10}"
