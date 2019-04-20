@@ -7,29 +7,31 @@ module.exports = (data) => {
 	
 	const APPLICATIONS = {
 		
-		//	creates an application
+		/*
+			Description:
+				Creates an item application for review by SU
+				
+			PARAMETERS:
+				itemData = {
+					title: <String>,
+					keywords: [keywords]
+					price_type: "fixed" | "ranged",
+					price: 
+						<Float> | 
+						{
+							min: <Float>,
+							max: <Float>
+						}
+				}
+				
+			RETURN VALUE:
+				Undefined if the application is successfully created
+		
+		*/
 		create: (itemData) => {
-			
-			/*
-				PARAMETERS
-					itemData = {
-						title: <String>,
-						keywords: [keywords]
-						price_type: "fixed" | "ranged",
-						price: 
-							<Float> | 
-							{
-								min: <Float>,
-								max: <Float>
-							}
-					}
-				RETURN VALUE
-					Undefined if the application is successfully created
-			
-			*/
-			
 			//	TODO
 			//		Throw an error if the data is not valid
+			console.log(itemData.keywords)
 			const ITEM_TITLE = itemData.title;
 			const KEYWORDS = itemData.keywords.reduce((prev, current) => {
 				prev[current] = true
@@ -37,13 +39,15 @@ module.exports = (data) => {
 			}, {})
 			const PRICE_TYPE = itemData.price_type;
 			const PRICE = itemData.price;
+			const CREATED = Date.now();
 			
 			
 			let application = {
 				title: ITEM_TITLE,
 				keywords: KEYWORDS,
 				price_type: PRICE_TYPE,
-				price: PRICE
+				price: PRICE,
+				created: CREATED
 			}
 			
 			return new Promise((resolve, reject) => {
@@ -61,15 +65,63 @@ module.exports = (data) => {
 			
 		},
 		
-		//	retrieves a single application
+		/*
+		
+			DESCRIPTION:
+				Gets an application by its unique ID
+				
+			PARAMETERS:
+				config = {
+					id: <String>
+				}
+			
+			RETURN VALUE:
+				An object representing the application is returned.
+				Null if the ID does not much any in the database.
+		
+		*/
 		getOne: (config) => {
 			
+			const ID = config.id;
+			
+			return new Promise((resolve, reject) => {
+				
+				DATABASE
+					.ref('item_application')
+					.child(ID)
+					.once('value')
+					.then((snapshot) => {
+						
+						resolve(snapshot.val());
+						
+					})
+				
+			})
 			
 		},
 		
 		//	retrieves all applications?
-		getAll: (config) => {
+		getMultiple: (config) => {
 			
+			/*
+			let applications = [];
+			
+			return new Promise((resolve, reject) => {
+				
+				DATABASE
+				.ref('item_application')
+				.orderByChild('created')
+				.startAt(1555785135296)
+				.on('child_added', (snapshot) => {
+					
+					applications.push(snapshot.val());
+					if (applications.length === 2)
+						resolve(applications)
+					
+				})
+				
+			})
+			*/
 			
 		},
 		
