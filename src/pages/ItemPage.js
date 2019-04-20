@@ -41,14 +41,15 @@ class ItemPage extends React.Component {
 						
 						//	found item
 						const ITEM = response.data
+						console.log(ITEM)
 						
 						const newState = {
 							title: ITEM.name,
 							price: {
 								type: ITEM.price_type,
-								min: ITEM.min_price,
-								max: ITEM.max_price,
-								current: ITEM.current_price
+								min: ITEM.price.min,
+								max: ITEM.price.max,
+								current: ITEM.price.current
 							},
 							description: ITEM.description,
 							seller: ITEM.seller,
@@ -91,14 +92,63 @@ class ItemPage extends React.Component {
 	
 	render() {
 	
-		//	Data below will reside in state
+		const USER_IS_AUTHENTICATED = this.props.isAuthenticated;
+		
 		const PAGE_TITLE = this.state.title;
-		//	Rating stars need own component that returns different # of stars
+		const PRICE_TYPE = this.state.price.type;
 		const RATING_STARS = <img className='img-fluid' src='http://css-stars.com/wp-content/uploads/2013/12/4-stars.jpg' />;
 		const PRICE = this.formatPrice(this.state.price.current);
 		const CURRENT_BID = this.formatPrice(this.state.price.current);
 		const KEYWORDS = 'Garbage Can, Trash, Stainless, Step';
 		const SELLER = this.state.seller;
+		
+		//	Sub components
+		const BUY_COMPONENT = (
+			<Container>
+				<Row>
+					<Col sm>
+						<span className='display-4 text-danger'>
+							{PRICE}
+						</span>
+					</Col>
+				</Row>
+				<Row className='pt-4'>
+					<Col sm>
+						<button className='btn btn-lg btn-warning col-sm-6'>
+							<span> BUY </span>
+						</button>
+					</Col>
+				</Row>
+			</Container>
+		)
+		
+		const BID_COMPONENT = (
+			<Container>
+				<Row>
+					<Col sm>
+						<span className='display-4'>
+							Current Bid:
+						</span>
+						<span className='display-4 text-danger'>
+							{CURRENT_BID}
+						</span>
+					</Col>
+				</Row>
+				<form className='row pt-4 ml-1'>
+					<div className='col-sm-2 no-gutters bg-secondary text-center h2'>
+						<span className="h2">
+							$
+						</span>
+					</div>
+					<input className='col-sm-6 input-control h2' />
+					<button className="col-sm-4 no-gutters btn btn-warning h2">
+						<span className="h2">
+							BID
+						</span>
+					</button>
+				</form>
+			</Container>
+		)
 		
 		return (
 			<div>
@@ -141,51 +191,11 @@ class ItemPage extends React.Component {
 									</Col>
 									
 							</Row>
-							<Row>
-								<Col sm>
-									<span className='display-4 text-danger'>
-										{PRICE}
-									</span>
-								</Col>
-							</Row>
-							
-							
-							<Row>
-								<Col sm>
-									<span className='display-4'>
-										Current Bid:
-									</span>
-									<span className='display-4 text-danger'>
-										{CURRENT_BID}
-									</span>
-								</Col>
-							</Row>
-							
-							
-							<Row className='pt-4'>
-								<Col sm>
-									<button className='btn btn-lg btn-warning col-sm-6'>
-										<span> BUY </span>
-									</button>
-								</Col>
-							</Row>
-							
-							<form className='row pt-4 ml-1'>
-							
-									<div className='col-sm-2 no-gutters bg-secondary text-center h2'>
-										<span className="h2">
-											$
-										</span>
-									</div>
-									<input className='col-sm-6 input-control h2' />
-									<button className="col-sm-4 no-gutters btn btn-warning h2">
-										<span className="h2">
-											BID
-										</span>
-									</button>
-									
-							
-							</form>
+							{USER_IS_AUTHENTICATED ? 
+								(PRICE_TYPE === 'fixed' ?
+									BUY_COMPONENT :
+									BID_COMPONENT) :
+								null}
 							
 						</Col>
 					</Row>
@@ -196,5 +206,9 @@ class ItemPage extends React.Component {
 	}
 }
 
+const mapStateToProps = (state) => ({
+	isAuthenticated: !!state.auth.userID
+})
 
-export default ItemPage;
+
+export default connect(mapStateToProps)(ItemPage);
