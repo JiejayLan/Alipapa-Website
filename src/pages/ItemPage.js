@@ -15,15 +15,15 @@ class ItemPage extends React.Component {
 		super(props);
 		
 		this.state = {
-			title: '',
+			title: undefined,
 			price: {
 				type: undefined,
 				min: undefined,
 				max: undefined,
 				current: undefined
 			},
-			description: '',
-			seller: '',
+			description: undefined,
+			seller: undefined,
 		}
 		
 		const URL = '/controllers/items/' +
@@ -41,7 +41,6 @@ class ItemPage extends React.Component {
 						
 						//	found item
 						const ITEM = response.data
-						console.log(ITEM)
 						
 						const newState = {
 							title: ITEM.name,
@@ -56,12 +55,22 @@ class ItemPage extends React.Component {
 						}
 						
 						this.setState(newState);
-						
+						break;
 					}
 					
 					case 204: {
 						
-						//	redirect
+						this.setState({
+							title: undefined,
+							price: {
+								type: undefined,
+								min: undefined,
+								max: undefined,
+								current: undefined
+							},
+							description: undefined,
+							seller: null,
+						})
 						
 					}
 				
@@ -101,9 +110,10 @@ class ItemPage extends React.Component {
 		const CURRENT_BID = this.formatPrice(this.state.price.current);
 		const KEYWORDS = 'Garbage Can, Trash, Stainless, Step';
 		const SELLER = this.state.seller;
+		const ITEM_NOT_FOUND = SELLER === null;
 		
 		//	Sub components
-		const BUY_COMPONENT = (
+		const BUY_OPTION = (
 			<Container>
 				<Row>
 					<Col sm>
@@ -122,7 +132,7 @@ class ItemPage extends React.Component {
 			</Container>
 		)
 		
-		const BID_COMPONENT = (
+		const BID_OPTION = (
 			<Container>
 				<Row>
 					<Col sm>
@@ -150,58 +160,71 @@ class ItemPage extends React.Component {
 			</Container>
 		)
 		
-		return (
-			<div>
-				<Container>
-					
-					<Row>
-						<Col sm={6}>
-							<div>
-								<img className='img-fluid' src='https://images-na.ssl-images-amazon.com/images/I/91t4TlUrzuL._SL1500_.jpg' />
-							</div>
-							<div>
-								{KEYWORDS}
-							</div>
-						</Col>
-						<Col sm={6}>
-							<Row>
-								<Col sm>
-									<h1 className='display-3'>
-									{PAGE_TITLE}
-									</h1>
-								</Col>
-							</Row>
-							<Row>
-									<Col>
-										<Row>
-											<Col>Sold By:</Col>
-										</Row>
-										<Row>
-											<Col xs={{ offset: 1}}>
-												<span className='h3'>
-													{SELLER}
-												</span>
-											</Col>
-										</Row>
-										<Row>
-											<Col xs={{ offset:1, span: 3}}>
-												{RATING_STARS}
-											</Col>
-										</Row>
+		const BUY_COMPONENT = USER_IS_AUTHENTICATED ? 
+														(PRICE_TYPE === 'fixed' ?
+															BUY_OPTION :
+															BID_OPTION):
+														null;
+		
+		if (ITEM_NOT_FOUND) {
+			return (
+					<div>
+						<h2>
+							NOT FOUND
+						</h2>
+					</div>
+			)
+		} else {
+			return (
+				<div>
+					<Container>
+						
+						<Row>
+							<Col sm={6}>
+								<div>
+									<img className='img-fluid' src='https://images-na.ssl-images-amazon.com/images/I/91t4TlUrzuL._SL1500_.jpg' />
+								</div>
+								<div>
+									{KEYWORDS}
+								</div>
+							</Col>
+							<Col sm={6}>
+								<Row>
+									<Col sm>
+										<h1 className='display-3'>
+										{PAGE_TITLE}
+										</h1>
 									</Col>
-									
-							</Row>
-							{USER_IS_AUTHENTICATED ? 
-								(PRICE_TYPE === 'fixed' ?
-									BUY_COMPONENT :
-									BID_COMPONENT) :
-								null}
-							
-						</Col>
-					</Row>
-				</Container>
-			</div>
-		)
+								</Row>
+								<Row>
+										<Col>
+											<Row>
+												<Col>Sold By:</Col>
+											</Row>
+											<Row>
+												<Col xs={{ offset: 1}}>
+													<span className='h3'>
+														{SELLER}
+													</span>
+												</Col>
+											</Row>
+											<Row>
+												<Col xs={{ offset:1, span: 3}}>
+													{RATING_STARS}
+												</Col>
+											</Row>
+										</Col>
+										
+								</Row>
+
+								{BUY_COMPONENT}
+								
+							</Col>
+						</Row>
+					</Container>
+				</div>
+			)
+		}
 		
 	}
 }
