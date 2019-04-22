@@ -66,7 +66,6 @@ module.exports = (data) => {
 		},
 		
 		/*
-		
 			DESCRIPTION:
 				Gets an application by its unique ID
 				
@@ -78,7 +77,6 @@ module.exports = (data) => {
 			RETURN VALUE:
 				An object representing the application is returned.
 				Null if the ID does not much any in the database.
-		
 		*/
 		getOne: (config) => {
 			
@@ -138,9 +136,20 @@ module.exports = (data) => {
 
 	const STORE = {
 		
-		//	retrieves a single item from the store
+		/*
+			DESCRIPTION:
+				Retrieves an item from the store by its ID
+				
+			PARAMETERS:
+				config = {
+					id: <String> ID of item
+				}
+			
+			RETURN VALUE:
+				An object representing the item is returned.
+				Null if the item does not exist.
+		*/
 		getOne: (config) => {
-			//	config = { id: <ID of item> }
 			
 			const ITEM_ID = config.id;
 			
@@ -160,15 +169,102 @@ module.exports = (data) => {
 			
 		},
 		
-		//	adds an item to the store
-		create: (config) => {
+		/*
+			DESCRIPTION:
+				Updates an item in the store.
+				
+			PARAMETERS:
+				config = {
+					id: <String> ID of item,
+					item: <Object> new value of item
+				}
+			
+			RETURN VALUE:
+				None if successfully updated
+		*/
+		update: (config) => {
+			
+			const ITEM_ID = config.id;
+			const UPDATED_ITEM = config.item;
+			
+			return new Promise((resolve, reject) => {
+				
+				DATABASE
+					.ref('total_items')
+					.child(ITEM_ID)
+					.set(UPDATED_ITEM)
+					.then((result) => {
+						
+						resolve();
+						
+					})
+				
+			})
+			
 			
 			
 		},
 		
-		//	removes an item from the store
+		/*
+			DESCRIPTION:
+				Adds a new items to the store
+				
+			PARAMETERS:
+				config = {
+					data: <Object> item to be added
+				}
+			
+			RETURN VALUE:
+				None if successfully added
+		*/
+		create: (config) => {
+			
+			const ITEM = config.data;
+			
+			return new Promise((resolve, reject) => {
+				
+				DATABASE
+					.ref('total_items')
+					.push(ITEM)
+					.then((itemRef) => {
+						
+						resolve()
+						
+					})
+				
+			})
+			
+		},
+		
+		/*
+			DESCRIPTION:
+				Removes an item from the store by its ID
+				
+			PARAMETERS:
+				config = {
+					id: <String> ID of item
+				}
+			
+			RETURN VALUE:
+				None
+		*/
 		remove: (config) => {
 			
+			const ITEM_ID = config.id;
+			
+			return new Promise((resolve, reject) => {
+				
+				DATABASE
+					.ref('total_items')
+					.child(ITEM_ID)
+					.set(null)
+					.then((result) => {
+						
+						resolve();
+						
+					})
+				
+			})
 			
 		}
 		
