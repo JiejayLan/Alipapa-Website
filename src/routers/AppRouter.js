@@ -1,7 +1,6 @@
 import React from 'react';
 import {Router, Route, Switch} from 'react-router-dom';
 import createHistory from 'history/createBrowserHistory';
-import DashboardPage from '../pages/DashboardPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import LoginPage from '../pages/LoginPage';
 import PrivateRoute from './PrivateRoute';
@@ -30,7 +29,7 @@ const AppRouter = () => (
       <PrivateRoute path="/message" component={SendMessagePage} exact={true}/>
       <PrivateRoute path="/checkmessage" component={CheckMessagePage }/>
       <PublicRoute path="/items/:id" component={ItemPage} exact={true}/>
-      <PrivateRoute path="/editProfile/:id" component={EditProfilePage}/>
+      <PrivateRoute path="/editProfile" component={EditProfilePage}/>
       <PrivateRoute path="/profile" component={ProfilePage}/>
       <Route component={NotFoundPage}/>
     </Switch>

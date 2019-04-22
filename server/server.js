@@ -9,13 +9,18 @@ const ORDER_MANAGER = require('./service/OrderManager')({ firebase });
 let bodyParser = require('body-parser');
 let message_controller= require("./controller/message_controller.js")
 const MESSAGE_SYSTEM = require('./service/messageManager');
+let auth = require('./controller/auth_controller.js')
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(publicPath));
 
-//login a user
-app.post("/login",require('./controller/login_controller.js')({firebase}));
+
+app.post("/profile", require('./controller/profile_controller.js')({firebase}));
+
+app.post("/login",auth.login({firebase}));
+//delete a user
+app.post("/delete",auth.delete({firebase}));
 //a route to control all message request
 app.use("/message",message_controller(MESSAGE_SYSTEM(firebase)));
 app.use('/controllers/items/:id', require('./controller/item_page_controller.js')({ itemManager: ITEM_MANAGER, orderManager: ORDER_MANAGER}));

@@ -20,8 +20,16 @@ class LoginPage extends React.Component {
         "password":this.state.password
       })
       .then( (response)=> {
-        console.log(response.data);
-        this.props.startLogin(response.data); 
+        // alert suspended user
+        if(response.data.status === "suspended"){
+          setTimeout(() => {
+            this.props.startLogin(response.data); 
+          }, 2000);
+          alert("WARNING:Your account has been suspended. You can choose to submit an appeal");
+        }
+        else
+          this.props.startLogin(response.data); 
+        
       })
       .catch(function (error) {
         console.log(error);
