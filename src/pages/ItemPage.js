@@ -24,6 +24,7 @@ class ItemPage extends React.Component {
 			},
 			description: undefined,
 			seller: undefined,
+			inputValue: ''
 		}
 		
 		const URL = '/controllers/items/' +
@@ -52,6 +53,7 @@ class ItemPage extends React.Component {
 							},
 							description: ITEM.description,
 							seller: ITEM.seller,
+							status: ITEM.status
 						}
 						
 						this.setState(newState);
@@ -83,6 +85,67 @@ class ItemPage extends React.Component {
 				
 			})
 		
+		this.handleFixedBuy = this.handleFixedBuy.bind(this);
+		this.handleRangedBuy = this.handleRangedBuy.bind(this);
+		this.handleInputChange = this.handleInputChange.bind(this);
+	}
+	
+	handleFixedBuy(event) {
+		
+		const SELF = this;
+		const ITEM_ID = this.props.match.params.id;
+		const URL = '/controllers/items/' +
+								ITEM_ID + 
+								'/buy';
+		const POST_DATA = {
+			buyer: SELF.props.user,
+			item: {
+				name: SELF.state.title,
+				description: SELF.state.description,
+				seller: SELF.state.seller,
+				price_type: SELF.state.price.type,
+				price: {
+					max: SELF.state.price.max,
+					min: SELF.state.price.min,
+					current: SELF.state.price.current,
+					previous: SELF.state.price.current
+				}
+			}
+		}
+		
+		axios
+			.post(URL, POST_DATA)
+			.then((response) => {
+				
+				switch(response.status) {
+					
+					case 200: {
+						
+						this.setState({
+							... SELF.state,
+							status: 'order'
+						})
+						
+						break;
+					}
+					
+					
+				}
+				
+			})
+		
+	}
+	
+	handleRangedBuy(event) {
+		event.preventDefault();
+
+		
+	}
+	
+	handleInputChange(event) {
+		this.setState({
+			inputValue: event.target.value
+		})
 	}
 
 	formatPrice(price) {
@@ -100,8 +163,6 @@ class ItemPage extends React.Component {
 	}
 	
 	render() {
-	
-		const USER_IS_AUTHENTICATED = this.props.isAuthenticated;
 		
 		const PAGE_TITLE = this.state.title;
 		const PRICE_TYPE = this.state.price.type;
@@ -110,7 +171,10 @@ class ItemPage extends React.Component {
 		const CURRENT_BID = this.formatPrice(this.state.price.current);
 		const KEYWORDS = 'Garbage Can, Trash, Stainless, Step';
 		const SELLER = this.state.seller;
+		
+		const USER_IS_AUTHENTICATED = this.props.isAuthenticated;
 		const ITEM_NOT_FOUND = SELLER === null;
+		const BUYABLE = this.state.status === 'good';
 		
 		//	Sub components
 		const BUY_OPTION = (
@@ -124,7 +188,7 @@ class ItemPage extends React.Component {
 				</Row>
 				<Row className='pt-4'>
 					<Col sm>
-						<button className='btn btn-lg btn-warning col-sm-6'>
+						<button className='btn btn-lg btn-warning col-sm-6' onClick={this.handleFixedBuy} disabled={!BUYABLE}>
 							<span> BUY </span>
 						</button>
 					</Col>
@@ -150,8 +214,8 @@ class ItemPage extends React.Component {
 							$
 						</span>
 					</div>
-					<input className='col-sm-6 input-control h2' />
-					<button className="col-sm-4 no-gutters btn btn-warning h2">
+					<input value={this.state.inputValue} className='col-sm-6 input-control h2' onChange={this.handleInputChange}/>
+					<button className="col-sm-4 no-gutters btn btn-warning h2" onClick={this.handleRangedBuy}>
 						<span className="h2">
 							BID
 						</span>
@@ -230,7 +294,8 @@ class ItemPage extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-	isAuthenticated: !!state.auth.userID
+	isAuthenticated: !!state.auth.userID,
+	user: state.auth
 })
 
 

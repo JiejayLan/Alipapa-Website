@@ -1,12 +1,15 @@
 ;
+const express = require('express');
+const router = express.Router({
+	mergeParams: true
+});
 
 
 module.exports = (data) => {	
 	
-	const ITEM_PAGE_CONTROLLER = (req, res) => {
+	const GET_ITEM_CONTROLLER = (req, res) => {
 		
 		const ITEM_ID = req.params.id;
-		
 		const ITEM_MANAGER = data.itemManager;
 		const STORE = ITEM_MANAGER.store;
 		
@@ -17,7 +20,6 @@ module.exports = (data) => {
 		STORE
 			.getOne(config)
 			.then( (item) => {
-				
 				if (item !== null) {
 					
 					res
@@ -37,6 +39,59 @@ module.exports = (data) => {
 	}
 	
 	
-	return ITEM_PAGE_CONTROLLER;
+	const BUY_ITEM_CONTROLLER = (req, res) => {
+		
+		const ORDER_MANAGER = data.orderManager;
+		const PENDING_ORDERS = ORDER_MANAGER.pending;
+		const ITEM_MANAGER = data.itemManager;
+		const STORE = ITEM_MANAGER.store;
+		const ITEM_ID = req.params.id;
+		const ITEM = req.body.item;
+		const BUYER = req.body.buyer;
+		
+		let updatedItem = ITEM;
+		updatedItem.status = 'order';
+		
+		const UPDATE_ITEM_CONFIG = {
+			id: ITEM_ID,
+			item: req.body.item
+		}
+		
+		//	Change item.status from "good" to "order"
+		STORE
+			.update(UPDATE_ITEM_CONFIG)
+			.then((results) => {
+				
+				const CREATE_PENDING_CONFIG = {
+					data: {
+						buyer: BUYER,
+						itemID: ITEM_ID,
+						price: ITEM.price.current,
+						seller: ITEM.seller,
+						status: 'pending'
+					}
+				}
+				
+				//	Create a pending order
+				PENDING_ORDERS
+					.create(CREATE_PENDING_CONFIG)
+					.then((result) => {
+						
+						res
+							.status(200)
+							.end()
+						
+					})
+				
+			})
+			
+		
+	}
+	
+	
+	router.get('/', GET_ITEM_CONTROLLER);
+	router.post('/buy', BUY_ITEM_CONTROLLER);
+	
+	return router;
 	
 }
