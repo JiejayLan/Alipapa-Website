@@ -1,10 +1,9 @@
-export const viewUser = ( user ) => {
-    return (dispatch, getState) => {
+import {database} from '../firebase/firebase';
 
-        dispatch({
-            type: 'VIEW_USER',
-            user
-        })
+export const viewUser = (users) => {
+    return {
+        type: 'VIEW_USER',
+        users
     }
 };
 
@@ -18,13 +17,10 @@ export const removeUser = (user) => {
     }
 };
 
-export const viewUserApplication = (application) => {
-    return (dispatch, getState) => {
-
-        dispatch({
-            type: 'VIEW_USER_APP',
-            application
-        })
+export const viewUserApplication = (applications) => {
+    return {
+        type: 'VIEW_USER_APP',
+        applications
     }
 };
 
