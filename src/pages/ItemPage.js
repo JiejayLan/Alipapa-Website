@@ -53,7 +53,8 @@ class ItemPage extends React.Component {
 							},
 							description: ITEM.description,
 							seller: ITEM.seller,
-							status: ITEM.status
+							status: ITEM.status,
+							bidEnd: ITEM.bidEnd
 						}
 						
 						this.setState(newState);
@@ -129,16 +130,117 @@ class ItemPage extends React.Component {
 						break;
 					}
 					
-					
 				}
 				
 			})
 		
 	}
 	
-	handleRangedBuy(event) {
-		event.preventDefault();
+	//	Input is a string
+	inputIsFloat(input) {
+		if (input === '')
+			return false;
 
+		let parsed = input.split('.')
+		if (parsed.length > 2)
+			return false;
+		
+		let integral = parsed[0];
+		let integralIsValid = true;
+		for (let i = 0 ; i < integral.length ; i++) {
+			
+			if (isNaN(integral.charAt(i))) {
+				
+				integralIsValid = false;
+				break;
+				
+			}
+			
+		}
+		if (parsed.length === 1)
+			return integralIsValid;
+		
+
+		let fractional = parsed[1];
+		let fractionalIsValid = true;
+		for (let i = 0 ; i < fractional.length ; i++) {
+			
+			if (isNaN(fractional.charAt(i))) {
+				
+				fractionalIsValid = false;
+				break;
+				
+			}
+			
+		}
+		
+		return integralIsValid && fractionalIsValid;
+	}
+	
+	handleRangedBuy(event) {
+		
+		event.preventDefault();
+								
+		const INPUT_VALUE = this.state.inputValue;
+		const INPUT_IS_FLOAT = this.inputIsFloat(INPUT_VALUE);
+		const BID_AMOUNT = parseFloat(INPUT_VALUE);
+		const CURRENT_HIGHEST_BID = this.state.price.current;
+		const MIN_BID = this.state.price.min;
+		const MAX_BID = this.state.price.max;
+		
+		if (INPUT_IS_FLOAT 
+				&& MIN_BID<= BID_AMOUNT 
+				&& BID_AMOUNT <= MAX_BID
+				&& BID_AMOUNT > CURRENT_HIGHEST_BID) {
+			
+			const SELF = this;
+			const ITEM_ID = this.props.match.params.id;
+			const URL = '/controllers/items/' +
+									ITEM_ID + 
+									'/bid';
+			
+			const POST_DATA = {
+				buyer: SELF.props.user,
+				bid: BID_AMOUNT
+			}
+			
+			axios
+				.post(URL, POST_DATA)
+				.then((response) => {
+					
+					//	update state
+					switch(response.status) {
+						
+						case 200: {
+							
+							const ITEM = response.data
+							const NEW_STATE = {
+								title: ITEM.name,
+								price: {
+									type: ITEM.price_type,
+									min: ITEM.price.min,
+									max: ITEM.price.max,
+									current: ITEM.price.current
+								},
+								description: ITEM.description,
+								seller: ITEM.seller,
+								status: ITEM.status
+							}
+							
+							this.setState(NEW_STATE)
+							break;
+						}
+						
+					}
+					
+				})
+
+		} else {
+			
+				//	NOTIFY USER TO FIX INPUT
+				
+		}
+		
 		
 	}
 	
@@ -175,6 +277,7 @@ class ItemPage extends React.Component {
 		const USER_IS_AUTHENTICATED = this.props.isAuthenticated;
 		const ITEM_NOT_FOUND = SELLER === null;
 		const BUYABLE = this.state.status === 'good';
+		const BIDABLE = Date.now() < this.state.bidEnd;
 		
 		//	Sub components
 		const BUY_OPTION = (
@@ -208,26 +311,30 @@ class ItemPage extends React.Component {
 						</span>
 					</Col>
 				</Row>
-				<form className='row pt-4 ml-1'>
-					<div className='col-sm-2 no-gutters bg-secondary text-center h2'>
-						<span className="h2">
-							$
-						</span>
-					</div>
-					<input value={this.state.inputValue} className='col-sm-6 input-control h2' onChange={this.handleInputChange}/>
-					<button className="col-sm-4 no-gutters btn btn-warning h2" onClick={this.handleRangedBuy}>
-						<span className="h2">
-							BID
-						</span>
-					</button>
-				</form>
+				{
+					BIDABLE ?
+						<form className='row pt-4 ml-1'>
+							<div className='col-sm-2 no-gutters bg-secondary text-center h2'>
+								<span className="h2">
+									$
+								</span>
+							</div>
+							<input value={this.state.inputValue} className='col-sm-6 input-control h2' onChange={this.handleInputChange}/>
+							<button className="col-sm-4 no-gutters btn btn-warning h2" onClick={this.handleRangedBuy}>
+								<span className="h2">
+									BID
+								</span>
+							</button>
+						</form>
+					:
+						null
+				}
 			</Container>
 		)
 		
 		const BUY_COMPONENT = USER_IS_AUTHENTICATED ? 
 														(PRICE_TYPE === 'fixed' ?
-															BUY_OPTION :
-															BID_OPTION):
+															BUY_OPTION : BID_OPTION) :
 														null;
 		
 		if (ITEM_NOT_FOUND) {

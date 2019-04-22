@@ -88,9 +88,62 @@ module.exports = (data) => {
 		
 	}
 	
+	const BID_ITEM_CONTROLLER = (req, res) => {
+		
+		const ORDER_MANAGER = data.orderManager;
+		const PENDING_ORDERS = ORDER_MANAGER.pending;
+		const ITEM_MANAGER = data.itemManager;
+		const STORE = ITEM_MANAGER.store;
+		const ITEM_ID = req.params.id;
+		const ITEM = req.body.item;
+		const BUYER = req.body.buyer;
+		
+		const GET_ITEM_CONFIG = {
+			id: ITEM_ID
+		}
+		
+		STORE
+			.getOne(GET_ITEM_CONFIG)
+			.then((item) => {
+				
+				const BID_AMOUNT = req.body.bid;
+				
+				let updatedItem = {
+					... item,
+					price: {
+						min: item.price.min,
+						max: item.price.max, 
+						previous: item.price.current,
+						current: BID_AMOUNT
+					},
+					buyer: BUYER.userID
+				}
+				
+				const UPDATE_ITEM_CONFIG = {
+					id: ITEM_ID,
+					item: updatedItem
+				}
+				
+				STORE
+					.update(UPDATE_ITEM_CONFIG)
+					.then((updatedItem) => {
+						
+						res
+							.status(200)
+							.json(updatedItem);
+						
+					})
+				
+			})
+		
+		
+		
+	}
+	
 	
 	router.get('/', GET_ITEM_CONTROLLER);
 	router.post('/buy', BUY_ITEM_CONTROLLER);
+	router.post('/bid', BID_ITEM_CONTROLLER);
 	
 	return router;
 	
