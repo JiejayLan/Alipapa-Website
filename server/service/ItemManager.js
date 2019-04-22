@@ -180,7 +180,7 @@ module.exports = (data) => {
 				}
 			
 			RETURN VALUE:
-				None if successfully updated
+				Returns the updated item
 		*/
 		update: (config) => {
 			
@@ -195,7 +195,7 @@ module.exports = (data) => {
 					.set(UPDATED_ITEM)
 					.then((result) => {
 						
-						resolve();
+						resolve(UPDATED_ITEM);
 						
 					})
 				
