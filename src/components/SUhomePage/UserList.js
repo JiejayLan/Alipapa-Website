@@ -16,7 +16,6 @@ class UserList extends React.Component {
             this.props.viewUser(resp.data);
             
             this.setState({...resp.data});
-            console.log('state:', this.state);
 
         }).catch( err =>{
             console.log(err);
@@ -33,8 +32,6 @@ class UserList extends React.Component {
             };
             OUlist.push(this.state[OUkeys[i]]);
         }
-
-        console.log('OUlist',OUlist);
 
         let jsxOUlist = OUlist.map( (user) =>
             <div className='col-9 mx-auto col-md-6 col-lg-3 my-3 rounded float-left' key={user.username}>

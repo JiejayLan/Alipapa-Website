@@ -1,10 +1,11 @@
 
 const SUmanagementReducer = (state = [], action) => {
     switch (action.type){
-        
+
         case 'VIEW_USER':{
             console.log('view user', action.users);
-            return action.users;}
+            return action.users;
+        }
 
         case 'REMOVE_USER':
             console.log('remove user', action.user);
@@ -12,7 +13,8 @@ const SUmanagementReducer = (state = [], action) => {
 
         case 'VIEW_USER_APP':{
             console.log('view user application', action.applications);
-            return action.applications;}
+            return action.applications;
+        }
 
         case 'APP_USER_APP':
             console.log('approve user application', action.application);
@@ -22,9 +24,10 @@ const SUmanagementReducer = (state = [], action) => {
             console.log('deny user application', action.application);
             break;
 
-        case 'VIEW_ITEM_APP':
+        case 'VIEW_ITEM_APP':{
             console.log('view item application', action.itemAppli);
-            break;
+            return action.itemAppli;
+        }
 
         case 'APP_ITEM_APP':
             console.log('approve item application', action.itemAppli);

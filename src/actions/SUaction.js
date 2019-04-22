@@ -45,12 +45,9 @@ export const DenyUserApplication = (application) => {
 };
 
 export const viewItemApplication = (itemAppli) => {
-    return (dispatch, getState) =>{
-
-        dispatch({
+    return {
             type: 'VIEW_ITEM_APP',
             itemAppli
-        })
     }
 }
 

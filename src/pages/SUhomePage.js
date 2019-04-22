@@ -4,6 +4,7 @@ import * as firebase from "firebase";
 import {database,storage} from '../firebase/firebase';
 import UserList from '../components/SUhomePage/UserList';
 import UserApplicationList from '../components/SUhomePage/UserApplicationList';
+import ItemApplicationList from '../components/SUhomePage/ItemApplicationList';
 import axios from 'axios';
 import { viewUser, removeUser, 
   viewUserApplication, ApproveUserApplication, DenyUserApplication,
@@ -54,28 +55,12 @@ class SUhomePage extends React.Component {
         <div className='clearfix'></div>
         <hr />
         <h2 className="text-center">New Item Application</h2>
+        <ItemApplicationList />
+        <div className='clearfix'></div>
       </div>
     )
   }
 }
 
-/*const mapStateToProps = (state) => {
-  return {
-    projects: state.SUviewData.projects
-  }
-};*/
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    removeUser: (user) => dispatch( removeUser(user)),
-
-    ApproveUserApplication: (application) => dispatch(
-      ApproveUserApplication(application)
-    ),
-    DenyUserApplication: (application) => dispatch(
-      DenyUserApplication(application)
-    )
-  }
-}
-
-export default connect(null, mapDispatchToProps) (SUhomePage);
+export default connect() (SUhomePage);
