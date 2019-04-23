@@ -10,10 +10,12 @@ let bodyParser = require('body-parser');
 let message_controller= require("./controller/message_controller.js")
 const MESSAGE_SYSTEM = require('./service/messageManager');
 let auth = require('./controller/auth_controller.js')
+const AUCTION_CHECKER = require('./AuctionCheck')({ itemManager: ITEM_MANAGER, orderManager: ORDER_MANAGER});
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(publicPath));
+AUCTION_CHECKER.run();
 
 
 app.post("/profile", require('./controller/profile_controller.js')({firebase}));
