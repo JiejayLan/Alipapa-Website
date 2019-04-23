@@ -24,23 +24,53 @@ export const viewUserApplication = (applications) => {
     }
 };
 
-export const ApproveUserApplication = (application) => {
+export const ApproveUserApplication = (application={}) => {
     return (dispatch, getState) => {
+        const key = application.uid;
+        let {
+            address = '',
+            credit_card = '',
+            password = '', 
+            phone_number = '',
+            username = '' 
+        } = application;
 
-        dispatch({
-            type: 'APP_USER_APP',
-            application
-        })
-    }
+        const newUser = {address, credit_card, password, phone_number, status: 'newUser', username};
+
+        database.ref('user_application').child(key).remove().then(function() {
+            console.log("Remove succeeded.")
+          })
+          .catch(function(error) {
+            console.log("Remove failed: " + error.message)
+          });
+
+        return database.ref('users').push(newUser).then((ref) => {
+            dispatch({
+              type: 'APP_USER_APP',
+              application: {
+              userID: key,
+              ...newUser
+              }
+            });
+        });
+    };
 };
 
 export const DenyUserApplication = (application) => {
     return (dispatch, getState) => {
+        const key = application;
 
-        dispatch({
+        database.ref('user_application').child(key).remove().then(function() {
+            console.log("Remove succeeded.")
+          })
+          .catch(function(error) {
+            console.log("Remove failed: " + error.message)
+          });
+        
+        /*dispatch({
             type: 'DENY_USER_APP',
             application
-        })
+        })*/
     }
 };
 

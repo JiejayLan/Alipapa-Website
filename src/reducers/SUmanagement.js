@@ -16,9 +16,13 @@ const SUmanagementReducer = (state = [], action) => {
             return action.applications;
         }
 
-        case 'APP_USER_APP':
+        case 'APP_USER_APP':{
             console.log('approve user application', action.application);
-            break;
+            return [
+                ...state,
+                action.application
+            ];
+        }
 
         case 'DENY_USER_APP':
             console.log('deny user application', action.application);

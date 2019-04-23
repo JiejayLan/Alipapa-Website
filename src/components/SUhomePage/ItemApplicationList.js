@@ -27,12 +27,12 @@ class ItemApplicationList extends React.Component {
         let Itemlist = [];
 
         for(let i = 0; i < Itemkeys.length; i++){
-            //this.state[Itemkeys[i]].key = generate(10);
+            this.state[Itemkeys[i]].uid = Itemkeys[i];
             Itemlist.push(this.state[Itemkeys[i]]);
         }
 
         let jsxOUlist = Itemlist.map( (application) =>
-            <div className='col-9 mx-auto col-md-6 col-lg-3 my-3 rounded float-left'>
+            <div className='col-9 mx-auto col-md-6 col-lg-3 my-3 rounded float-left' key={application.uid}>
             <div className='card'>
                 <div className='card-content'>
                     <span className='card-title'>Item Application:</span>

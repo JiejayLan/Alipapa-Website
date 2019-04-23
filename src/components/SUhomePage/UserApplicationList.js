@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import * as firebase from "firebase";
-import { viewUserApplication } from '../../actions/SUaction';
+import { viewUserApplication, ApproveUserApplication, DenyUserApplication } from '../../actions/SUaction';
 import axios from 'axios';
 
 class UserApplicationList extends React.Component {
@@ -20,18 +20,41 @@ class UserApplicationList extends React.Component {
         }).catch( err =>{
             console.log(err);
         });
-    }
+    };
+
+    approveHandler = (uid) => {
+        if (confirm("Are you sure to approve?")){
+            this.props.ApproveUserApplication(this.state[uid]); 
+
+            delete this.state[uid];
+
+            let newState = this.state;
+            this.setState({...newState});
+        }
+    };
+
+    rejectHandler = (uid) => {
+        if (confirm("Are you sure to reject?")){
+            this.props.DenyUserApplication(uid);
+
+            delete this.state[uid];
+
+            let newState = this.state;
+            this.setState({...newState});
+        }
+    };
 
     renderApplicationList = () => {
         const APPkeys = Object.keys(this.state);
         let APPlist = [];
 
         for(let i = 0; i < APPkeys.length; i++){
+            this.state[APPkeys[i]].uid = APPkeys[i];
             APPlist.push(this.state[APPkeys[i]]);
         }
 
         let jsxOUlist = APPlist.map( (application) =>
-            <div className='col-9 mx-auto col-md-6 col-lg-3 my-3 rounded float-left' key={application.username}>
+            <div className='col-9 mx-auto col-md-6 col-lg-3 my-3 rounded float-left' key={application.uid}>
             <div className='card'>
                 <div className='card-content'>
                     <span className='card-title'>New Application!</span>
@@ -42,8 +65,8 @@ class UserApplicationList extends React.Component {
                     {application.phone_number}<br />
                 </div>
                 <div className='card-action'>
-                    <button>approve</button>
-                    <button>reject</button>
+                    <button onClick={()=>this.approveHandler(application.uid)}>approve</button>
+                    <button onClick={()=>this.rejectHandler(application.uid)}>reject</button>
                 </div>
             </div>
             </div>
@@ -71,7 +94,9 @@ class UserApplicationList extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        viewUserApplication: (application) => dispatch( viewUserApplication(application))
+        viewUserApplication: (application) => dispatch( viewUserApplication(application)),
+        ApproveUserApplication: (application) => dispatch( ApproveUserApplication(application)),
+        DenyUserApplication: (application) => dispatch( DenyUserApplication(application))
     };
 };
 
