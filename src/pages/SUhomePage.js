@@ -2,6 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as firebase from "firebase";
 import {database,storage} from '../firebase/firebase';
+import UserList from '../components/SUhomePage/UserList';
+import UserApplicationList from '../components/SUhomePage/UserApplicationList';
+import ItemApplicationList from '../components/SUhomePage/ItemApplicationList';
+import axios from 'axios';
+import { viewUser, removeUser, 
+  viewUserApplication, ApproveUserApplication, DenyUserApplication,
+  viewItemApplication, ApproveItemApplication, DenyItemApplication}
+  from '../actions/SUaction';
+
 
 class SUhomePage extends React.Component {
   constructor(){
@@ -19,40 +28,6 @@ class SUhomePage extends React.Component {
         searchkey : ''
     };
   }
-
-  componentDidMount() {
-
-    let rootRef = firebase.database().ref("users");
-    let rootRef2 = firebase.database().ref("usersApplication");
-    
-      rootRef.on("value", snapshot => {
-
-        // Store all the itemIDs in array
-        let users = snapshot.val();
-
-        // Store array into state
-        let addinstate = {...this.state.OUinfo};
-        addinstate = {...users};
-        this.setState({OUinfo:addinstate});
-        
-        //checking 
-        //console.log(this.state);
-    });
-    
-      rootRef2.on("value", snapshot => {
-
-        // Store all the itemIDs in array
-        let userApp = snapshot.val();
-
-        // Store array into state
-        let addinstate = {...this.state.OUapplication};
-        addinstate = {...userApp};
-        this.setState({OUapplication:addinstate});
-        
-        //checking 
-        console.log(this.state);
-    });
-  }
   
     render() {
 
@@ -63,41 +38,6 @@ class SUhomePage extends React.Component {
         border: '5px',
         textAlign: 'center'
       }
-      
-      //get our user info out, and and make them into a JSX array
-      let OUkeys = Object.keys(this.state.OUinfo);
-      let OUlist = [];
-
-      for(let i = 0; i < OUkeys.length; i++){
-        OUlist.push(this.state.OUinfo[OUkeys[i]]);
-      }
-
-      let jsxOUlist = OUlist.map( (user) =>
-        <div>
-          <ol>{user.username}
-          </ol>
-          <button>warn</button>
-          <button>remove</button>
-        </div>
-      );
-
-      //get our user application info out, and and make them into a JSX array
-      let OUAppkeys = Object.keys(this.state.OUapplication);
-      let OUApplist = [];
-
-      for(let i = 0; i < OUAppkeys.length; i++){
-        OUApplist.push(this.state.OUapplication[OUAppkeys[i]]);
-      }
-
-      let jsxOUApplist = OUApplist.map( (userappli) =>
-        <div>
-          <ol>{userappli.name}
-          </ol>
-          <button>Approve</button>
-          <button>Bye</button>
-        </div>
-      );
-
 
     return (
       <div style={divstyle}>
@@ -105,17 +45,22 @@ class SUhomePage extends React.Component {
         <br />
         <hr />
         <h2 className="text-center">User Information</h2>
-        <div>{jsxOUlist}</div>
+        <UserList />
         <br />
+        <div className='clearfix'></div>
         <hr />
         <h2 className="text-center">New User Application</h2>
-        <div>{jsxOUApplist}</div>
+        <UserApplicationList />
         <br />
+        <div className='clearfix'></div>
         <hr />
         <h2 className="text-center">New Item Application</h2>
+        <ItemApplicationList />
+        <div className='clearfix'></div>
       </div>
     )
   }
 }
 
-export default SUhomePage;
+
+export default connect() (SUhomePage);

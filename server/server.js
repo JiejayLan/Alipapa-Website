@@ -12,6 +12,8 @@ const MESSAGE_SYSTEM = require('./service/messageManager');
 let auth = require('./controller/auth_controller.js')
 const AUCTION_CHECKER = require('./AuctionCheck')({ itemManager: ITEM_MANAGER, orderManager: ORDER_MANAGER});
 
+//const SU_MANAGER = require('./service/SUmanager')({firebase});
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(publicPath));
@@ -26,6 +28,8 @@ app.post("/delete",auth.delete({firebase}));
 //a route to control all message request
 app.use("/message",message_controller(MESSAGE_SYSTEM(firebase)));
 app.use('/controllers/items/:id', require('./controller/item_page_controller.js')({ itemManager: ITEM_MANAGER, orderManager: ORDER_MANAGER}));
+
+app.post('/suhome', require('./controller/SUmanage_controller')({firebase}) );
 
 //	test endpoints
 app.post('/test', require('./controller/test.js')( {itemManager: ITEM_MANAGER} ));

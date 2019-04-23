@@ -6,6 +6,7 @@ import LoginPage from '../pages/LoginPage';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 import LoginRoute from './LoginRoute';
+import SuperRoute from './SuperRoute';
 import sellingForm from '../pages/sellItemForm';
 import ItemPage from '../pages/ItemPage';
 import HomePage from '../pages/HomePage';
@@ -24,7 +25,8 @@ const AppRouter = () => (
       <PublicRoute path="/register" component={RegisterPage}/>
       <LoginRoute path="/login" component={LoginPage} exact={true}/>
       <PublicRoute path="/" component={HomePage} exact={true}/>
-      <PrivateRoute path="/suhome" component={SUHomePage} exact={true}/>
+      {/*<SuperRoute path="/suhome" component={SUHomePage}/>*/}
+      <PrivateRoute path="/suhome" component={SUHomePage}/>
       <PrivateRoute path="/sellnewitem" component={sellingForm} exact={true}/>
       <PrivateRoute path="/message" component={SendMessagePage} exact={true}/>
       <PrivateRoute path="/checkmessage" component={CheckMessagePage }/>
