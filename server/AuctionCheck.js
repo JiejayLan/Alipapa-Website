@@ -59,13 +59,6 @@ module.exports = (data) => {
 											
 											PENDING_ORDERS
 												.create(CREATE_PENDING_CONFIG)
-												.then((result) => {
-													
-													res
-														.status(200)
-														.end()
-													
-												})
 											
 										}
 										

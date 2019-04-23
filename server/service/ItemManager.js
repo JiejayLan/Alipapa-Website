@@ -289,7 +289,8 @@ module.exports = (data) => {
 					.ref('total_items')
 					.orderByChild('price_type')
 					.equalTo('ranged')
-					.once('value', (snapshot) => {
+					.once('value')
+					.then((snapshot) => {
 						
 						let values = [];
 						snapshot.forEach((childSnapshot) => {
