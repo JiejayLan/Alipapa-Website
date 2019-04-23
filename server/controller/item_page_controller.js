@@ -54,7 +54,7 @@ module.exports = (data) => {
 		
 		const UPDATE_ITEM_CONFIG = {
 			id: ITEM_ID,
-			item: req.body.item
+			item: updatedItem
 		}
 		
 		//	Change item.status from "good" to "order"
@@ -116,7 +116,7 @@ module.exports = (data) => {
 						previous: item.price.current,
 						current: BID_AMOUNT
 					},
-					buyer: BUYER.userID
+					buyer: BUYER
 				}
 				
 				const UPDATE_ITEM_CONFIG = {
