@@ -31,7 +31,6 @@ module.exports = (data) => {
 		create: (itemData) => {
 			//	TODO
 			//		Throw an error if the data is not valid
-			console.log(itemData.keywords)
 			const ITEM_TITLE = itemData.title;
 			const KEYWORDS = itemData.keywords.reduce((prev, current) => {
 				prev[current] = true
@@ -266,8 +265,54 @@ module.exports = (data) => {
 				
 			})
 			
-		}
+		},
 		
+		/*
+			DESCRIPTION:
+				Get ranged price items with status set to "good"
+				
+			PARAMETERS:
+			
+			RETURN VALUE:
+				An array of <Object> of the form:
+				{
+					id: <String> unique ID of item,
+					data: <Object> object representing the item
+				}
+				
+		*/
+		getRangedPriceItems: () => {
+			
+			return new Promise((resolve, reject) => {
+				
+				DATABASE
+					.ref('total_items')
+					.orderByChild('price_type')
+					.equalTo('ranged')
+					.once('value', (snapshot) => {
+						
+						let values = [];
+						snapshot.forEach((childSnapshot) => {
+							
+							if (childSnapshot.val().status === 'good') {
+								
+								values.push({
+									id: childSnapshot.key,
+									data: childSnapshot.val()
+								})
+								
+							}
+							
+						})
+						
+						resolve(values);
+						
+					})
+				
+			})
+			
+			
+		}
 		
 	}
 
