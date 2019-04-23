@@ -5,14 +5,17 @@ const publicPath = path.join(__dirname, '..', 'public');
 const port = process.env.PORT || 3000;
 const firebase = require("./firebase");
 const ITEM_MANAGER = require('./service/ItemManager')({ firebase });
+const ORDER_MANAGER = require('./service/OrderManager')({ firebase });
 let bodyParser = require('body-parser');
 let message_controller= require("./controller/message_controller.js")
 const MESSAGE_SYSTEM = require('./service/messageManager');
 let auth = require('./controller/auth_controller.js')
+const AUCTION_CHECKER = require('./AuctionCheck')({ itemManager: ITEM_MANAGER, orderManager: ORDER_MANAGER});
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(publicPath));
+AUCTION_CHECKER.run();
 
 
 app.post("/profile", require('./controller/profile_controller.js')({firebase}));
@@ -22,7 +25,7 @@ app.post("/login",auth.login({firebase}));
 app.post("/delete",auth.delete({firebase}));
 //a route to control all message request
 app.use("/message",message_controller(MESSAGE_SYSTEM(firebase)));
-app.get('/controllers/items/:id', require('./controller/item_page_controller.js')({ itemManager: ITEM_MANAGER }));
+app.use('/controllers/items/:id', require('./controller/item_page_controller.js')({ itemManager: ITEM_MANAGER, orderManager: ORDER_MANAGER}));
 
 //	test endpoints
 app.post('/test', require('./controller/test.js')( {itemManager: ITEM_MANAGER} ));
