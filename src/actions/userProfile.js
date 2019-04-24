@@ -18,19 +18,3 @@ export const startEditProfile = (id, updates) => {
     });
   };
 };
-
-export const setProfile = (profile) => ({
-  type: 'SET_PROFILE',
-  profile
-});
-
-export const startSetProfile = () => {
-  return (dispatch, getState) => {
-    const uid = getState().auth.userID;
-    console.log(uid);
-    return database.ref(`users/${uid}`).once('value').then((snapshot) => {
-      const profile = snapshot.val();
-      dispatch(setProfile(profile));
-    });
-  }
-};

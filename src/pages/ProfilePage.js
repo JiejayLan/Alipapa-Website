@@ -8,14 +8,12 @@ class ProfilePage extends React.Component {
     super(props);
 
     this.state = {
-      address: '',
-      phone_number: '',
-      username: '',
-      password: '',
-      credit_card: ''
+      address: props.auth.address,
+      phone_number: props.auth.phone_number,
+      username: props.auth.username,
+      password: props.auth.password,
+      credit_card: props.auth.credit_card
     };
-
-    console.log(props.auth);
  }
 
   render() {
@@ -48,4 +46,10 @@ class ProfilePage extends React.Component {
   }
 }
 
-export default connect(undefined)(ProfilePage);
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth
+  };
+};
+
+export default connect(mapStateToProps)(ProfilePage);
