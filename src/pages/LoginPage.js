@@ -29,7 +29,6 @@ class LoginPage extends React.Component {
         }
         else
           this.props.startLogin(response.data); 
-        
       })
       .catch(function (error) {
         console.log(error);
@@ -69,9 +68,14 @@ class LoginPage extends React.Component {
     
   }
 
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth
+  }
+};
 
 const mapDispatchToProps = (dispatch) => ({
   startLogin: (userData) => dispatch(login(userData))
 });
 
-export default connect(undefined, mapDispatchToProps)(LoginPage);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

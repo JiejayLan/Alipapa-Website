@@ -6,7 +6,7 @@ module.exports=(data)=>{
       let USERS = snapshot.val();
       let userID ="test";
       for(let id in USERS){
-        if(USERS[id]["username"]===req.body.username && USERS[id]["password"] === req.body.password){
+        if(USERS[id]===req.body.userID){
           userID = id;
           break;
         }              

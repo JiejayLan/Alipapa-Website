@@ -11,7 +11,10 @@ export const Header = ({startLogout,isAuthenticated,status,userID}={}) => {
       <div className="header__content">
         <Link className="header__title" to="/">
           <h1>Alipapa</h1>
-        </Link>     
+        </Link> 
+        <Link to="/profile">
+          <h1>profile</h1>
+        </Link>    
         <button className="button button--link" onClick={()=>startLogout({status,userID})}>Logout</button>
       </div>
     </div>

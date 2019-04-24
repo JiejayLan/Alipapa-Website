@@ -10,7 +10,7 @@ import SUmanagementReducer from '../reducers/SUmanagement';
 //make the redux data persist
 const persistConfig = {
   key: 'root',
-  storage,
+  storage
 }
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
