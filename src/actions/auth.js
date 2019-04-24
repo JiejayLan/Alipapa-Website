@@ -9,7 +9,8 @@ export const login = (
       userID="",
       status="",
       username="",
-      password=""
+      password="",
+      credit_card=""
     } = {}
   ) => {
     return ({
@@ -21,7 +22,8 @@ export const login = (
       userID,
       status,
       username,
-      password
+      password,
+      credit_card
     }
   })};
 

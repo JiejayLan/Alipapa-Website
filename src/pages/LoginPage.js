@@ -68,14 +68,9 @@ class LoginPage extends React.Component {
     
   }
 
-const mapStateToProps = (state) => {
-  return {
-    auth: state.auth
-  }
-};
 
 const mapDispatchToProps = (dispatch) => ({
   startLogin: (userData) => dispatch(login(userData))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
+export default connect(undefined, mapDispatchToProps)(LoginPage);
