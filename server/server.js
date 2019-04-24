@@ -20,11 +20,15 @@ app.use(express.static(publicPath));
 AUCTION_CHECKER.run();
 
 
-app.post("/profile", require('./controller/profile_controller.js')({firebase}));
 
+//login a user
 app.post("/login",auth.login({firebase}));
 //delete a user
 app.post("/delete",auth.delete({firebase}));
+
+//retrieve user profile
+app.post("/profile", require('./controller/profile_controller.js')({firebase}));
+
 //a route to control all message request
 app.use("/message",message_controller(MESSAGE_SYSTEM(firebase)));
 app.use('/controllers/items/:id', require('./controller/item_page_controller.js')({ itemManager: ITEM_MANAGER, orderManager: ORDER_MANAGER}));

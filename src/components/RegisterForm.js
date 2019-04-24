@@ -3,13 +3,13 @@ import React from 'react';
 export default class RegisterForm extends React.Component {
   constructor(props){
     super(props);
-    //may need to change props.application to props.profile
+    //figure out why props.profile is not displaying
     this.state={
-      username: props.application ? props.application.username : '',
-      password: props.application ? props.application.password : '',
-      credit_card: props.application ? props.application.credit_card : '',
-      address: props.application ? props.application.address : '',
-      phone_number: props.application ? props.application.phone_number : ''
+      username: props.profile ? props.profile.username : '',
+      password: props.profile ? props.profile.password : '',
+      credit_card: props.profile ? props.profile.credit_card : '',
+      address: props.profile ? props.profile.address : '',
+      phone_number: props.profile ? props.profile.phone_number : ''
     };
   }
 

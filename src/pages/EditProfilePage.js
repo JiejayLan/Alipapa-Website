@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import RegisterForm from '../components/RegisterForm';
 import {startEditProfile} from '../actions/userProfile';
 
+//retrieve data from firebase
 const EditProfilePage = (props) => {
   return (
     <div>
