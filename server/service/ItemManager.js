@@ -141,17 +141,58 @@ module.exports = (data) => {
 				
 			PARAMETERS:
 				config = {
-					id: <String> ID of item
+					id: <String> ID of item,
+					sellerInfo: <boolean>
 				}
 			
 			RETURN VALUE:
-				An object representing the item is returned.
-				Null if the item does not exist.
+				If:
+					(1) sellerInfo = false, returns an <Object> representing
+							the item.
+					(2) sellerInfo = true, returns <Result> where
+							<Result> = {
+								item: <Object> representing item,
+								seller: <Object> representing seller
+							}
 		*/
 		getOne: (config) => {
 			
 			const ITEM_ID = config.id;
+			const GET_SELLER_INFO = config.sellerInfo;
 			
+			return new Promise((resolve, reject) => {
+
+				DATABASE
+					.ref('total_items')
+					.child(ITEM_ID)
+					.once('value')
+					.then((snapshot) => {
+						
+						let item = snapshot.val();
+						if (item === null || !GET_SELLER_INFO)
+							resolve(item);
+						
+						const SELLER_ID = item.seller;
+						
+						DATABASE
+							.ref('users')
+							.child(SELLER_ID)
+							.once('value')
+							.then((snapshot) => {
+								
+								let seller = snapshot.val();
+								
+								resolve({
+									item: item,
+									seller: seller
+								})
+								
+							})
+						
+						
+					})
+
+			})				
 			const ITEM = DATABASE
 										.ref('total_items')
 										.child(ITEM_ID)
@@ -163,6 +204,8 @@ module.exports = (data) => {
 											return item;
 											
 										})
+										
+										
 			
 			return ITEM;
 			
