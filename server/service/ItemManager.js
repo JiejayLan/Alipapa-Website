@@ -169,26 +169,31 @@ module.exports = (data) => {
 					.then((snapshot) => {
 						
 						let item = snapshot.val();
-						if (item === null || !GET_SELLER_INFO)
+						
+						if (item === null || !GET_SELLER_INFO) {
+							
 							resolve(item);
-						
-						const SELLER_ID = item.seller;
-						
-						DATABASE
-							.ref('users')
-							.child(SELLER_ID)
-							.once('value')
-							.then((snapshot) => {
-								
-								let seller = snapshot.val();
-								
-								resolve({
-									item: item,
-									seller: seller
+							
+						} else {
+							
+							const SELLER_ID = item.seller;
+							
+							DATABASE
+								.ref('users')
+								.child(SELLER_ID)
+								.once('value')
+								.then((snapshot) => {
+									
+									let seller = snapshot.val();
+									
+									resolve({
+										item: item,
+										seller: seller
+									})
+									
 								})
 								
-							})
-						
+						}
 						
 					})
 

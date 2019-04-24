@@ -317,7 +317,7 @@ class ItemPage extends React.Component {
 		const DESCRIPTION = this.state.description;
 		
 		const USER_IS_AUTHENTICATED = this.props.isAuthenticated;
-		const ITEM_NOT_FOUND = SELLER === null;
+		const ITEM_NOT_FOUND = SELLER ? false : true;
 		const BUYABLE = this.state.status === 'good';
 		const BIDABLE = Date.now() < this.state.bidEnd;
 		
