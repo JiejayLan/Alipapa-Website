@@ -13,8 +13,8 @@ module.exports.login=(data)=>{
               break;
             }              
           }
-          let {address ,phone_number,user_type,username,status}={...USERS[userID]};
-          res.json({address ,phone_number,user_type,username,userID,status}); 
+          let {address ,phone_number,user_type,username, password, status}={...USERS[userID]};
+          res.json({address ,phone_number,user_type,username, password, userID,status}); 
       })
     }
 }

@@ -12,7 +12,7 @@ export const editProfile = (id, updates) => ({
 
 export const startEditProfile = (id, updates) => {
   return (dispatch, getState) => {
-    const uid = getState().auth.uid;
+    const uid = getState().auth.userID;
     return database.ref(`users/${uid}`).update(updates).then(() => {
       dispatch(editProfile(id, updates));
     });
@@ -26,7 +26,8 @@ export const setProfile = (profile) => ({
 
 export const startSetProfile = () => {
   return (dispatch, getState) => {
-    const uid = getState().auth.uid;
+    const uid = getState().auth.userID;
+    console.log(uid);
     return database.ref(`users/${uid}`).once('value').then((snapshot) => {
       const profile = snapshot.val();
       dispatch(setProfile(profile));

@@ -8,7 +8,8 @@ export const login = (
       user_type = "", 
       userID="",
       status="",
-      username=""
+      username="",
+      password=""
     } = {}
   ) => {
     return ({
@@ -19,7 +20,8 @@ export const login = (
       user_type,
       userID,
       status,
-      username
+      username,
+      password
     }
   })};
 

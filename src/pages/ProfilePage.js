@@ -1,35 +1,21 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {setProfile} from '../actions/userProfile';
-import axios from 'axios';
 
 class ProfilePage extends React.Component {
   
   constructor(props) {
     super(props);
 
-    //figure out a way to do it dynamically 
     this.state = {
-      address:  '',
+      address: '',
       phone_number: '',
-      username: 'SU',
-      password: '123',
+      username: '',
+      password: '',
       credit_card: ''
     };
 
-    axios.post('/profile', {
-      "username": this.state.username,
-      "password": this.state.password 
-    })
-    .then((response) => {
-      console.log(response.data);
-      this.props.setProfile(response.data);
-      this.setState(() => ({...response.data}));
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+    console.log(props.auth);
  }
 
   render() {
@@ -62,8 +48,4 @@ class ProfilePage extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  setProfile: (profile) => dispatch(setProfile(profile))
-});
-
-export default connect(undefined, mapDispatchToProps)(ProfilePage);
+export default connect(undefined)(ProfilePage);
