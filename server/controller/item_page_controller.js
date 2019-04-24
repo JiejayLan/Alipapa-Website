@@ -14,23 +14,24 @@ module.exports = (data) => {
 		const STORE = ITEM_MANAGER.store;
 		
 		const config = {
-			id: ITEM_ID
+			id: ITEM_ID,
+			sellerInfo: true
 		}
 		
 		STORE
 			.getOne(config)
-			.then( (item) => {
-				if (item !== null) {
+			.then( (result) => {
+				if (result !== null) {
 					
 					res
 						.status(200)
-						.json(item)
+						.json(result)
 						
 				} else {
 					
 					res
 						.status(204)
-						.json(item)
+						.json(result)
 					
 				}
 				
