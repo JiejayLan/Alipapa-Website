@@ -5,6 +5,7 @@ import thunk from 'redux-thunk';
 import authReducer from '../reducers/auth';
 import applicationReducer from '../reducers/application';
 import userProfileReducer from '../reducers/userProfile';
+import SUmanagementReducer from '../reducers/SUmanagement';
 
 //make the redux data persist
 const persistConfig = {
@@ -20,7 +21,8 @@ export default () => {
               combineReducers({
               application: applicationReducer,
               auth: persistedReducer,
-              userProfile: userProfileReducer
+              userProfile: userProfileReducer,
+              SUmanagement: SUmanagementReducer
   }),
   composeEnhancers(applyMiddleware(thunk)))
   let persistor = persistStore(store)

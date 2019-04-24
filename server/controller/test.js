@@ -3,20 +3,34 @@
 
 module.exports = (data) => {	
 	
+	const ITEM_MANAGER = data.itemManager;
+	const APPLICATIONS = ITEM_MANAGER.applications;
+	
 	return (req, res) => {
 		
-		const ITEM_MANAGER = data.itemManager;
-		const APPLICATIONS = ITEM_MANAGER.applications;
-		const NEW_ITEM_INFO = req.body;	
+		let config = {
+			
+			id: req.body.id
+			
+		}
 		
-		
+		/*
 		APPLICATIONS
-			.create(NEW_ITEM_INFO)
+			.create(req.body)
 			.then((result) => {
 				
-				console.log('RESULT:' + result);
-				
 			})
+			*/
+	
+		
+		APPLICATIONS
+			.getMultiple(config)
+			.then((applications) => {
+				console.log(applications)
+				console.log("SUCCESS:" + applications.length);
+			})
+		
+		
 		
 	}
 	
