@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import firebase from 'firebase';
 import axios from 'axios';
-
+import ReviewStars from '../components/ReviewStars.js';
 
 
 class ItemPage extends React.Component {
@@ -25,6 +25,7 @@ class ItemPage extends React.Component {
 			keywords: undefined,
 			description: undefined,
 			seller: undefined,
+			sellerRating: undefined,
 			status: undefined,
 			bidEnd: undefined,
 			inputValue: '',
@@ -45,7 +46,8 @@ class ItemPage extends React.Component {
 					case 200: {
 						
 						//	found item
-						const ITEM = response.data
+						const ITEM = response.data.item;
+						const SELLER = response.data.seller;
 						
 						const newState = {
 							title: ITEM.name,
@@ -58,6 +60,7 @@ class ItemPage extends React.Component {
 							keywords: ITEM.keywords,
 							description: ITEM.description,
 							seller: ITEM.seller,
+							sellerRating: SELLER.rating,
 							status: ITEM.status,
 							bidEnd: ITEM.bidEnd,
 							inputValue: '',
@@ -84,6 +87,7 @@ class ItemPage extends React.Component {
 							keywords: undefined,
 							description: undefined,
 							seller: undefined,
+							sellerRating: undefined,
 							status: undefined,
 							bidEnd: undefined,
 							inputValue: '',
@@ -308,8 +312,8 @@ class ItemPage extends React.Component {
 		const CURRENT_BID = this.formatPrice(this.state.price.current);
 		const MESSAGE_TEXT = this.state.message.text;
 		const MESSAGE_CLASS = this.state.message.className;
-		
 		const SELLER = this.state.seller;
+		const SELLER_RATING = this.state.sellerRating || 0;
 		const DESCRIPTION = this.state.description;
 		
 		const USER_IS_AUTHENTICATED = this.props.isAuthenticated;
@@ -440,7 +444,10 @@ class ItemPage extends React.Component {
 											</Row>
 											<Row>
 												<Col xs={{ offset:1, span: 3}}>
-													{RATING_STARS}
+													<ReviewStars
+														rating={SELLER_RATING}
+														className='img-fluid'
+													/>
 												</Col>
 											</Row>
 										</Col>
