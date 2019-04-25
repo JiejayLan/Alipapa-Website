@@ -7,13 +7,31 @@ export const viewUser = (users) => {
     }
 };
 
+/*export const warnUser = (target, self) => {
+    return (dispatch, getState) => {
+
+        return dispatch({
+            type: 'WARN_USER',
+            target
+        })
+    }
+};*/
+
 export const removeUser = (user) => {
     return (dispatch, getState) => {
 
-        dispatch({
+        const key = user;
+
+        database.ref('users').child(key).remove().then(function() {
+            console.log("Remove succeeded.")
+          })
+          .catch(function(error) {
+            console.log("Remove failed: " + error.message)
+          });
+        /*dispatch({
             type: 'REMOVE_USER',
             user
-        })
+        })*/
     }
 };
 
