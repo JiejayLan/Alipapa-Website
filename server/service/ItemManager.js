@@ -389,7 +389,7 @@ module.exports = (data) => {
 					.push(NEW_INTENTION)
 					.then((response) => {
 						
-						const KEYWORDS = Object.keys(config.data.keywords);
+						const KEYWORDS = DATA.keywords;
 						const KEYWORDS_REF = DATABASE.ref('keywords');
 						const AUTHOR_ID = config.data.authorID;
 						
