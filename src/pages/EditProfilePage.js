@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import RegisterForm from '../components/RegisterForm';
-import {startEditProfile} from '../actions/userProfile';
+import {startEditProfile} from '../actions/auth';
 
 //retrieve data from firebase
 const EditProfilePage = (props) => {
@@ -16,8 +16,8 @@ const EditProfilePage = (props) => {
         <RegisterForm
           onSubmit={ (auth) => {
             console.log('reaches before startEditProfile');
-            props.startEditProfile(auth)
-            props.history.push('/profile');
+            props.startEditProfile(auth);
+            props.history.push('/account');
           }}
         />
       </div>
@@ -30,7 +30,7 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
-  startEditProfile: (id, profile) => dispatch(startEditProfile(id, profile))
+  startEditProfile: (auth) => dispatch(startEditProfile(auth))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditProfilePage);
