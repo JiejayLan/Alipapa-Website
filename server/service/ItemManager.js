@@ -349,13 +349,83 @@ module.exports = (data) => {
 		}
 		
 	}
+	
+	
+	INTENTIONS = {
+		
+		/*
+			DESCRIPTION:
+				Creates a purchase intention.
+				
+			PARAMETERS:
+				config = {
+					data: {
+						authorID: <String> valid user ID,
+						name: <String> description of the intention,
+						keywords: [<String>] keywords
+					}
+				}
+			
+			RETURN VALUE:
+				None if intention is successfully created.
+				
+		*/
+		create: (config) => {
+			
+			return new Promise((resolve, reject) => {
+				
+				const DATA = config.data;
+				const NEW_INTENTION = {
+					authorID: DATA.authorID,
+					name: DATA.name,
+					keywords: DATA.keywords.reduce((dict, keyword) => {
+						dict[keyword] = true;
+						return dict
+					}, {})
+				}
+				
+				DATABASE
+					.ref('purchase_intentions')
+					.push(NEW_INTENTION)
+					.then((response) => {
+						
+						const KEYWORDS = Object.keys(config.data.keywords);
+						const KEYWORDS_REF = DATABASE.ref('keywords');
+						const AUTHOR_ID = config.data.authorID;
+						
+						KEYWORDS.forEach((keyword, index) => {
+							
+							KEYWORDS_REF
+								.child(keyword)
+								.child(AUTHOR_ID)
+								.set(true)
+								.then((response) => {
+									
+									if (index + 1 === KEYWORDS.length) {
+										
+										resolve();
+										
+									}
+									
+								})
+							
+						})
+						
+					})
+				
+			})
+		}
+		
+	}
 
 
 	const ITEM_MANAGER = {
 		
 		applications: APPLICATIONS,
-		store: STORE
-		
+		Applications: APPLICATIONS,
+		store: STORE,
+		Store: STORE,
+		Intentions: INTENTIONS
 	}
 	
 	return ITEM_MANAGER;
