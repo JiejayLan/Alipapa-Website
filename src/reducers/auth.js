@@ -8,6 +8,11 @@ export default (state = {}, action) => {
     case 'LOGOUT':
       return     {
       };
+    case 'EDIT_PROFILE':
+      return {
+        ...state,
+        ...action.userData
+      };
     default:
       return state;
   }
