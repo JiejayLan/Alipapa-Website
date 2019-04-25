@@ -16,6 +16,7 @@ import CheckMessagePage from '../pages/checkMessagePage';
 import EditProfilePage from '../pages/EditProfilePage';
 import ProfilePage from '../pages/ProfilePage'
 import SUHomePage from '../pages/SUhomePage';
+import PurchaseIntention from '../pages/PurchaseIntention';
 export const history = createHistory();
 
 const AppRouter = () => (
@@ -33,6 +34,7 @@ const AppRouter = () => (
       <PublicRoute path="/items/:id" component={ItemPage} exact={true}/>
       <PrivateRoute path="/editProfile" component={EditProfilePage}/>
       <PrivateRoute path="/profile" component={ProfilePage}/>
+			<PrivateRoute path="/purchase-intention/new" component={PurchaseIntention} />
       <Route component={NotFoundPage}/>
     </Switch>
   </div>
