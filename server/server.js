@@ -28,9 +28,6 @@ app.post("/delete",auth.delete({firebase}));
 
 app.post('/purchase-intention/new', require('./controller/purchase_intention_controller.js')({ itemManager: ITEM_MANAGER }));
 
-//retrieve user profile
-app.post("/profile", require('./controller/profile_controller.js')({firebase}));
-
 //a route to control all message request
 app.use("/message",message_controller(MESSAGE_SYSTEM(firebase)));
 app.use('/controllers/items/:id', require('./controller/item_page_controller.js')({ itemManager: ITEM_MANAGER, orderManager: ORDER_MANAGER}));

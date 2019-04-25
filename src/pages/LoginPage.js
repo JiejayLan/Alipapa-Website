@@ -29,7 +29,6 @@ class LoginPage extends React.Component {
         }
         else
           this.props.startLogin(response.data); 
-        
       })
       .catch(function (error) {
         console.log(error);

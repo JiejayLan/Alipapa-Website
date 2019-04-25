@@ -1,15 +1,16 @@
 import React from 'react';
+import {connect} from 'react-redux';
 
-export default class RegisterForm extends React.Component {
+class RegisterForm extends React.Component {
   constructor(props){
     super(props);
     //figure out why props.profile is not displaying
     this.state={
-      username: props.profile ? props.profile.username : '',
-      password: props.profile ? props.profile.password : '',
-      credit_card: props.profile ? props.profile.credit_card : '',
-      address: props.profile ? props.profile.address : '',
-      phone_number: props.profile ? props.profile.phone_number : ''
+      username: props.auth ? props.auth.username : '',
+      password: props.auth ? props.auth.password : '',
+      credit_card: props.auth ? props.auth.credit_card : '',
+      address: props.auth ? props.auth.address : '',
+      phone_number: props.auth ? props.auth.phone_number : ''
     };
   }
 
@@ -108,3 +109,10 @@ export default class RegisterForm extends React.Component {
     );
   }
 }
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth
+  };
+};
+
+export default connect(mapStateToProps)(RegisterForm);
