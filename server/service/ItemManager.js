@@ -198,22 +198,7 @@ module.exports = (data) => {
 					})
 
 			})				
-			const ITEM = DATABASE
-										.ref('total_items')
-										.child(ITEM_ID)
-										.once('value')
-										.then((snapshot) => {
-											
-											let item = snapshot.val();
-											
-											return item;
-											
-										})
-										
-										
-			
-			return ITEM;
-			
+
 		},
 		
 		/*
