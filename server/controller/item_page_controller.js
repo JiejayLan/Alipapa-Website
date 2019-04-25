@@ -11,7 +11,7 @@ module.exports = (data) => {
 		
 		const ITEM_ID = req.params.id;
 		const ITEM_MANAGER = data.itemManager;
-		const STORE = ITEM_MANAGER.store;
+		const STORE = ITEM_MANAGER.Store;
 		
 		const config = {
 			id: ITEM_ID,
@@ -45,7 +45,7 @@ module.exports = (data) => {
 		const ORDER_MANAGER = data.orderManager;
 		const PENDING_ORDERS = ORDER_MANAGER.pending;
 		const ITEM_MANAGER = data.itemManager;
-		const STORE = ITEM_MANAGER.store;
+		const STORE = ITEM_MANAGER.Store;
 		const ITEM_ID = req.params.id;
 		const ITEM = req.body.item;
 		const BUYER = req.body.buyer;
@@ -94,7 +94,7 @@ module.exports = (data) => {
 		const ORDER_MANAGER = data.orderManager;
 		const PENDING_ORDERS = ORDER_MANAGER.pending;
 		const ITEM_MANAGER = data.itemManager;
-		const STORE = ITEM_MANAGER.store;
+		const STORE = ITEM_MANAGER.Store;
 		const ITEM_ID = req.params.id;
 		const ITEM = req.body.item;
 		const BUYER = req.body.buyer;
