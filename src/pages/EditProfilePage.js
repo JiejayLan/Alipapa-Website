@@ -14,9 +14,9 @@ const EditProfilePage = (props) => {
       </div> 
       <div className="content-container">
         <RegisterForm
-          onSubmit={ (profile) => {
+          onSubmit={ (auth) => {
             console.log('reaches before startEditProfile');
-            props.startEditProfile(profile)
+            props.startEditProfile(auth)
             props.history.push('/profile');
           }}
         />
@@ -26,7 +26,7 @@ const EditProfilePage = (props) => {
 };
 
 const mapStateToProps = (state, props) => ({
-  profile: state.profile
+  auth: state.auth
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
