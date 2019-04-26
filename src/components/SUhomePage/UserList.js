@@ -38,8 +38,7 @@ class UserList extends React.Component {
     }
 
     setRedirect = () => {
-        if(confirm('Are you sure to warn this user',
-            '/nThis will redirect you to the message system! Please remember the username!')){
+        if(confirm('Are you sure to warn this user. This will redirect you to the message system! Please remember the username!')){
             this.redirect = true;
             this.setState({...this.state});
         }

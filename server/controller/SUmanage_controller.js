@@ -27,5 +27,12 @@ module.exports = ( data ) => {
                 res.json(itemApplications);
             });
         }
+        else if( req.body.datatype === 'COMP' ){
+            firebase.database.ref('/send_complain').once('value').then(snapshot =>{
+                let complaints = snapshot.val();
+
+                res.json(complaints);
+            });
+        }
     }
 }
