@@ -18,6 +18,7 @@ import ProfilePage from '../pages/ProfilePage';
 import SUHomePage from '../pages/SUhomePage';
 import PurchaseIntention from '../pages/PurchaseIntention';
 import UserInfoPage from '../pages/UserInfoPage';
+import TransactionHistory from '../components/TransactionHistory';
 
 export const history = createHistory();
 
@@ -38,6 +39,7 @@ const AppRouter = () => (
       <PrivateRoute path="/profile" component={ProfilePage}/>
 			<PrivateRoute path="/purchase-intention/new" component={PurchaseIntention} />
       <PrivateRoute path="/account" component={UserInfoPage}/>
+      <PrivateRoute path="/transactionHistory" component={TransactionHistory}/>
 
       <Route component={NotFoundPage}/>
     </Switch>
