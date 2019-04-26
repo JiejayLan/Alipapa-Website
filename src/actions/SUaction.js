@@ -22,16 +22,7 @@ export const removeUser = (user) => {
 
         const key = user;
 
-        database.ref('users').child(key).remove().then(function() {
-            console.log("Remove succeeded.")
-          })
-          .catch(function(error) {
-            console.log("Remove failed: " + error.message)
-          });
-        /*dispatch({
-            type: 'REMOVE_USER',
-            user
-        })*/
+        database.ref('users').child(key).update({status: 'delete'});
     }
 };
 
