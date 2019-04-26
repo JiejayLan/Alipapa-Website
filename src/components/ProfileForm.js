@@ -1,12 +1,13 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-class RegisterForm extends React.Component {
+class ProfileForm extends React.Component {
   constructor(props){
     super(props);
     //figure out why props.profile is not displaying
     this.state={
       username: props.auth ? props.auth.username : '',
+      password: props.auth ? props.auth.password : '',
       credit_card: props.auth ? props.auth.credit_card : '',
       address: props.auth ? props.auth.address : '',
       phone_number: props.auth ? props.auth.phone_number : ''
@@ -16,6 +17,11 @@ class RegisterForm extends React.Component {
   onNameChange = (e) => {
     const username = e.target.value;
     this.setState(() => ({username}));
+  };
+
+  onPasswordChange = (e) => {
+    const password = e.target.value;
+    this.setState(() => ({password}));
   };
 
   onCreditCardChange = (e) => {
@@ -37,6 +43,7 @@ class RegisterForm extends React.Component {
     e.preventDefault();
       this.props.onSubmit({
         username: this.state.username,
+        password: this.state.password,
         credit_card: this.state.credit_card,
         address: this.state.address,
         phone_number: this.state.phone_number
@@ -55,6 +62,14 @@ class RegisterForm extends React.Component {
           className="text-input"
           value={this.state.username}
           onChange={this.onNameChange}
+          required
+        />
+        <input
+          type="text"
+          placeholder="Password"
+          className="text-input"
+          value={this.state.password}
+          onChange={this.onPasswordChange}
           required
         />
         <input
@@ -100,4 +115,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(RegisterForm);
+export default connect(mapStateToProps)(ProfileForm);
