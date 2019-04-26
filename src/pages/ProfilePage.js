@@ -1,35 +1,20 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {setProfile} from '../actions/userProfile';
-import axios from 'axios';
 
+//information gets updates only after refresh -- find out why
 class ProfilePage extends React.Component {
   
   constructor(props) {
     super(props);
 
-    //figure out a way to do it dynamically 
     this.state = {
-      address:  '',
-      phone_number: '',
-      username: 'SU',
-      password: '123',
-      credit_card: ''
+      address: props.auth.address,
+      phone_number: props.auth.phone_number,
+      username: props.auth.username,
+      password: props.auth.password,
+      credit_card: props.auth.credit_card
     };
-
-    axios.post('/profile', {
-      "username": this.state.username,
-      "password": this.state.password 
-    })
-    .then((response) => {
-      console.log(response.data);
-      this.props.setProfile(response.data);
-      this.setState(() => ({...response.data}));
-    })
-    .catch((error) => {
-      console.log(error);
-    });
  }
 
   render() {
@@ -62,8 +47,10 @@ class ProfilePage extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  setProfile: (profile) => dispatch(setProfile(profile))
-});
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth
+  };
+};
 
-export default connect(undefined, mapDispatchToProps)(ProfilePage);
+export default connect(mapStateToProps)(ProfilePage);
