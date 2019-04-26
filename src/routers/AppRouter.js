@@ -18,7 +18,7 @@ import ProfilePage from '../pages/ProfilePage';
 import SUHomePage from '../pages/SUhomePage';
 import PurchaseIntention from '../pages/PurchaseIntention';
 import UserInfoPage from '../pages/UserInfoPage';
-import TransactionHistory from '../components/TransactionHistory';
+import TransactionHistory from '../components/transactionPage/TransactionHistory';
 
 export const history = createHistory();
 
