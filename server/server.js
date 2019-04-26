@@ -32,6 +32,8 @@ app.use('/controllers/items/:id', require('./controller/item_page_controller.js'
 
 app.post('/suhome', require('./controller/SUmanage_controller')({firebase}) );
 
+app.post('/transactionHistory', require('./controller/transaction_controller')({firebase}) );
+
 //	test endpoints
 app.post('/test', require('./controller/test.js')( {itemManager: ITEM_MANAGER} ));
 

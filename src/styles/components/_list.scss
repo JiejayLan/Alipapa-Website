@@ -95,6 +95,15 @@
   word-break: break-all;
 }
 
+.list-item__title--link {
+  color: $grey;
+  &:hover {
+    background: $off-white;
+    text-decoration: none;
+    color: $dark-grey;
+  }
+}
+
 .list-item__sub-title {
   color: $grey;
   font-size: $font-size-small;
