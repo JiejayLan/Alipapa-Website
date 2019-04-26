@@ -111,10 +111,14 @@ export const ApproveItemApplication = (itemAppli) => {
 
 export const DenyItemApplication = (itemAppli) => {
     return (dispatch, getState) => {
+        const key = itemAppli;
 
-        dispatch({
-            type: 'DENY_ITEM_APP',
-            itemAppli
-        })
+        database.ref('item_application').child(key).remove().then(function() {
+            console.log("Remove succeeded.")
+          })
+          .catch(function(error) {
+            console.log("Remove failed: " + error.message)
+          });
+        
     }
 };
