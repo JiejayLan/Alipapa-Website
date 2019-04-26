@@ -24,7 +24,7 @@ class ProfilePage extends React.Component {
     const ADDRESS = this.state.address;
     const PHONE_NUMBER = this.state.phone_number;
     return (
-      <div className="content-container">
+      <div>
         <div className="list-header">
           <h2 className="list-item__title">Profile</h2>
         </div>
