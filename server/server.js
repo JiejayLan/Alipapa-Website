@@ -12,8 +12,6 @@ const MESSAGE_SYSTEM = require('./service/messageManager');
 let auth = require('./controller/auth_controller.js')
 const AUCTION_CHECKER = require('./AuctionCheck')({ itemManager: ITEM_MANAGER, orderManager: ORDER_MANAGER});
 
-//const SU_MANAGER = require('./service/SUmanager')({firebase});
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(publicPath));

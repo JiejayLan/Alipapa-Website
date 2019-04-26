@@ -5,11 +5,8 @@ import {database,storage} from '../firebase/firebase';
 import UserList from '../components/SUhomePage/UserList';
 import UserApplicationList from '../components/SUhomePage/UserApplicationList';
 import ItemApplicationList from '../components/SUhomePage/ItemApplicationList';
+import ComplaintList from '../components/SUhomePage/ComplaintList';
 import axios from 'axios';
-import { viewUser, removeUser, 
-  viewUserApplication, ApproveUserApplication, DenyUserApplication,
-  viewItemApplication, ApproveItemApplication, DenyItemApplication}
-  from '../actions/SUaction';
 
 
 class SUhomePage extends React.Component {
@@ -56,6 +53,12 @@ class SUhomePage extends React.Component {
         <hr />
         <h2 className="text-center">New Item Application</h2>
         <ItemApplicationList />
+        <br />
+        <div className='clearfix'></div>
+        <hr />
+        <h2 className='text-center'>Complain</h2>
+        <ComplaintList />
+        <br />
         <div className='clearfix'></div>
       </div>
     )
