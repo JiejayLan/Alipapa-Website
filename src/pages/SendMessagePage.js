@@ -48,6 +48,7 @@ class MessageForm extends React.Component {
 
         if(this.state.messageType === "complain"){
             message.receiver = "SU";
+            message.status = "suspended";
             message.complaintedUsername = this.state.complaintedUsername;
         }
         else if(this.state.messageType ==="explain"){
@@ -70,7 +71,7 @@ class MessageForm extends React.Component {
           })
           .then( (response)=> {
             console.log(response);
-            this.props.history.push('/message')
+            this.props.history.push('/sendMessage')
           })
           .catch(function (error) {
             console.log(error);

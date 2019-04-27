@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import RegisterForm from '../components/RegisterForm';
+import ProfileForm from '../components/ProfileForm';
 import {startEditProfile} from '../actions/auth';
 
 //retrieve data from firebase
@@ -13,7 +13,7 @@ const EditProfilePage = (props) => {
         </div>
       </div> 
       <div className="content-container">
-        <RegisterForm
+        <ProfileForm
           onSubmit={ (auth) => {
             console.log('reaches before startEditProfile');
             props.startEditProfile(auth);

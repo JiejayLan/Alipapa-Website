@@ -95,6 +95,15 @@
   word-break: break-all;
 }
 
+.list-item__title--link {
+  color: $grey;
+  &:hover {
+    background: $off-white;
+    text-decoration: none;
+    color: $dark-grey;
+  }
+}
+
 .list-item__sub-title {
   color: $grey;
   font-size: $font-size-small;
@@ -102,6 +111,7 @@
 
 .list-item__data {
   margin: $s-size 0 0 0;
+  word-break: break-all;
 
   @media (min-width: $desktop-breakpoint) {
     margin: 0;
@@ -109,3 +119,12 @@
   }
 }
 
+.list-item__text {
+  margin: $s-size 0 $s-size 0;
+  word-break: break-all;
+
+  @media (min-width: $desktop-breakpoint) {
+    margin: 0;
+    padding-left: $s-size;
+  }
+}

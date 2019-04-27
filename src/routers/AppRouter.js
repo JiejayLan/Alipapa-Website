@@ -14,10 +14,11 @@ import RegisterPage from '../pages/RegisterPage';
 import SendMessagePage from '../pages/sendMessagePage';
 import CheckMessagePage from '../pages/checkMessagePage';
 import EditProfilePage from '../pages/EditProfilePage';
-import ProfilePage from '../pages/ProfilePage';
 import SUHomePage from '../pages/SUhomePage';
+import Friend from '../pages/FriendPage';
 import PurchaseIntention from '../pages/PurchaseIntention';
 import UserInfoPage from '../pages/UserInfoPage';
+import TransactionHistory from '../components/transactionPage/TransactionHistory';
 
 export const history = createHistory();
 
@@ -31,13 +32,14 @@ const AppRouter = () => (
       <SuperRoute path="/suhome" component={SUHomePage}/>
       {/*<PrivateRoute path="/suhome" component={SUHomePage}/>*/}
       <PrivateRoute path="/sellnewitem" component={sellingForm} exact={true}/>
-      <PrivateRoute path="/message" component={SendMessagePage} exact={true}/>
-      <PrivateRoute path="/checkmessage" component={CheckMessagePage }/>
+      <PrivateRoute path="/sendMessage" component={SendMessagePage} exact={true}/>
+      <PrivateRoute path="/checkMessage" component={CheckMessagePage }/>
+      <PrivateRoute path="/friend" component={Friend}/>
       <PublicRoute path="/items/:id" component={ItemPage} exact={true}/>
       <PrivateRoute path="/editProfile" component={EditProfilePage}/>
-      <PrivateRoute path="/profile" component={ProfilePage}/>
 			<PrivateRoute path="/purchase-intention/new" component={PurchaseIntention} />
       <PrivateRoute path="/account" component={UserInfoPage}/>
+      <PrivateRoute path="/transactionHistory" component={TransactionHistory}/>
 
       <Route component={NotFoundPage}/>
     </Switch>

@@ -1,73 +1,72 @@
 
 module.exports = (firebase) => {
     //database instance
-    let DATABASE= firebase.database;
+    let DATABASE = firebase.database;
 
-	const MESSAGE_SYSTEM = {		
-		//send out a message
-		send: (data, res) => {            
-                DATABASE.ref('/message').push().set({...data},
-                    function(error){
-                        if (error) {
-                            res
-                            .status(204)
-                            .json({"status":"error", "message":error});
-                            res.end();
-                          } 
-                        else {
-                            res
-                            .status(200)
-                            .json({"status":"success", "postMessage":data});
-                            res.end();
-                        }         
-                });    
+    const MESSAGE_SYSTEM = {
+        //send out a message
+        send: (data) => {
+            return new Promise((resolve, reject) => {
+                (DATABASE.ref('/message').push().set({ ...data },
+                    function (error) {
+                        if (error){
+                            console.log("error");
+                            resolve({ "status": "error", "message": error });
+                        } 
+                        else{
+                            console.log("no error");
+                            resolve({ "status": "success", "message": data });
+                        }                         
+                    }
+                ))
+            })
         },
 
         //	check messages
-		checkReceiveMessage: (username ,res) => {            
+        checkReceiveMessage: (username, res) => {
             DATABASE.ref('/message')
                 .orderByChild("receiver")
                 .equalTo(username)
-                .on('value', (snapshot)=>{
+                .on('value', (snapshot) => {
                     // console.log("snapshot",snapshot.val());  
                     let message = snapshot.val();
-                    if(message === undefined){
+                    if (message === undefined) {
                         res
-                        .status(204)
-                        .json(message);
+                            .status(204)
+                            .json(message);
                         res.end();
                     }
-                    else{
+                    else {
                         res
-                        .status(200)
-                        .json(message);
-                        res.end();             
-                    }                       
+                            .status(200)
+                            .json(message);
+                        res.end();
+                    }
                 });
         },
         //	check received complain messages
-		checkReceiveComplain: (username ,res) => {            
+        checkReceiveComplain: (username, res) => {
             DATABASE.ref('/message')
                 .orderByChild("complaintedUsername")
                 .equalTo(username)
-                .on('value', (snapshot)=>{
+                .on('value', (snapshot) => {
                     let message = snapshot.val();
-                    if(message === undefined){
+                    if (message === undefined) {
                         res
-                        .status(204)
-                        .json(message);
+                            .status(204)
+                            .json(message);
                         res.end();
                     }
-                    else{
+                    else {
                         res
-                        .status(200)
-                        .json(message);  
-                        res.end();           
-                    }                       
-            });
-        }          		
-	}
-	
-	return MESSAGE_SYSTEM;
-	
+                            .status(200)
+                            .json(message);
+                        res.end();
+                    }
+                });
+        }
+    }
+
+    return MESSAGE_SYSTEM;
+
 }
