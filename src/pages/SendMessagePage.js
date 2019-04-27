@@ -48,6 +48,7 @@ class MessageForm extends React.Component {
 
         if(this.state.messageType === "complain"){
             message.receiver = "SU";
+            message.status = "suspended";
             message.complaintedUsername = this.state.complaintedUsername;
         }
         else if(this.state.messageType ==="explain"){
