@@ -27,6 +27,12 @@ class LoginPage extends React.Component {
           }, 2000);
           alert("WARNING:Your account has been suspended. You can choose to submit an appeal");
         }
+        else if(response.data.status === "newUser"){
+          setTimeout(() => {
+            this.props.startLogin(response.data); 
+          }, 2000);
+          alert("WARNING:New User must change password after first time login");
+        }
         else
           this.props.startLogin(response.data); 
       })
