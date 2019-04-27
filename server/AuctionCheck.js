@@ -27,8 +27,8 @@ module.exports = (data) => {
 							const ITEM_ID = itemWrapper.id;
 							const ITEM = itemWrapper.data;
 							
-							
 							if (NOW > AUCTION_END) {
+								
 								const UPDATED_ITEM_STATUS = ITEM.buyer ? 'order' : 'expired';
 								const UPDATED_ITEM = {
 									
@@ -46,7 +46,7 @@ module.exports = (data) => {
 										
 										if (UPDATED_ITEM_STATUS === 'order') {
 											
-											const PENDING_ORDERS = ORDER_MANAGER.pending;
+											const PENDING_ORDERS = ORDER_MANAGER.Pending;
 											const CREATE_PENDING_CONFIG = {
 												data: {
 													buyer: ITEM.buyer,
@@ -73,8 +73,8 @@ module.exports = (data) => {
 				
 			},
 			
-			//	check every 30 seconds for testing
-			1000 * 30	
+			//	check every 120 seconds for testing
+			1000 * 60 * 2
 			
 		)
 		
