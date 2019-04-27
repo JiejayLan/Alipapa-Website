@@ -13,9 +13,6 @@ export const Header = ({startLogout,isAuthenticated,status,userID,user_type}={})
           <Link className="header__title" to="/">
             <h1>Alipapa</h1>
           </Link> 
-          <Link className="header__link" to="/profile">
-            Profile
-          </Link> 
           <Link className="header__link" to="/account">
             Account
           </Link>    
