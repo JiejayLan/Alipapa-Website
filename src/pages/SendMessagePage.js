@@ -71,7 +71,7 @@ class MessageForm extends React.Component {
           })
           .then( (response)=> {
             console.log(response);
-            this.props.history.push('/message')
+            this.props.history.push('/sendMessage')
           })
           .catch(function (error) {
             console.log(error);
