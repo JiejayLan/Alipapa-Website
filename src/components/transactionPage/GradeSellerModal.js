@@ -12,7 +12,7 @@ class GradeSellerModal extends React.Component {
       seller: props.seller,
       userID: props.auth.userID,
       orderID: props.orderID,
-      rating: 3
+      rating: ''
     };
 
     this.openModal = this.openModal.bind(this);
@@ -32,21 +32,25 @@ class GradeSellerModal extends React.Component {
     const ORDERID = this.state.orderID;
     let counter = 0;
     let avgRating = 0;
-    database.ref(`users/${SELLER}/grade`).set({[USERID]: RATING});
 
-    database.ref(`users/${SELLER}/grade`).once('value').then((snapshot) => {
-      const GRADES = snapshot.val();
-      for (let grade in GRADES){
-        avgRating += GRADES[grade]; 
-        counter += 1;
-      }
-      avgRating /= counter;
-      database.ref(`users/${SELLER}`).update({rating: avgRating});
-    });
+    if (RATING !== ''){
+      database.ref(`users/${SELLER}/grade`).set({[USERID]: RATING});
 
-    database.ref(`orders/${ORDERID}`).update({status: "rated"});
+      database.ref(`users/${SELLER}/grade`).once('value').then((snapshot) => {
+        const GRADES = snapshot.val();
+        for (let grade in GRADES){
+          avgRating += GRADES[grade]; 
+          counter += 1;
+        }
+        avgRating /= counter;
+        database.ref(`users/${SELLER}`).update({rating: avgRating});
+      });
+
+      database.ref(`orders/${ORDERID}`).update({status: "rated"});
+      this.setState(() => ({modalIsOpen}));
+      location.reload(true);
+    }
     this.setState(() => ({modalIsOpen}));
-    location.reload(true);
   }
 
   handleOptionChange = (e) => {
@@ -60,17 +64,16 @@ class GradeSellerModal extends React.Component {
         <button className="button" onClick={this.openModal}>
           Grade seller
         </button>
-        <Modal
+        <Modal 
           isOpen={this.state.modalIsOpen}
           onRequestClose={this.closeModal}
           contentLabel="Select Your Rating"
-          closeTimeoutMS={200}
         >
-          <div>1 being the worst</div>
-          <div>5 being the best</div>
+          <h2 className="list-item__title ">Select Your Rating</h2>
+          <p className="list-item__sub-title">1 being the worst and 5 being the best</p>
           
           <div>
-            <label>
+            <label className="label">
               <input 
                 type="radio" 
                 selected 
@@ -81,7 +84,7 @@ class GradeSellerModal extends React.Component {
               1
             </label>
 
-            <label>
+            <label className="label">
               <input 
                 type="radio" 
                 value="2"
@@ -91,7 +94,7 @@ class GradeSellerModal extends React.Component {
               2
             </label>
 
-            <label>
+            <label className="label">
               <input 
                 type="radio" 
                 value="3"
@@ -101,7 +104,7 @@ class GradeSellerModal extends React.Component {
               3
             </label>
           
-            <label>
+            <label className="label">
               <input 
                 type="radio" 
                 value="4"
@@ -112,7 +115,7 @@ class GradeSellerModal extends React.Component {
             </label>
 
                       
-            <label>
+            <label className="label">
               <input 
                 type="radio" 
                 value="5"
