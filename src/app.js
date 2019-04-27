@@ -9,6 +9,9 @@ import './styles/bootstrap.min.css';
 import 'react-dates/lib/css/_datepicker.css';
 import { PersistGate } from 'redux-persist/integration/react'
 const { store, persistor } = configureStore();
+import Modal from 'react-modal';
+
+Modal.setAppElement('#app');
 
 const jsx = (
   <Provider store={store}>
