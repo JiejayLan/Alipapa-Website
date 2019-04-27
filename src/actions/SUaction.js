@@ -114,3 +114,14 @@ export const DenyItemApplication = (itemAppli) => {
         
     }
 };
+
+export const warnUser = (uid) =>{
+    return (dispatch, getState) =>{
+        database.ref('users').child(uid).once('value', snapShot =>{
+            let data = snapShot.val();
+            let warns = data.warn_count;
+            warns += 1;
+            snapShot.val().warn_count = warns;
+        })
+    }
+}
