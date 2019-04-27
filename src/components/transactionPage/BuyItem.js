@@ -1,4 +1,5 @@
 import React from 'react';
+import GradeSellerModal from './GradeSellerModal';
 
 const BuyItem = ({seller, itemID, itemName, price, status}) => (
   <div className="list-item">
@@ -12,8 +13,15 @@ const BuyItem = ({seller, itemID, itemName, price, status}) => (
       <h3 className="list-item__subtitle">Order Status: {status}</h3>
       <div>
         <h3 className="list-item__subtitle">Seller Info:</h3>
-        <h4 className="list-item__data">userID: {seller}</h4>
+        <h4 className="list-item__text">userID: {seller}</h4>
       </div>
+      {
+        status === "completed" ? (
+        <div>
+          <GradeSellerModal/>
+        </div>
+        ) : ''
+      }
     </div>
   </div>
 );
