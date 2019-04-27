@@ -16,8 +16,7 @@ module.exports = (firebase) => {
                         else{
                             console.log("no error");
                             resolve({ "status": "success", "message": data });
-                        }
-                            
+                        }                         
                     }
                 ))
             })

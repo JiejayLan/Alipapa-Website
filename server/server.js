@@ -8,7 +8,9 @@ const ITEM_MANAGER = require('./service/ItemManager')({ firebase });
 const ORDER_MANAGER = require('./service/OrderManager')({ firebase });
 let bodyParser = require('body-parser');
 let message_controller= require("./controller/message_controller.js")
+let friend_controller= require("./controller/friend_controller.js")
 const MESSAGE_SYSTEM = require('./service/messageManager');
+const FRIEDN_MANAGER = require('./service/FriendManager')(firebase);
 let auth = require('./controller/auth_controller.js')
 const AUCTION_CHECKER = require('./AuctionCheck')({ itemManager: ITEM_MANAGER, orderManager: ORDER_MANAGER});
 
@@ -26,8 +28,12 @@ app.post("/delete",auth.delete({firebase}));
 
 app.post('/purchase-intention/new', require('./controller/purchase_intention_controller.js')({ itemManager: ITEM_MANAGER }));
 
-//a route to control all message request
+//a route to controll all message request
 app.use("/message",message_controller(MESSAGE_SYSTEM(firebase)));
+
+//a route to controll all friend request 
+app.use("/friend",friend_controller(FRIEDN_MANAGER));
+
 app.use('/controllers/items/:id', require('./controller/item_page_controller.js')({ itemManager: ITEM_MANAGER, orderManager: ORDER_MANAGER}));
 
 app.post('/suhome', require('./controller/SUmanage_controller')({firebase}) );

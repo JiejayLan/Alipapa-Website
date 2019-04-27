@@ -21,6 +21,7 @@ class LoginPage extends React.Component {
       })
       .then( (response)=> {
         console.log(response);
+        //successfully login
         if(response.data.userID){
           if(response.data.status === "suspended"){
             setTimeout(() => {
