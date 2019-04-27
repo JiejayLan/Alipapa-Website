@@ -9,13 +9,13 @@ module.exports = (firebase) => {
 
 		//add a new friend
 		addFriend: (config) => {
-			const USER_ID = config.id;
-			const FRIEND_ID = config.friend_id;
+			const USER_NAME = config.userName;
+			const FRIEND_NAME = config.friendName;
 			return new Promise((resolve, reject) => {
 				DATABASE
-				.ref('friends/userID1')
-				.child('userID3')
-				.set(null,(dataRef) => {		
+				.ref('friends/'+USER_NAME)
+				.child(FRIEND_NAME)
+				.set(true,(dataRef) => {		
 					resolve({"status":"success"})				
 				})
 				
@@ -26,28 +26,29 @@ module.exports = (firebase) => {
 		//delete a friend of a specific user
 		deleteFriend: (config) => {
 			
-			const USER_ID = config.id;
-			const FRIEND_ID = config.friend_id;
+			const USER_NAME = config.userName;
+			const FRIEND_NAME = config.friendName;
 			
 			return new Promise((resolve, reject) => {
 				DATABASE
-				.ref('friends/userID1')
-				.child('userID3')
+				.ref('friends/'+USER_NAME)
+				.child(FRIEND_NAME)
 				.set(null,(dataRef) => {	
 					resolve({"status":"success"})			
 	
 				})					
 			})								
-		},
+		},			
 		
 		//List of friends of a specific user
 		listFriend: (config) => {
 
-			const USER_ID = config.userID;
+			const USER_NAME = config.userName;
+			const FRIEND_NAME = config.friendName;
 			
 			return( 
 				DATABASE
-					.ref('friends/'+USER_ID)
+					.ref('friends/'+USER_NAME)
 					.once('value')
 					.then((snapshot) => {				
 						return snapshot.val();			
@@ -57,15 +58,13 @@ module.exports = (firebase) => {
 
 		//check if this is a friend
 		checkFriend: (config) => {
-			console.log(config);
-			const USER_ID = config.userID;
-			const FRIEND_ID = config.friendID;
+			const USER_NAME = config.userName;
+			const FRIEND_NAME = config.friendName;
 			return( 
 				DATABASE
-					.ref('friends/'+USER_ID+"/"+FRIEND_ID)
+					.ref('friends/'+USER_NAME+"/"+FRIEND_NAME)
 					.once('value')
-					.then((snapshot) => {	
-						console.log(USER_ID,FRIEND_ID,snapshot.val());			
+					.then((snapshot) => {			
 						return snapshot.val();			
 					}))					
 			

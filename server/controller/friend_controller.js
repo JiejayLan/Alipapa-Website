@@ -11,14 +11,14 @@ module.exports = (FRIEND_MANAGE) => {
         if (result.status === "success") {
             console.log("add friend success");
             res
-                .status(204)
-                .json({ status: result.message });
+                .status(200)
+                .json({ status: "SUCCESS" });
         }
         else {
             console.log("add friend fail");
             res
-                .status(200)
-                .json({ status: result.message });
+                .status(204)
+                .json({ status: "FAIL"});
         }
     });
 
@@ -30,19 +30,18 @@ module.exports = (FRIEND_MANAGE) => {
         if (result.status === "success") {
             console.log("delete friend success");
             res
-                .status(204)
+                .status(200)
                 .json({ status: result.message });
         }
         else {
             console.log("delete friend fail");
             res
-                .status(200)
+                .status(204)
                 .json({ status: result.message });
         }
     });
 
-
-
+    //List of friends of a specific user
     router.post('/listfriend', async (req, res) => {
         let data = req.body; 
         const LIST_FRIEND = FRIEND_MANAGE.listFriend;
@@ -65,6 +64,7 @@ module.exports = (FRIEND_MANAGE) => {
 
     });
 
+    //router to check if it is a friend
     router.post('/checkfriend', async (req, res) => {
         let data = req.body; 
         const CHECK_FRIEND = FRIEND_MANAGE.checkFriend;
@@ -76,10 +76,9 @@ module.exports = (FRIEND_MANAGE) => {
                     .json(result);
             }
             else {
-                console.log("list friend fail");
                 res
                     .status(204)
-                    .json({ friendList:null });
+                    .json({ status:"error" });
             }
 
         });
