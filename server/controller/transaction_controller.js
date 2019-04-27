@@ -21,7 +21,8 @@ module.exports = (data) => {
         let buyItem = [];
         for (let orderID in orders){
           if(orders[orderID]["buyer"]["userID"] === req.body.userID){
-            buyItem.push(orders[orderID]);
+            const ORDER_DETAIL = orders[orderID];
+            buyItem.push({orderID, ...ORDER_DETAIL});
           }
         }
 
