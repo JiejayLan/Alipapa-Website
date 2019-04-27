@@ -20,21 +20,28 @@ class LoginPage extends React.Component {
         "password":this.state.password
       })
       .then( (response)=> {
+        console.log(response);
+        if(response.data.userID){
+          if(response.data.status === "suspended"){
+            setTimeout(() => {
+              this.props.startLogin(response.data); 
+            }, 2000);
+            alert("WARNING:Your account has been suspended. You can choose to submit an appeal");
+          }
+          else if(this.state.username == this.state.password){
+            setTimeout(() => {
+              this.props.startLogin(response.data); 
+            }, 2000);
+            alert("WARNING:New User must change password after first time login");
+          }
+          else
+            this.props.startLogin(response.data); 
+        }
+        else{
+          alert("Wrong username or password");
+        }
         // alert suspended user
-        if(response.data.status === "suspended"){
-          setTimeout(() => {
-            this.props.startLogin(response.data); 
-          }, 2000);
-          alert("WARNING:Your account has been suspended. You can choose to submit an appeal");
-        }
-        else if(response.data.status === "newUser"){
-          setTimeout(() => {
-            this.props.startLogin(response.data); 
-          }, 2000);
-          alert("WARNING:New User must change password after first time login");
-        }
-        else
-          this.props.startLogin(response.data); 
+
       })
       .catch(function (error) {
         console.log(error);

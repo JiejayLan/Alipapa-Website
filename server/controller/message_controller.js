@@ -4,10 +4,20 @@ const router = express.Router();
 module.exports = (MESSAGE_SYSTEM) => {
     
     //send out a message
-    router.post('/send', (req,res)=>{	
+    router.post('/send', async (req,res)=>{	
                 let data = req.body;
                 let send_message = MESSAGE_SYSTEM.send;
-                send_message(data,res);
+                let result = await send_message(data);
+                if(result.status ==="success"){
+                    res
+                    .status(204)
+                    .json({status:result.message});
+                }
+                else{
+                    res
+                    .status(200)
+                    .json({status:result.message});        
+                }
     });
 
     //check all receive message
