@@ -2,27 +2,12 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 
-//information gets updates only after refresh -- find out why
-class ProfilePage extends React.Component {
-  
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      address: props.auth.address,
-      phone_number: props.auth.phone_number,
-      username: props.auth.username,
-      password: props.auth.password,
-      credit_card: props.auth.credit_card
-    };
- }
-
-  render() {
-    const NAME = this.state.username;
-    const PASSWORD = this.state.password;
-    const CREDIT_CARD = this.state.credit_card;
-    const ADDRESS = this.state.address;
-    const PHONE_NUMBER = this.state.phone_number;
+const ProfilePage = (props) => {
+    const NAME = props.auth.username;
+    const PASSWORD = props.auth.password;
+    const CREDIT_CARD = props.auth.credit_card;
+    const ADDRESS = props.auth.address;
+    const PHONE_NUMBER = props.auth.phone_number;
     return (
       <div>
         <div className="list-header">
@@ -44,7 +29,6 @@ class ProfilePage extends React.Component {
         </div>
       </div>
     );
-  }
 }
 
 const mapStateToProps = (state) => {
