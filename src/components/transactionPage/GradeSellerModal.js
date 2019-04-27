@@ -1,14 +1,17 @@
 import React from 'react';
 import Modal from 'react-modal';
+import {connect} from 'react-redux';
+import {database} from '../../firebase/firebase';
 
-
-
-export default class GradeSellerModal extends React.Component {
+class GradeSellerModal extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       modalIsOpen: false,
+      seller: props.seller,
+      userID: props.auth.userID,
+      orderID: props.orderID,
       rating: 3
     };
 
@@ -23,7 +26,27 @@ export default class GradeSellerModal extends React.Component {
 
   closeModal() {
     let modalIsOpen = false;
+    const SELLER = this.state.seller;
+    const USERID = this.state.userID;
+    const RATING = this.state.rating;
+    const ORDERID = this.state.orderID;
+    let counter = 0;
+    let avgRating = 0;
+    database.ref(`users/${SELLER}/grade`).set({[USERID]: RATING});
+
+    database.ref(`users/${SELLER}/grade`).once('value').then((snapshot) => {
+      const GRADES = snapshot.val();
+      for (let grade in GRADES){
+        avgRating += GRADES[grade]; 
+        counter += 1;
+      }
+      avgRating /= counter;
+      database.ref(`users/${SELLER}`).update({rating: avgRating});
+    });
+
+    database.ref(`orders/${ORDERID}`).update({status: "rated"});
     this.setState(() => ({modalIsOpen}));
+    location.reload(true);
   }
 
   handleOptionChange = (e) => {
@@ -106,3 +129,9 @@ export default class GradeSellerModal extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps)(GradeSellerModal);
