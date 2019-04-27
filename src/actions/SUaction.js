@@ -44,7 +44,8 @@ export const ApproveUserApplication = (application={}) => {
             username = '' 
         } = application;
 
-        const newUser = {address, credit_card, password, phone_number, status: 'newUser', username};
+        const newUser = {address, credit_card, grade:{}, password, phone_number, 
+            rating: 0, status: 'normal', user_type: 'OU', username, warn_count: 0};
 
         database.ref('user_application').child(key).remove().then(function() {
             console.log("Remove succeeded.")
