@@ -6,7 +6,7 @@ module.exports.login=(data)=>{
     return(req,res)=>{
       firebase.database.ref('/users').once('value').then((snapshot)=> {       
           let USERS = snapshot.val()
-          let userID ="";
+          let userID =null;
           for(let id in USERS){
             if(USERS[id]["username"]===req.body.username && USERS[id]["password"] === req.body.password){
               userID = id;

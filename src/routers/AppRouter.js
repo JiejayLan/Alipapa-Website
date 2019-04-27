@@ -32,8 +32,8 @@ const AppRouter = () => (
       <SuperRoute path="/suhome" component={SUHomePage}/>
       {/*<PrivateRoute path="/suhome" component={SUHomePage}/>*/}
       <PrivateRoute path="/sellnewitem" component={sellingForm} exact={true}/>
-      <PrivateRoute path="/message" component={SendMessagePage} exact={true}/>
-      <PrivateRoute path="/checkmessage" component={CheckMessagePage }/>
+      <PrivateRoute path="/sendMessage" component={SendMessagePage} exact={true}/>
+      <PrivateRoute path="/checkMessage" component={CheckMessagePage }/>
       <PublicRoute path="/items/:id" component={ItemPage} exact={true}/>
       <PrivateRoute path="/editProfile" component={EditProfilePage}/>
       <PrivateRoute path="/profile" component={ProfilePage}/>
