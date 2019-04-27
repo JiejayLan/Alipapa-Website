@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import * as firebase from "firebase";
-import { viewItemApplication } from '../../actions/SUaction';
+import { viewItemApplication, DenyItemApplication } from '../../actions/SUaction';
 import axios from 'axios';
 
 class ItemApplicationList extends React.Component {
@@ -20,7 +20,18 @@ class ItemApplicationList extends React.Component {
         }).catch( err =>{
             console.log(err);
         });
-    }
+    };
+
+    rejectHandler = (uid) => {
+        if(confirm("Are you sure to reject?")){
+            this.props.DenyItemApplication(uid);
+
+            delete this.state[uid];
+
+            let newState = this.state;
+            this.setState({...newState});
+        }
+    };
 
     renderApplicationList = () => {
         const Itemkeys = Object.keys(this.state);
@@ -41,7 +52,7 @@ class ItemApplicationList extends React.Component {
                 </div>
                 <div className='card-action'>
                     <button>approve</button>
-                    <button>reject</button>
+                    <button onClick={()=>this.rejectHandler(application.uid)}>reject</button>
                 </div>
             </div>
             </div>
@@ -69,7 +80,8 @@ class ItemApplicationList extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        viewItemApplication: (application) => dispatch( viewItemApplication(application))
+        viewItemApplication: (application) => dispatch( viewItemApplication(application)),
+        DenyItemApplication: (application) => dispatch( DenyItemApplication(application))
     };
 };
 

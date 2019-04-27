@@ -22,16 +22,7 @@ export const removeUser = (user) => {
 
         const key = user;
 
-        database.ref('users').child(key).remove().then(function() {
-            console.log("Remove succeeded.")
-          })
-          .catch(function(error) {
-            console.log("Remove failed: " + error.message)
-          });
-        /*dispatch({
-            type: 'REMOVE_USER',
-            user
-        })*/
+        database.ref('users').child(key).update({status: 'delete'});
     }
 };
 
@@ -53,7 +44,8 @@ export const ApproveUserApplication = (application={}) => {
             username = '' 
         } = application;
 
-        const newUser = {address, credit_card, password, phone_number, status: 'newUser', username};
+        const newUser = {address, credit_card, grade:{}, password, phone_number, 
+            rating: 0, status: 'normal', user_type: 'OU', username, warn_count: 0};
 
         database.ref('user_application').child(key).remove().then(function() {
             console.log("Remove succeeded.")
@@ -111,10 +103,25 @@ export const ApproveItemApplication = (itemAppli) => {
 
 export const DenyItemApplication = (itemAppli) => {
     return (dispatch, getState) => {
+        const key = itemAppli;
 
-        dispatch({
-            type: 'DENY_ITEM_APP',
-            itemAppli
-        })
+        database.ref('item_application').child(key).remove().then(function() {
+            console.log("Remove succeeded.")
+          })
+          .catch(function(error) {
+            console.log("Remove failed: " + error.message)
+          });
+        
     }
 };
+
+export const warnUser = (uid) =>{
+    return (dispatch, getState) =>{
+        database.ref('users').child(uid).once('value', snapShot =>{
+            let data = snapShot.val();
+            let warns = data.warn_count;
+            warns += 1;
+            snapShot.val().warn_count = warns;
+        })
+    }
+}

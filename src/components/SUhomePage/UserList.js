@@ -37,7 +37,22 @@ class UserList extends React.Component {
         }
     }
 
+    inspectUser = (uid) => {
+        let name = this.state[uid].username;
+        let warns = this.state[uid].warn_count;
+        let rating = this.state[uid].rating;
+        if(rating === 0){
+            confirm(name +' has ' + warns + ' warning(s) and has no rating yet');
+        }
+        else{
+            let grade = this.state[uid].grade;
+
+            confirm(name +' has ' + warns + ' warning(s), the rating is '+ rating+ 'and is conducted by '+grade);
+        }
+    }
+
     setRedirect = () => {
+        
         if(confirm('Are you sure to warn this user. This will redirect you to the message system! Please remember the username!')){
             this.redirect = true;
             this.setState({...this.state});
@@ -55,12 +70,30 @@ class UserList extends React.Component {
         let OUlist = [];
 
         for(let i = 0; i < OUkeys.length; i++){
-            
-            this.state[OUkeys[i]].uid = OUkeys[i];
 
-            if( !this.state[OUkeys[i]].user_type ){
-                this.state[OUkeys[i]].user_type = 'New User'
+            if( this.state[OUkeys[i]].user_type === 'SU' ){
+                continue;
             };
+
+            if( this.state[OUkeys[i]].status === 'delete'){
+                continue;
+            }
+            /*Every code from here is just to prevent issue sice the format of user in DB is not finalized yet */
+            if( this.state[OUkeys[i]].username === 'shibin' ){
+                continue;
+            };
+            if( !this.state[OUkeys[i]].grade ){
+                this.state[OUkeys[i]].grade = {}
+            };
+            if( !this.state[OUkeys[i]].rating ){
+                this.state[OUkeys[i]].rating = 0;
+            };
+            if( !this.state[OUkeys[i]].warn_count ){
+                this.state[OUkeys[i]].warn_count = 0;
+            };
+            /************ */
+
+            this.state[OUkeys[i]].uid = OUkeys[i];
 
             OUlist.push(this.state[OUkeys[i]]);
         }
@@ -69,11 +102,17 @@ class UserList extends React.Component {
             <div className='col-9 mx-auto col-md-6 col-lg-3 my-3 rounded float-left' key={user.uid}>
             <div className='card'>
                 <div className='card-content'>
-                    <span className='card-title'>{user.user_type}</span>
-                    <p>{user.username}</p>
-                    <p>{user.status}</p>
+                    <span className='card-title'>{user.username}</span>
+                    <br />{user.user_type}<br />
+                    address: {user.address}<br />
+                    phone: {user.phone_number}<br />
+                    rating: {user.rating}<br />
+                    warning: {user.warn_count}<br />
+
+                    {user.status}
                 </div>
                 <div className='card-action'>
+                    <button onClick={()=>this.inspectUser(user.uid)}>inspect</button>
                     <button onClick={this.setRedirect}>warn</button>
                     <button onClick={()=>this.removeUserHandler(user.uid)}>remove</button>
                 </div>
