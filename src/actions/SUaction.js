@@ -17,18 +17,23 @@ export const warnUser = (username) =>{
             let keys = Object.keys(users);
             let targetuid = '';
             let warns = 0;
+            let suspend = false;
 
             for( let i = 0; i < keys.length; i++){
                 if( users[keys[i]].username === username ){
                     warns = users[keys[i]].warn_count;
                     warns += 1;
+                    if(warns >= 2){
+                    suspend = true;
+                    }
                     targetuid = keys[i]
                     break;
                 }
             }
-
+            if(suspend){
+                ref.child(targetuid).update({status: 'suspended'});
+            }
             ref.child(targetuid).update( {warn_count : warns} )
-
         })
     }
 }
