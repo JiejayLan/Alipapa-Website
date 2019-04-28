@@ -149,3 +149,10 @@ export const addItemToBl = (itemname) => {
         database.ref('superUser/item_blacklist').child(itemname).set(true);
     }
 };
+
+
+export const justifyComp = (compid) => {
+    return (dispatch, getState) =>{
+    database.ref('message').child(compid).update({status: 'justified'});
+    }
+};
