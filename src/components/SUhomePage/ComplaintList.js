@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import * as firebase from "firebase";
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
-import { justifyComp } from '../../actions/SUaction';
+import { justifyComp, removeComp } from '../../actions/SUaction';
 
 
 class ComplaintList extends React.Component {
@@ -44,6 +44,16 @@ class ComplaintList extends React.Component {
         };
     }
 
+    removeHandler = (uid) => {
+        if(confirm('Sure removing this complaint?')){
+            this.props.removeComp(uid);
+
+            delete this.state[uid];
+            let newState = this.state;
+            this.setState({...newState});
+        }
+    }
+
     renderComplaintList = () => {
         const Compkeys = Object.keys(this.state);
         let Complist = [];
@@ -71,7 +81,7 @@ class ComplaintList extends React.Component {
                 <div className='card-action'>
                     <button onClick={()=>this.justifyHandler(application.uid)}>justify</button>
                     <button onClick={this.setRedirect}>investigate</button>
-                    <button>remove</button>
+                    <button onClick={()=>this.removeHandler(application.uid)}>remove</button>
                 </div>
             </div>
             </div>
@@ -101,7 +111,8 @@ class ComplaintList extends React.Component {
 const mapDispatchToProps = (dispatch) => {
     return {
         viewItemApplication: (application) => dispatch( viewItemApplication(application)),
-        justifyComp: (compid) => dispatch( justifyComp(compid) )
+        justifyComp: (compid) => dispatch( justifyComp(compid) ),
+        removeComp: (compid) => dispatch( removeComp(compid) )
     };
 };
 

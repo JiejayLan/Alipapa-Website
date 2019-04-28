@@ -153,6 +153,18 @@ export const addItemToBl = (itemname) => {
 
 export const justifyComp = (compid) => {
     return (dispatch, getState) =>{
-    database.ref('message').child(compid).update({status: 'justified'});
+        database.ref('message').child(compid).update({status: 'justified'});
+    }
+};
+
+
+export const removeComp = (compid) => {
+    return (dispatch, getState) =>{
+        database.ref('message').child(compid).remove().then(function() {
+            console.log("Remove succeeded.")
+          })
+          .catch(function(error) {
+            console.log("Remove failed: " + error.message)
+          });
     }
 };
