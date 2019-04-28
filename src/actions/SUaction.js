@@ -135,3 +135,17 @@ export const DenyItemApplication = (itemAppli) => {
         
     }
 };
+
+export const addUserToBl = (username) => {
+    return (dispatch, getState) => {
+
+        database.ref('superUser/user_blacklist').child(username).set(true);
+    }
+};
+
+export const addItemToBl = (itemname) => {
+    return (dispatch, getState) => {
+
+        database.ref('superUser/item_blacklist').child(itemname).set(true);
+    }
+};

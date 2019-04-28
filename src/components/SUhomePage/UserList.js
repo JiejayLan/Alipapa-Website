@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import * as firebase from "firebase";
-import { viewUser, removeUser, warnUser } from '../../actions/SUaction';
+import { viewUser, removeUser, warnUser, addUserToBl } from '../../actions/SUaction';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 
@@ -27,7 +27,10 @@ class UserList extends React.Component {
     removeUserHandler = (uid) => {
         if (confirm("Are you sure to remove this user?")){
             if(confirm('There is no turning back, please review detail on this user carefully, still want to remove?')){
+                let username = this.state[uid].username;
+
                 this.props.removeUser(uid);
+                this.props.addUserToBl(username);
 
                 delete this.state[uid];
 
@@ -37,17 +40,18 @@ class UserList extends React.Component {
         }
     }
 
+
     inspectUser = (uid) => {
         let name = this.state[uid].username;
         let warns = this.state[uid].warn_count;
         let rating = this.state[uid].rating;
         if(rating === 0){
-            confirm(name +' has ' + warns + ' warning(s) and has no rating yet');
+            alert(name +' has ' + warns + ' warning(s) and has no rating yet');
         }
         else{
             let grade = this.state[uid].grade;
 
-            confirm(name +' has ' + warns + ' warning(s), the rating is '+ rating+ 'and is conducted by '+grade);
+            alert(name +' has ' + warns + ' warning(s), the rating is '+ rating+ 'and is conducted by '+grade);
         }
     }
 
@@ -143,7 +147,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         viewUser: (user) => dispatch( viewUser(user)),
         removeUser: (user) => dispatch( removeUser(user)),
-        warnUser: (user) => dispatch( warnUser(user) )
+        warnUser: (user) => dispatch( warnUser(user) ),
+        addUserToBl: (user) => dispatch( addUserToBl(user) )
     };
 };
 
