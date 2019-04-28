@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import * as firebase from "firebase";
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
+import { justifyComp, removeComp } from '../../actions/SUaction';
 
 
 class ComplaintList extends React.Component {
@@ -36,27 +37,51 @@ class ComplaintList extends React.Component {
         };
     }
 
+    justifyHandler = (uid) => {
+        if(confirm('Make sure you contact the user to investigate the complain before confirm it')){
+            this.props.justifyComp(uid);
+            this.setState({...this.state});
+        };
+    }
+
+    removeHandler = (uid) => {
+        if(confirm('Sure removing this complaint?')){
+            this.props.removeComp(uid);
+
+            delete this.state[uid];
+            let newState = this.state;
+            this.setState({...newState});
+        }
+    }
+
     renderComplaintList = () => {
         const Compkeys = Object.keys(this.state);
         let Complist = [];
 
         for(let i = 0; i < Compkeys.length; i++){
-            this.state[Compkeys[i]].uid = Compkeys[i];
-            Complist.push(this.state[Compkeys[i]]);
+            if(this.state[Compkeys[i]].messageType === 'complain'){
+                this.state[Compkeys[i]].uid = Compkeys[i];
+                Complist.push(this.state[Compkeys[i]]);
+            }
+            else 
+                delete this.state[Compkeys[i]];
         }
 
         let jsxOUlist = Complist.map( (application) =>
             <div className='col-9 mx-auto col-md-6 col-lg-3 my-3 rounded float-left' key={application.uid}>
             <div className='card'>
                 <div className='card-content'>
-                    <span className='card-title'>Complain to {application.complained_userID}:</span>
+                    <span className='card-title'>{application.messageType}:</span>
                     <br />
-                    {application.description}<br />
+                    sender: {application.sender}<br />
+                    receiver: {application.receiver}<br />
+                    status: {application.status}<br /><br />
+                    {application.description}<br /><br />
                 </div>
                 <div className='card-action'>
-                    <button>justify</button>
+                    <button onClick={()=>this.justifyHandler(application.uid)}>justify</button>
                     <button onClick={this.setRedirect}>investigate</button>
-                    <button>remove</button>
+                    <button onClick={()=>this.removeHandler(application.uid)}>remove</button>
                 </div>
             </div>
             </div>
@@ -85,7 +110,9 @@ class ComplaintList extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        viewItemApplication: (application) => dispatch( viewItemApplication(application))
+        viewItemApplication: (application) => dispatch( viewItemApplication(application)),
+        justifyComp: (compid) => dispatch( justifyComp(compid) ),
+        removeComp: (compid) => dispatch( removeComp(compid) )
     };
 };
 

@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import  MessageType from "../components/messgePage/MessageType.js"
-import  MessageOption from "../components/messgePage/MessageOption.js"
+import  MessageOption from "../components/messgePage/MessageOption.js";
+import { warnUser } from '../actions/SUaction';
 import axios from 'axios';
 
 class MessageForm extends React.Component {
@@ -70,6 +71,9 @@ class MessageForm extends React.Component {
             ...message
           })
           .then( (response)=> {
+            if(message.messageType === 'warning'){
+                this.props.warnUser(this.state.receiver);
+            }
             console.log(response);
             this.props.history.push('/sendMessage')
           })
@@ -107,5 +111,11 @@ const mapStateToProps = (state, props) => ({
     user: state.auth
 });
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        warnUser: (user) => dispatch( warnUser(user) )
+    };
+};
 
-export default connect(mapStateToProps)(MessageForm);
+
+export default connect(mapStateToProps, mapDispatchToProps)(MessageForm);
