@@ -1,4 +1,5 @@
 import {database} from '../firebase/firebase';
+import { object } from 'prop-types';
 
 export const viewUser = (users) => {
     return {
@@ -7,15 +8,30 @@ export const viewUser = (users) => {
     }
 };
 
-/*export const warnUser = (target, self) => {
-    return (dispatch, getState) => {
+export const warnUser = (username) =>{
+    return (dispatch, getState) =>{
+        let ref = database.ref('users');
+        
+        ref.once('value', snapShot =>{
+            let users = snapShot.val();
+            let keys = Object.keys(users);
+            let targetuid = '';
+            let warns = 0;
 
-        return dispatch({
-            type: 'WARN_USER',
-            target
+            for( let i = 0; i < keys.length; i++){
+                if( users[keys[i]].username === username ){
+                    warns = users[keys[i]].warn_count;
+                    warns += 1;
+                    targetuid = keys[i]
+                    break;
+                }
+            }
+
+            ref.child(targetuid).update( {warn_count : warns} )
+
         })
     }
-};*/
+}
 
 export const removeUser = (user) => {
     return (dispatch, getState) => {
@@ -114,14 +130,3 @@ export const DenyItemApplication = (itemAppli) => {
         
     }
 };
-
-export const warnUser = (uid) =>{
-    return (dispatch, getState) =>{
-        database.ref('users').child(uid).once('value', snapShot =>{
-            let data = snapShot.val();
-            let warns = data.warn_count;
-            warns += 1;
-            snapShot.val().warn_count = warns;
-        })
-    }
-}

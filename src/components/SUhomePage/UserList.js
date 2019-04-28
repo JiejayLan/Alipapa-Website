@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import * as firebase from "firebase";
-import { viewUser, removeUser } from '../../actions/SUaction';
+import { viewUser, removeUser, warnUser } from '../../actions/SUaction';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 
@@ -61,9 +61,10 @@ class UserList extends React.Component {
 
     warnRedirect = () => {
         if(this.redirect){
-            return <Redirect to='/message' />
+            return <Redirect to='/sendMessage' />
         };
     }
+
 
     renderUserList = () => {
         const OUkeys = Object.keys(this.state);
@@ -87,9 +88,6 @@ class UserList extends React.Component {
             };
             if( !this.state[OUkeys[i]].rating ){
                 this.state[OUkeys[i]].rating = 0;
-            };
-            if( !this.state[OUkeys[i]].warn_count ){
-                this.state[OUkeys[i]].warn_count = 0;
             };
             /************ */
 
@@ -144,7 +142,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => {
     return {
         viewUser: (user) => dispatch( viewUser(user)),
-        removeUser: (user) => dispatch( removeUser(user))
+        removeUser: (user) => dispatch( removeUser(user)),
+        warnUser: (user) => dispatch( warnUser(user) )
     };
 };
 
