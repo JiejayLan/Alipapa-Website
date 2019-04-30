@@ -28,10 +28,10 @@ module.exports = ( data ) => {
             });
         }
         else if( req.body.datatype === 'COMP' ){
-            firebase.database.ref('/send_complain').once('value').then(snapshot =>{
-                let complaints = snapshot.val();
-
-                res.json(complaints);
+            firebase.database.ref('/message').once('value').then(snapshot =>{
+                let messages = snapshot.val();
+                
+                res.json(messages);
             });
         }
     }
