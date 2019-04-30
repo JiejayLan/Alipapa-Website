@@ -97,11 +97,7 @@ export const DenyUserApplication = (application) => {
           .catch(function(error) {
             console.log("Remove failed: " + error.message)
           });
-        
-        /*dispatch({
-            type: 'DENY_USER_APP',
-            application
-        })*/
+
     }
 };
 
@@ -136,6 +132,19 @@ export const DenyItemApplication = (itemAppli) => {
     }
 };
 
+export const removeItem = (itemuid) =>{
+    return (dispatch, getState) => {
+
+        database.ref('total_items').child(itemuid).remove().then(function() {
+            console.log("Remove succeeded.")
+          })
+          .catch(function(error) {
+            console.log("Remove failed: " + error.message)
+          });
+        
+    }
+}
+
 export const addUserToBl = (username) => {
     return (dispatch, getState) => {
 
@@ -166,5 +175,37 @@ export const removeComp = (compid) => {
           .catch(function(error) {
             console.log("Remove failed: " + error.message)
           });
+    }
+};
+
+export const removeTBword = (word) => {
+    return (dispatch, getState) =>{
+        database.ref('superUser/taboo').once('value', snapShot=>{
+            let words = snapShot.val();
+
+           for(let i = 0; i < words.length; i++){
+                if(words[i] === word){
+                    database.ref(`superUser/taboo`).child(i).remove().then(function() {
+                        console.log("Remove succeeded.")
+                      })
+                      .catch(function(error) {
+                        console.log("Remove failed: " + error.message)
+                      });
+                    break;
+                }
+            }
+        });
+    }
+};
+
+export const addTBword = (word) => {
+    return (dispatch, getState) =>{
+        database.ref('superUser/taboo').once('value', snapShot =>{
+            let words = snapShot.val();
+
+            let newIndex = words.length;
+
+            database.ref('superUser/taboo').child(newIndex).set(word);
+        })
     }
 };

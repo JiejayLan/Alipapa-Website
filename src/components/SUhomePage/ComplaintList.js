@@ -38,7 +38,10 @@ class ComplaintList extends React.Component {
     }
 
     justifyHandler = (uid) => {
-        if(confirm('Make sure you contact the user to investigate the complain before confirm it')){
+        if(this.state[uid].status === 'justified'){
+            alert('Already justified!');
+        }
+        else if(confirm('Make sure you contact the user to investigate the complain before confirm it')){
             this.props.justifyComp(uid);
             this.setState({...this.state});
         };

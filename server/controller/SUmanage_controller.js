@@ -34,5 +34,19 @@ module.exports = ( data ) => {
                 res.json(messages);
             });
         }
+        else if( req.body.datatype === 'ITEMS' ){
+            firebase.database.ref('total_items').once('value').then(snapshot => {
+                let items = snapshot.val();
+
+                res.json(items);
+            })
+        }
+        else if( req.body.datatype === 'TAB' ){
+            firebase.database.ref('superUser/taboo').once('value').then(snapshot => {
+                let taboos = snapshot.val();
+
+                res.json(taboos);
+            })
+        }
     }
 }

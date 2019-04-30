@@ -49,7 +49,7 @@ class UserList extends React.Component {
             alert(name +' has ' + warns + ' warning(s) and has no rating yet');
         }
         else{
-            let grade = this.state[uid].grade;
+            let grade = JSON.stringify(this.state[uid].grade);
 
             alert(name +' has ' + warns + ' warning(s), the rating is '+ rating+ 'and is conducted by '+grade);
         }
@@ -84,9 +84,6 @@ class UserList extends React.Component {
                 continue;
             }
             /*Every code from here is just to prevent issue sice the format of user in DB is not finalized yet */
-            if( this.state[OUkeys[i]].username === 'shibin' ){
-                continue;
-            };
             if( !this.state[OUkeys[i]].grade ){
                 this.state[OUkeys[i]].grade = {}
             };
@@ -95,13 +92,11 @@ class UserList extends React.Component {
             };
             /************ */
 
-            this.state[OUkeys[i]].uid = OUkeys[i];
-
             OUlist.push(this.state[OUkeys[i]]);
         }
 
         let jsxOUlist = OUlist.map( (user) =>
-            <div className='col-9 mx-auto col-md-6 col-lg-3 my-3 rounded float-left' key={user.uid}>
+            <div className='col-9 mx-auto col-md-6 col-lg-3 my-3 rounded float-left' key={user.userID}>
             <div className='card'>
                 <div className='card-content'>
                     <span className='card-title'>{user.username}</span>
@@ -114,9 +109,9 @@ class UserList extends React.Component {
                     {user.status}
                 </div>
                 <div className='card-action'>
-                    <button onClick={()=>this.inspectUser(user.uid)}>inspect</button>
+                    <button onClick={()=>this.inspectUser(user.userID)}>inspect</button>
                     <button onClick={this.setRedirect}>warn</button>
-                    <button onClick={()=>this.removeUserHandler(user.uid)}>remove</button>
+                    <button onClick={()=>this.removeUserHandler(user.userID)}>remove</button>
                 </div>
             </div>
             </div>
