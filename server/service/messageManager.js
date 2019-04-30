@@ -26,7 +26,7 @@ module.exports = (firebase) => {
             status:"suspended" or "justified"
         4.explain(OU only)
             description
-            messageType:"complain"
+            messageType:"explain"
             receiver:"SU"
             sender
             explainUsername:(who you want to explain)
