@@ -1,4 +1,5 @@
 import {database} from '../firebase/firebase';
+import { object } from 'prop-types';
 
 export const viewUser = (users) => {
     return {
@@ -7,31 +8,42 @@ export const viewUser = (users) => {
     }
 };
 
-/*export const warnUser = (target, self) => {
-    return (dispatch, getState) => {
+export const warnUser = (username) =>{
+    return (dispatch, getState) =>{
+        let ref = database.ref('users');
+        
+        ref.once('value', snapShot =>{
+            let users = snapShot.val();
+            let keys = Object.keys(users);
+            let targetuid = '';
+            let warns = 0;
+            let suspend = false;
 
-        return dispatch({
-            type: 'WARN_USER',
-            target
+            for( let i = 0; i < keys.length; i++){
+                if( users[keys[i]].username === username ){
+                    warns = users[keys[i]].warn_count;
+                    warns += 1;
+                    if(warns >= 2){
+                    suspend = true;
+                    }
+                    targetuid = keys[i]
+                    break;
+                }
+            }
+            if(suspend){
+                ref.child(targetuid).update({status: 'suspended'});
+            }
+            ref.child(targetuid).update( {warn_count : warns} )
         })
     }
-};*/
+}
 
 export const removeUser = (user) => {
     return (dispatch, getState) => {
 
         const key = user;
 
-        database.ref('users').child(key).remove().then(function() {
-            console.log("Remove succeeded.")
-          })
-          .catch(function(error) {
-            console.log("Remove failed: " + error.message)
-          });
-        /*dispatch({
-            type: 'REMOVE_USER',
-            user
-        })*/
+        database.ref('users').child(key).update({status: 'delete'});
     }
 };
 
@@ -53,7 +65,8 @@ export const ApproveUserApplication = (application={}) => {
             username = '' 
         } = application;
 
-        const newUser = {address, credit_card, password, phone_number, status: 'newUser', username};
+        const newUser = {address, credit_card, grade:{}, password, phone_number, 
+            rating: 0, status: 'normal', user_type: 'OU', username, warn_count: 0};
 
         database.ref('user_application').child(key).remove().then(function() {
             console.log("Remove succeeded.")
@@ -111,10 +124,47 @@ export const ApproveItemApplication = (itemAppli) => {
 
 export const DenyItemApplication = (itemAppli) => {
     return (dispatch, getState) => {
+        const key = itemAppli;
 
-        dispatch({
-            type: 'DENY_ITEM_APP',
-            itemAppli
-        })
+        database.ref('item_application').child(key).remove().then(function() {
+            console.log("Remove succeeded.")
+          })
+          .catch(function(error) {
+            console.log("Remove failed: " + error.message)
+          });
+        
+    }
+};
+
+export const addUserToBl = (username) => {
+    return (dispatch, getState) => {
+
+        database.ref('superUser/user_blacklist').child(username).set(true);
+    }
+};
+
+export const addItemToBl = (itemname) => {
+    return (dispatch, getState) => {
+
+        database.ref('superUser/item_blacklist').child(itemname).set(true);
+    }
+};
+
+
+export const justifyComp = (compid) => {
+    return (dispatch, getState) =>{
+        database.ref('message').child(compid).update({status: 'justified'});
+    }
+};
+
+
+export const removeComp = (compid) => {
+    return (dispatch, getState) =>{
+        database.ref('message').child(compid).remove().then(function() {
+            console.log("Remove succeeded.")
+          })
+          .catch(function(error) {
+            console.log("Remove failed: " + error.message)
+          });
     }
 };
