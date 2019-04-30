@@ -2,6 +2,7 @@ import React from 'react';
 import Modal from 'react-modal';
 import {connect} from 'react-redux';
 import {database} from '../../firebase/firebase';
+import {VIPCheckRating} from '../../actions/VIPCheck';
 
 class GradeSellerModal extends React.Component {
   constructor(props) {
@@ -48,8 +49,12 @@ class GradeSellerModal extends React.Component {
 
       database.ref(`orders/${ORDERID}`).update({status: "rated"});
       this.setState(() => ({modalIsOpen}));
+
+      VIPCheckRating(SELLER);
+
       location.reload(true);
     }
+
     this.setState(() => ({modalIsOpen}));
   }
 
