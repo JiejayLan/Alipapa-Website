@@ -5,17 +5,14 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
-import Message from "../components/checkMessagePage/Message"
-import MessageHeader from "../components/checkMessagePage/MessageHeader"
+// import Message from "../components/checkMessagePage/Message"
+// import MessageHeader from "../components/checkMessagePage/MessageHeader"
 import TableHead from '@material-ui/core/TableHead';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-
+import { firebase } from '../firebase/firebase';
 function TabContainer(props) {
   return (
     <Typography component="div" style={{ padding: 8 * 3 }}>
@@ -34,87 +31,118 @@ const styles = theme => ({
     width: '100%',
     backgroundColor: theme.palette.background.paper,
   },
-  table:{
+  table: {
     width: '30%',
   }
 });
 
 class MessageForm extends React.Component {
   constructor(props) {
-      super(props);
-      this.state = {
-          userID:'',
-          userType:'',
-          value:0,
-          message:[],
-          complain:[],
-          appeal:[],
-          warning:[]
-      };
+    super(props);
+    this.state = {
+      userID: '',
+      userType: '',
+      value: 0,
+      message: [],
+      complain: [],
+      appeal: [],
+      warning: []
+    };
   }
 
-  classifyMessage(data){
+  classifyMessage(data) {
     let message = [];
     let appeal = [];
     let warning = [];
-    for(let id in data){
+    for (let id in data) {
       data[id]["messageID"] = id;
-      if(data[id]["messageType"] === "message")
+      if (data[id]["messageType"] === "message")
         message.push(data[id])
-      else if(data[id]["messageType"] === "warning")
+      else if (data[id]["messageType"] === "warning")
         warning.push(data[id]);
       else
         appeal.push(data[id]);
     }
-    this.setState({message});
-    this.setState({appeal});
-    this.setState({warning});
+    this.setState({ message });
+    this.setState({ appeal });
+    this.setState({ warning });
 
   }
 
-  componentWillMount(){
+  componentDidMount = () => {
+    //test for a chat room
+    // firebase.firestore().collection('messages').add({
+    //   name: "jay",
+    //   text: "hi",
+    //   profilePicUrl: "newul",
+    //   timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    // }).catch(function(error) {
+    //   console.error('Error writing new message to Firebase Database', error);
+    // });
 
-      //get auth data from redux
-      this.setState({
-          userType:this.props.user.user_type,
-          userID:this.props.user.userID
-      })
 
-      //get regular message from firebase   
-      axios.post('/message/checkReceive', {
-            username:this.props.user.username
-          })
-          .then( (response)=> {
-            let data =response.data;
-            this.classifyMessage(data);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });  
+    // var query = firebase.firestore()
+    //   .collection('messages')
+    //   .limit(12);
 
-          //check received complain messages
-          axios.post('/message/checkComplain',{
-            username:this.props.user.username
-          })
-          .then( (response)=> {
-            let complain = [];
-            let data =response.data;
-            for(let id in data){
-              data[id]["messageID"] = id;
-              complain.push(data[id]);
-            }
-            // console.log(complain);
-            this.setState({complain})
-          })
-          .catch(function (error) {
-            console.log(error);
-          });    
+    // // Start listening to the query.
+    // query.onSnapshot(function (snapshot) {
+    //   snapshot.docChanges().forEach(function (change) {
+    //     if (change.type === 'removed') {
+    //       console.log(change.doc.id);
+       
+    //     } else {
+    //       var message = change.doc.data();
+    //       console.log(message);
+    //     }
+    //   });
+    // });
   }
+
+
+  // componentWillMount() {
+
+  //   //get auth data from redux
+  //   this.setState({
+  //     userType: this.props.user.user_type,
+  //     userID: this.props.user.userID
+  //   })
+
+  //   //get regular message from firebase   
+  //   axios.post('/message/checkReceive', {
+  //     username: this.props.user.username
+  //   })
+  //     .then((response) => {
+  //       let data = response.data;
+  //       this.classifyMessage(data);
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     });
+
+  //   //check received complain messages
+  //   axios.post('/message/checkComplain', {
+  //     username: this.props.user.username
+  //   })
+  //     .then((response) => {
+  //       let complain = [];
+  //       let data = response.data;
+  //       for (let id in data) {
+  //         data[id]["messageID"] = id;
+  //         complain.push(data[id]);
+  //       }
+  //       // console.log(complain);
+  //       this.setState({ complain })
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     });
+  // }
 
   handleUpdate = (event) => {
-      this.setState({
-        [event.target.name]: event.target.value
-      })
+    this.setState({
+      [event.target.name]: event.target.value
+    })
   }
 
   handleChange = (event, value) => {
@@ -139,7 +167,7 @@ class MessageForm extends React.Component {
 
     return (
       <div className={classes.root}>
-        <AppBar position="static" color="default">
+        {/* <AppBar position="static" color="default">
           <Tabs
             value={value}
             onChange={this.handleChange}
@@ -154,50 +182,50 @@ class MessageForm extends React.Component {
           </Tabs>
         </AppBar>
         {value === 0 && <TabContainer>
-                          <Paper className={classes.table} >
-                            <Table >
-                            <TableHead><MessageHeader/></TableHead>                
-                            <div>
-                                {this.state.message.map((message)=>{
-                                    return <Message
-                                        description = {message.description}
-                                        sender = { message.sender}
-                                    />
-                                })}
-                            </div>
-                            </Table>
-                          </Paper>               
-                        </TabContainer>}
+          <Paper className={classes.table} >
+            <Table >
+              <TableHead><MessageHeader /></TableHead>
+              <div>
+                {this.state.message.map((message) => {
+                  return <Message
+                    description={message.description}
+                    sender={message.sender}
+                  />
+                })}
+              </div>
+            </Table>
+          </Paper>
+        </TabContainer>}
         {value === 1 && <TabContainer>
-                          <Paper className={classes.table} >
-                            <Table >
-                            <TableHead><MessageHeader/></TableHead>                
-                            <div>
-                                {this.state.warning.map((message)=>{
-                                    return <Message
-                                        description = {message.description}
-                                        sender = { message.sender}
-                                    />
-                                })}
-                            </div>
-                            </Table>
-                          </Paper> 
-                        </TabContainer>}
+          <Paper className={classes.table} >
+            <Table >
+              <TableHead><MessageHeader /></TableHead>
+              <div>
+                {this.state.warning.map((message) => {
+                  return <Message
+                    description={message.description}
+                    sender={message.sender}
+                  />
+                })}
+              </div>
+            </Table>
+          </Paper>
+        </TabContainer>}
         {value === 2 && <TabContainer>
-                          <Paper className={classes.table} >
-                            <Table >
-                            <TableHead><MessageHeader/></TableHead>                
-                            <div>
-                                {this.state.complain.map((message)=>{
-                                    return <Message
-                                        description = {message.description}
-                                        sender = { message.sender}
-                                    />
-                                })}
-                            </div>
-                            </Table>
-                          </Paper> 
-                        </TabContainer>}
+          <Paper className={classes.table} >
+            <Table >
+              <TableHead><MessageHeader /></TableHead>
+              <div>
+                {this.state.complain.map((message) => {
+                  return <Message
+                    description={message.description}
+                    sender={message.sender}
+                  />
+                })}
+              </div>
+            </Table>
+          </Paper>
+        </TabContainer>} */}
       </div>
     );
   }
@@ -208,7 +236,7 @@ MessageForm.propTypes = {
 };
 
 const mapStateToProps = (state, props) => ({
-    user: state.auth
+  user: state.auth
 });
 
 export default withStyles(styles)(connect(mapStateToProps)(MessageForm));
