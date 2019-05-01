@@ -5,8 +5,8 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
-// import Message from "../components/checkMessagePage/Message"
-// import MessageHeader from "../components/checkMessagePage/MessageHeader"
+import Message from "../components/checkMessagePage/Message"
+import MessageHeader from "../components/checkMessagePage/MessageHeader"
 import TableHead from '@material-ui/core/TableHead';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -100,44 +100,44 @@ class MessageForm extends React.Component {
   }
 
 
-  // componentWillMount() {
+  componentWillMount() {
 
-  //   //get auth data from redux
-  //   this.setState({
-  //     userType: this.props.user.user_type,
-  //     userID: this.props.user.userID
-  //   })
+    //get auth data from redux
+    this.setState({
+      userType: this.props.user.user_type,
+      userID: this.props.user.userID
+    })
 
-  //   //get regular message from firebase   
-  //   axios.post('/message/checkReceive', {
-  //     username: this.props.user.username
-  //   })
-  //     .then((response) => {
-  //       let data = response.data;
-  //       this.classifyMessage(data);
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error);
-  //     });
+    //get regular message from firebase   
+    axios.post('/message/checkReceive', {
+      userID: this.props.user.userID
+    })
+      .then((response) => {
+        let data = response.data;
+        this.classifyMessage(data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
 
-  //   //check received complain messages
-  //   axios.post('/message/checkComplain', {
-  //     username: this.props.user.username
-  //   })
-  //     .then((response) => {
-  //       let complain = [];
-  //       let data = response.data;
-  //       for (let id in data) {
-  //         data[id]["messageID"] = id;
-  //         complain.push(data[id]);
-  //       }
-  //       // console.log(complain);
-  //       this.setState({ complain })
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error);
-  //     });
-  // }
+    //check received complain messages
+    axios.post('/message/checkComplain', {
+      userID: this.props.user.userID
+    })
+      .then((response) => {
+        let complain = [];
+        let data = response.data;
+        for (let id in data) {
+          data[id]["messageID"] = id;
+          complain.push(data[id]);
+        }
+        // console.log(complain);
+        this.setState({ complain })
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
 
   handleUpdate = (event) => {
     this.setState({
@@ -154,20 +154,10 @@ class MessageForm extends React.Component {
   render() {
     const { classes } = this.props;
     const { value } = this.state;
-    // let Tabs = (this.state.userType === "SU")?
-    //           <div>
-    //             <Tab label = "Message" />
-    //             <Tab label= "Complain / Explain" />
-    //           </div>: 
-    //           <div>          
-    //             <Tab label="Message" />
-    //             <Tab label="Warning" />
-    //             <Tab label="Complain / Explain" />
-    //           </div>;
 
     return (
       <div className={classes.root}>
-        {/* <AppBar position="static" color="default">
+        <AppBar position="static" color="default">
           <Tabs
             value={value}
             onChange={this.handleChange}
@@ -178,7 +168,7 @@ class MessageForm extends React.Component {
           >
             <Tab label="Message" />
             <Tab label="Warning" />
-            <Tab label="Complain / Explain" />
+            <Tab label="Complain" />
           </Tabs>
         </AppBar>
         {value === 0 && <TabContainer>
@@ -225,7 +215,7 @@ class MessageForm extends React.Component {
               </div>
             </Table>
           </Paper>
-        </TabContainer>} */}
+        </TabContainer>}
       </div>
     );
   }

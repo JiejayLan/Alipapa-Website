@@ -64,12 +64,13 @@ class Friend extends React.Component {
 
   componentDidMount() {
     axios.post('/friend/listfriend', {
-      userName: this.state.userName
+      userID: this.state.userID
     })
       .then((response) => {
         let frinedList = [];
-        for (let friend in response.data) {
-          frinedList.push(friend);
+        let friends = response.data;
+        for (let id in friends) {
+          frinedList.push(friends[id]);
         }
         console.log("friendlist", frinedList);
         this.setState({ friendList: frinedList });
@@ -89,7 +90,7 @@ class Friend extends React.Component {
   handleDelete = (index)=>{
     console.log("You want to delete friend", this.state.friendList[index]);
     axios.post('/friend/deletefriend', {
-      userName: this.state.userName,
+      userID: this.state.userID,
       friendName:this.state.friendList[index]
     })
       .then((response) => {
@@ -104,7 +105,7 @@ class Friend extends React.Component {
   handleSumit = () => {
     // console.log("add a new friend");
     axios.post('/friend/addfriend', {
-      userName: this.state.userName,
+      userID: this.state.userID,
       friendName:this.state.newFriend
     })
       .then((response) => {

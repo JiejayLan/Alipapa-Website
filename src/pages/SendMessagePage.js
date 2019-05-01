@@ -11,8 +11,8 @@ class MessageForm extends React.Component {
         this.state = {
             messageType:"appeal",
             sender:'',
-            complaintedUsername:'',
-            explainUsername:'',
+            complaintUser:'',
+            explainUser:'',
             receiver:'',
             description:"",
             confirmedType:"false",
@@ -50,11 +50,11 @@ class MessageForm extends React.Component {
         if(this.state.messageType === "complain"){
             message.receiver = "SU";
             message.status = "suspended";
-            message.complaintedUsername = this.state.complaintedUsername;
+            message.complaintUser= this.state.complaintUser;
         }
         else if(this.state.messageType ==="explain"){
             message.receiver = "SU";
-            message.explainUsername = this.state.explainUsername;
+            message.explainUser = this.state.explainUser;
         }
         else if(this.state.messageType ==="warning" || this.state.messageType ==="message"){
             message.receiver= this.state.receiver;
@@ -65,7 +65,6 @@ class MessageForm extends React.Component {
 
         message.description = this.state.description;
         message.messageType = this.state.messageType;
-        message.senderUserType = this.state.userType;
         message.sender = this.state.sender;
         axios.post('/message/send', {
             ...message
