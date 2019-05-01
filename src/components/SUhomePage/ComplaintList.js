@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import * as firebase from "firebase";
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
-import { justifyComp, removeComp } from '../../actions/SUaction';
-
+import { justifyComp, removeComp, checkUsername, ApealApprove } from '../../actions/SUaction';
 
 class ComplaintList extends React.Component {
     constructor(props) {
@@ -57,15 +56,36 @@ class ComplaintList extends React.Component {
         }
     }
 
-    renderComplaintList = () => {
+    /*async nameHandler(id){
+       await checkUsername(id).then( (value)=> {
+         this.placeholder = value;
+       });
+    }*/
+
+    Appealhandler = (appid) => {
+        if(confirm('Sure want to approve this appeal?')){
+            this.props.ApealApprove(appid);
+
+            delete this.state[appid];
+            let newState = this.state;
+            this.setState({...newState});
+        }
+    }
+
+    renderComplaintList() {
         const Compkeys = Object.keys(this.state);
         let Complist = [];
 
         for(let i = 0; i < Compkeys.length; i++){
             if(this.state[Compkeys[i]].messageType === 'complain'){
+                //this.state[Compkeys[i]].receiver = this.nameHandler(this.state[Compkeys[i]].receiver);
+                //let a = await checkUsername(this.state[Compkeys[i]].sender);
+                //this.state[Compkeys[i]].sender = a;
+                //console.log(this.state[Compkeys[i]].sender);
                 this.state[Compkeys[i]].uid = Compkeys[i];
                 Complist.push(this.state[Compkeys[i]]);
             }
+            else if(this.state[Compkeys[i]].messageType === 'appeal') continue;
             else 
                 delete this.state[Compkeys[i]];
         }
@@ -93,15 +113,55 @@ class ComplaintList extends React.Component {
         return jsxOUlist;
     };
 
+    renderApealList =() =>{
+        const Compkeys = Object.keys(this.state);
+        let Applist = [];
+
+        for(let i = 0; i < Compkeys.length; i++){
+            if(this.state[Compkeys[i]].messageType === 'complain') continue;
+            else if(this.state[Compkeys[i]].messageType === 'appeal'){
+               // this.state[Compkeys[i]].receiver = this.nameHandler(this.state[Compkeys[i]].receiver);
+               // this.state[Compkeys[i]].sender = this.nameHandler(this.state[Compkeys[i]].sender);
+                this.state[Compkeys[i]].uid = Compkeys[i];
+                Applist.push(this.state[Compkeys[i]]);
+            }
+            else 
+                delete this.state[Compkeys[i]];
+        }
+
+        let jsxOUlist2 = Applist.map( (application) =>
+            <div className='col-9 mx-auto col-md-6 col-lg-3 my-3 rounded float-left' key={application.uid}>
+            <div className='card'>
+                <div className='card-content'>
+                    <span className='card-title'>{application.messageType}:</span>
+                    <br />
+                    username: {application.sender}<br />
+                    <br />
+                    {application.description}<br /><br />
+                </div>
+                <div className='card-action'>
+                    <button onClick={()=>this.Appealhandler(application.uid)}>approve</button>
+                    <button onClick={()=>this.removeHandler(application.uid)}>reject</button>
+                </div>
+            </div>
+            </div>
+        );
+
+        return jsxOUlist2;
+    }
+
 
     render(){
 
         let resultList = this.renderComplaintList();
 
+        let resultList2 = this.renderApealList();
+
         return(
             <div>
                 {this.investigateRedirect()}
                 {resultList}
+                {resultList2}
             </div>
         );
     };
@@ -115,7 +175,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         viewItemApplication: (application) => dispatch( viewItemApplication(application)),
         justifyComp: (compid) => dispatch( justifyComp(compid) ),
-        removeComp: (compid) => dispatch( removeComp(compid) )
+        removeComp: (compid) => dispatch( removeComp(compid) ),
+        ApealApprove: (appid) => dispatch( ApealApprove(appid) )
     };
 };
 
