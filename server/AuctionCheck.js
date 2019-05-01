@@ -46,7 +46,6 @@ module.exports = (data) => {
 										
 										if (UPDATED_ITEM_STATUS === 'order') {
 											
-											const PENDING_ORDERS = ORDER_MANAGER.Pending;
 											const CREATE_PENDING_CONFIG = {
 												data: {
 													buyer: ITEM.buyer,
@@ -57,8 +56,8 @@ module.exports = (data) => {
 												}
 											}
 											
-											PENDING_ORDERS
-												.create(CREATE_PENDING_CONFIG)
+											ORDER_MANAGER
+												.createPendingOrder(CREATE_PENDING_CONFIG)
 											
 										}
 										
@@ -74,7 +73,7 @@ module.exports = (data) => {
 			},
 			
 			//	check every 120 seconds for testing
-			1000 * 60 * 2
+			1000 * 30
 			
 		)
 		

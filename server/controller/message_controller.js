@@ -12,17 +12,19 @@ module.exports = (MESSAGE_SYSTEM) => {
             res
                 .status(204)
                 .json({ status: result.message });
+            res.end();
         }
         else {
             res
                 .status(200)
                 .json({ status: result.message });
+            res.end();
         }
     });
 
     //check all receive message
     router.post('/checkReceive', (req, res) => {
-        let username = req.body.username;
+        let username = req.body.userID;
         // console.log("username is",username);
         let check_message = MESSAGE_SYSTEM.checkReceiveMessage;
         check_message(username, res);
@@ -31,7 +33,7 @@ module.exports = (MESSAGE_SYSTEM) => {
 
     //check all receive complain
     router.post('/checkComplain', (req, res) => {
-        let username = req.body.username;
+        let username = req.body.userID;
         // console.log("username for complain",username);
         let check_message = MESSAGE_SYSTEM.checkReceiveComplain;
         check_message(username, res);
