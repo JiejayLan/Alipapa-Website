@@ -12,26 +12,25 @@ module.exports = (firebase) => {
                 .equalTo(username)
                 .on('value', (snapshot) => {
                     //no such user and return null
-                    if(!snapshot.val())
+                    if (!snapshot.val())
                         resolve(null);
-                    else{
+                    else {
                         let userID = Object.keys(snapshot.val())[0];
                         resolve(userID);
                     }
-            })
+                })
         })
     }
 
     //check and return username based on userID
     let checkUsername = (userID) => {
-        console.log("userID",userID);
         return new Promise((resolve, reject) => {
-            DATABASE.ref('/users'+'/'+userID)
+            DATABASE.ref('/users' + '/' + userID)
                 .once('value')
                 .then((snapshot) => {
                     let user = snapshot.val();
                     resolve(user.username);
-            })
+                })
         })
     }
 
@@ -72,13 +71,13 @@ module.exports = (firebase) => {
         send: async (data) => {
 
             //replace all username with userID
-            for(let key in data){
-                if(key === "sender" || key === "complaintUser" || key === "explainUser" ||key ==="receiver"){
+            for (let key in data) {
+                if (key === "sender" || key === "complaintUser" || key === "explainUser" || key === "receiver") {
                     let userID = await checkID(data[key]);
                     data[key] = userID;
                 }
             }
-            
+
             return new Promise((resolve, reject) => {
                 (DATABASE.ref('/message').push().set({ ...data },
                     function (error) {
@@ -104,12 +103,12 @@ module.exports = (firebase) => {
                     let messages = snapshot.val();
 
                     //replace all userID with username
-                    for(let key in messages){
+                    for (let key in messages) {
                         let message = messages[key]
                         let sender = await checkUsername(message.sender);
                         message.sender = sender;
                     }
-                        
+
                     if (messages === undefined) {
                         res
                             .status(204)
@@ -124,6 +123,7 @@ module.exports = (firebase) => {
                     }
                 });
         },
+        
         //	check received complain messages
         checkReceiveComplain: (userID, res) => {
             DATABASE.ref('/message')
@@ -133,7 +133,7 @@ module.exports = (firebase) => {
                     let messages = snapshot.val();
 
                     //replace all userID with username
-                    for(let key in messages){
+                    for (let key in messages) {
                         let message = messages[key]
                         let sender = await checkUsername(message.sender);
                         message.sender = sender;
