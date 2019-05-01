@@ -203,6 +203,44 @@ module.exports = (data) => {
 		
 		/*
 			DESCRIPTION:
+				Retrieves all items
+				
+			PARAMETERS:
+			None
+			
+			RETURN VALUE:
+				Array of <Object> which represent the items
+		*/
+		getAll: () => {
+			
+			return new Promise((resolve, reject) => {
+				
+				const ITEMS = [];
+				
+				DATABASE
+					.ref('total_items')
+					.once('value')
+					.then((itemSnapshots) => {
+						
+						const COUNT = itemSnapshots.length;
+						
+						itemSnapshots.forEach((snapshot, index) => {
+							
+							ITEMS.push(snapshot.val())
+							
+						})
+						
+						resolve(ITEMS)
+						
+					})
+				
+				
+			})
+			
+		},
+		
+		/*
+			DESCRIPTION:
 				Updates an item in the store.
 				
 			PARAMETERS:
