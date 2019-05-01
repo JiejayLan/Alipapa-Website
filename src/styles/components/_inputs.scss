@@ -12,7 +12,8 @@
 
 .textarea {
   @extend .text-input;
-  height: 10rem;
+  width: 50rem;
+  height: 20rem;
 }
 
 .file-input {
