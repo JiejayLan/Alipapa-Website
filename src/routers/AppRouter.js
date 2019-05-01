@@ -19,6 +19,7 @@ import Friend from '../pages/FriendPage';
 import PurchaseIntention from '../pages/PurchaseIntention';
 import UserInfoPage from '../pages/UserInfoPage';
 import TransactionHistory from '../components/transactionPage/TransactionHistory';
+import SellerApproveItemPage from '../pages/SellerApproveItemPage';
 
 export const history = createHistory();
 
@@ -40,7 +41,7 @@ const AppRouter = () => (
 			<PrivateRoute path="/purchase-intention/new" component={PurchaseIntention} />
       <PrivateRoute path="/account" component={UserInfoPage}/>
       <PrivateRoute path="/transactionHistory" component={TransactionHistory}/>
-
+      <PrivateRoute path="/sellerapprove" component={SellerApproveItemPage}/>
       <Route component={NotFoundPage}/>
     </Switch>
   </div>

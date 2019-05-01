@@ -18,5 +18,12 @@
 }
 
 .button--secondary {
+  @extend .button;
+  max-width: 50%;
   background: #888888;
+}
+
+.button--alt{
+  @extend .button;
+  max-width: 50%;
 }
