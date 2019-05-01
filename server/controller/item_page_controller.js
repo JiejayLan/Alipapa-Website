@@ -43,7 +43,6 @@ module.exports = (data) => {
 	const BUY_ITEM_CONTROLLER = (req, res) => {
 		
 		const ORDER_MANAGER = data.orderManager;
-		const PENDING_ORDERS = ORDER_MANAGER.Pending;
 		const ITEM_MANAGER = data.itemManager;
 		const STORE = ITEM_MANAGER.Store;
 		const ITEM_ID = req.params.id;
@@ -74,8 +73,8 @@ module.exports = (data) => {
 				}
 				
 				//	Create a pending order
-				PENDING_ORDERS
-					.create(CREATE_PENDING_CONFIG)
+				ORDER_MANAGER
+					.createPendingOrder(CREATE_PENDING_CONFIG)
 					.then((result) => {
 						
 						res
@@ -92,7 +91,6 @@ module.exports = (data) => {
 	const BID_ITEM_CONTROLLER = (req, res) => {
 		
 		const ORDER_MANAGER = data.orderManager;
-		const PENDING_ORDERS = ORDER_MANAGER.Pending;
 		const ITEM_MANAGER = data.itemManager;
 		const STORE = ITEM_MANAGER.Store;
 		const ITEM_ID = req.params.id;

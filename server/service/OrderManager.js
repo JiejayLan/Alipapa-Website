@@ -4,8 +4,7 @@ module.exports = (data) => {
 	
 	const DATABASE = data.firebase.database;
 	
-	
-	const PENDING = {
+	return {
 		/*
 			DESCRIPTION:
 				Creates a pending order
@@ -24,13 +23,11 @@ module.exports = (data) => {
 			RETURN VALUE:
 				None if the pending order is successfully created
 		*/
-		create: (config) => {
-			
+		createPendingOrder: (config) => {
 			
 			return new Promise ((resolve, reject) => {
 				
-				const ORDER_INFO = config.data;
-														
+				const ORDER_INFO = config.data;			
 				
 				DATABASE
 					.ref('total_items')
@@ -44,7 +41,6 @@ module.exports = (data) => {
 							.once('value')
 							.then((sellerSnapshot) => {
 								
-								
 								const ITEM = itemSnapshot.val();
 								const SELLER = sellerSnapshot.val()
 								const ORDER_PATH = 'orders/' +
@@ -54,7 +50,6 @@ module.exports = (data) => {
 									itemName: ITEM.name,
 									sellerUsername: SELLER.username
 								}
-								
 								
 								DATABASE
 									.ref(ORDER_PATH)
@@ -67,22 +62,12 @@ module.exports = (data) => {
 								
 							})
 						
-						
-						
-						
 					})
 				
 			})
 			
 		}
-		
 	}
-	
-	
-	const ORDER_MANAGER = {
-		Pending: PENDING
-	}
-	
-	return ORDER_MANAGER;
+
 	
 }
