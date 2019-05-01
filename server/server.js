@@ -27,6 +27,7 @@ app.post("/login",auth.login({firebase}));
 app.post("/delete",auth.delete({firebase}));
 
 app.post('/purchase-intention/new', require('./controller/purchase_intention_controller.js')({ itemManager: ITEM_MANAGER }));
+app.post('/process-pending-orders/:decision/:orderId/', require('./controller/process_pending_order_controller.js')({ ITEM_MANAGER, ORDER_MANAGER, MESSAGE_SYSTEM}));
 
 //a route to controll all message request
 app.use("/message",message_controller(MESSAGE_SYSTEM(firebase)));
