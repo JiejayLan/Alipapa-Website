@@ -4,8 +4,7 @@ module.exports = (data) => {
 	
 	const DATABASE = data.firebase.database;
 	
-	
-	const PENDING = {
+	return {
 		/*
 			DESCRIPTION:
 				Creates a pending order
@@ -24,13 +23,11 @@ module.exports = (data) => {
 			RETURN VALUE:
 				None if the pending order is successfully created
 		*/
-		create: (config) => {
-			
+		createPendingOrder: (config) => {
 			
 			return new Promise ((resolve, reject) => {
 				
-				const ORDER_INFO = config.data;
-														
+				const ORDER_INFO = config.data;			
 				
 				DATABASE
 					.ref('total_items')
@@ -44,7 +41,6 @@ module.exports = (data) => {
 							.once('value')
 							.then((sellerSnapshot) => {
 								
-								
 								const ITEM = itemSnapshot.val();
 								const SELLER = sellerSnapshot.val()
 								const ORDER_PATH = 'orders/' +
@@ -54,7 +50,6 @@ module.exports = (data) => {
 									itemName: ITEM.name,
 									sellerUsername: SELLER.username
 								}
-								
 								
 								DATABASE
 									.ref(ORDER_PATH)
@@ -67,22 +62,86 @@ module.exports = (data) => {
 								
 							})
 						
-						
-						
-						
 					})
 				
 			})
 			
+		},
+		
+		/*
+			DESCRIPTION:
+				Converts a pending order to an approved order
+				
+			PARAMETERS:
+				config = {
+					id: <String> ID of order,
+				}
+			
+			RETURN VALUE:
+				Promise resolves if the approved order is created
+		*/
+		createApprovedOrder: (config) => {
+			
+			const ORDER_ID = config.id;
+			
+			return new Promise((resolve, reject) => {
+				
+				DATABASE
+					.ref('orders')
+					.child(ORDER_ID)
+					.once('value')
+					.then((snapshot) => {
+						
+						const PENDING_ORDER = snapshot.val();
+						console.log(PENDING_ORDER);
+						
+						if (PENDING_ORDER === null) {
+					
+							reject(new Error("COULD NOT FIND ORDER"));
+							return;
+							
+						} else {
+						
+							const APPROVED_ORDER = {
+								... PENDING_ORDER,
+								status: 'approved'
+							}
+							
+							DATABASE
+								.ref('orders')
+								.child(ORDER_ID)
+								.set(APPROVED_ORDER)
+								.then((response) => {
+									
+									resolve();
+									
+								})
+						}
+						
+					})											
+				
+			})
+			
+		},
+		
+		/*
+			DESCRIPTION:
+				
+				
+			PARAMETERS:
+				config = {
+					
+				}
+			
+			RETURN VALUE:
+				
+		*/
+		update: (config) => {
+			
+
 		}
 		
 	}
-	
-	
-	const ORDER_MANAGER = {
-		Pending: PENDING
-	}
-	
-	return ORDER_MANAGER;
+
 	
 }
