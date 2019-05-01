@@ -4,7 +4,6 @@ import {connect} from 'react-redux';
 class RegisterForm extends React.Component {
   constructor(props){
     super(props);
-    //figure out why props.profile is not displaying
     this.state={
       username: props.auth ? props.auth.username : '',
       credit_card: props.auth ? props.auth.credit_card : '',
@@ -41,7 +40,6 @@ class RegisterForm extends React.Component {
         address: this.state.address,
         phone_number: this.state.phone_number
       });
-    
   };
 
   render(){
@@ -74,8 +72,7 @@ class RegisterForm extends React.Component {
           value={this.state.address}
           onChange={this.onAddressChange}
           required
-          pattern="^[a-zA-Z0-9\s,'-]*$"
-          title="American address"
+          title="address"
         />
         <input
           type="text"
@@ -85,7 +82,7 @@ class RegisterForm extends React.Component {
           onChange={this.onPhoneNumberChange}
           required
           pattern="\d{10}"
-          title="American 10 digits phone number"
+          title="10 digits phone number (no spaces and dashes in between)"
         />
         <div>
           <button className="button">Submit</button>
