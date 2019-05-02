@@ -12,6 +12,7 @@ let friend_controller= require("./controller/friend_controller.js")
 const MESSAGE_SYSTEM = require('./service/messageManager');
 const FRIEDN_MANAGER = require('./service/FriendManager')(firebase);
 let auth = require('./controller/auth_controller.js')
+let taboo_controller = require('./controller/taboo_controller.js')
 const AUCTION_CHECKER = require('./AuctionCheck')({ itemManager: ITEM_MANAGER, orderManager: ORDER_MANAGER});
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -23,6 +24,7 @@ AUCTION_CHECKER.run();
 
 //login a user
 app.post("/login",auth.login({firebase}));
+app.get("/taboo",taboo_controller.checkTaboo({firebase}));
 //delete a user
 app.post("/delete",auth.delete({firebase}));
 
