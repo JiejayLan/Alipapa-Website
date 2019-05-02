@@ -115,6 +115,41 @@ module.exports = (data) => {
 		
 		/*
 			DESCRIPTION:
+				Returns an order by its ID
+				
+			PARAMETERS:
+				config = {
+					id: <String> ID of an order
+				}
+			
+			RETURN VALUE:
+				Promise<Order>
+				Order: <Object> representing an order; null if the order does not exist
+		*/
+		getOne: (config) => {
+			
+			return new Promise((resolve, reject) => {
+				
+				const ORDER_ID = config.id;
+				
+				DATABASE
+					.ref('orders')
+					.child(ORDER_ID)
+					.once('value')
+					.then((snapshot) => {
+						
+						resolve(snapshot.val());
+						
+					})
+				
+			})
+			
+			
+			
+		},
+		
+		/*
+			DESCRIPTION:
 				
 				
 			PARAMETERS:
