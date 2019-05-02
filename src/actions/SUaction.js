@@ -8,32 +8,24 @@ export const viewUser = (users) => {
     }
 };
 
-export const warnUser = (username) =>{
+export const warnUser = (userid) =>{
     return (dispatch, getState) =>{
-        let ref = database.ref('users');
+        let ref = database.ref(`users/${userid}`);
         
         ref.once('value', snapShot =>{
-            let users = snapShot.val();
-            let keys = Object.keys(users);
-            let targetuid = '';
-            let warns = 0;
+            let user = snapShot.val();
+            let warns = user.warn_count;
             let suspend = false;
+            
+            warns += 1;
+            if(warns >= 2){
+                suspend = true;
+            }
 
-            for( let i = 0; i < keys.length; i++){
-                if( users[keys[i]].username === username ){
-                    warns = users[keys[i]].warn_count;
-                    warns += 1;
-                    if(warns >= 2){
-                    suspend = true;
-                    }
-                    targetuid = keys[i]
-                    break;
-                }
+            if(suspend && user.status !== 'suspended'){
+                ref.update({status: 'suspended'});
             }
-            if(suspend){
-                ref.child(targetuid).update({status: 'suspended'});
-            }
-            ref.child(targetuid).update( {warn_count : warns} )
+            ref.update( {warn_count : warns} )
         })
     }
 }
@@ -66,7 +58,8 @@ export const ApproveUserApplication = (application={}) => {
         } = application;
 
         const newUser = {address, credit_card, grade:{}, password, phone_number, 
-            rating: 0, status: 'normal', user_type: 'OU', username, warn_count: 0};
+            rating: 0, status: 'normal', total_spending: 0, userID, user_type: 'OU', 
+            username, warn_count: 0};
 
         database.ref('user_application').child(key).remove().then(function() {
             console.log("Remove succeeded.")
@@ -76,6 +69,7 @@ export const ApproveUserApplication = (application={}) => {
           });
 
         return database.ref('users').push(newUser).then((ref) => {
+            console.log(ref);
             dispatch({
               type: 'APP_USER_APP',
               application: {
@@ -97,11 +91,7 @@ export const DenyUserApplication = (application) => {
           .catch(function(error) {
             console.log("Remove failed: " + error.message)
           });
-        
-        /*dispatch({
-            type: 'DENY_USER_APP',
-            application
-        })*/
+
     }
 };
 
@@ -136,6 +126,19 @@ export const DenyItemApplication = (itemAppli) => {
     }
 };
 
+export const removeItem = (itemuid) =>{
+    return (dispatch, getState) => {
+
+        database.ref('total_items').child(itemuid).remove().then(function() {
+            console.log("Remove succeeded.")
+          })
+          .catch(function(error) {
+            console.log("Remove failed: " + error.message)
+          });
+        
+    }
+}
+
 export const addUserToBl = (username) => {
     return (dispatch, getState) => {
 
@@ -154,6 +157,13 @@ export const addItemToBl = (itemname) => {
 export const justifyComp = (compid) => {
     return (dispatch, getState) =>{
         database.ref('message').child(compid).update({status: 'justified'});
+
+        database.ref('message').child(compid).once('value', snapShot=>{
+            let comp = snapShot.val();
+            let userID = comp.receiver;
+
+            database.ref('user').child(userID).update({warn_count: warn_count+1});
+        })
     }
 };
 
@@ -168,3 +178,61 @@ export const removeComp = (compid) => {
           });
     }
 };
+
+export const removeTBword = (word) => {
+    return (dispatch, getState) =>{
+        database.ref('superUser/taboo').once('value', snapShot=>{
+            let words = snapShot.val();
+
+           for(let i = 0; i < words.length; i++){
+                if(words[i] === word){
+                    database.ref(`superUser/taboo`).child(i).remove().then(function() {
+                        console.log("Remove succeeded.")
+                      })
+                      .catch(function(error) {
+                        console.log("Remove failed: " + error.message)
+                      });
+                    break;
+                }
+            }
+        });
+    }
+};
+
+export const addTBword = (word) => {
+    return (dispatch, getState) =>{
+        database.ref('superUser/taboo').once('value', snapShot =>{
+            let words = snapShot.val();
+
+            let newIndex = words.length;
+
+            database.ref('superUser/taboo').child(newIndex).set(word);
+        })
+    }
+};
+
+export function checkUsername (userID) {
+    return new Promise((resolve, reject) => {
+        database.ref(`users/${userID}`)
+            .once('value')
+            .then((snapshot) => {
+                let user = snapshot.val();
+                resolve(user.username);
+            })
+    })
+}
+
+export const ApealApprove = (messageid) => {
+    return (dispatch, getState) =>{
+        database.ref(`message/${messageid}`).once('value', snapShot=> {
+            let messa = snapShot.val();
+            let userID = messa.sender;
+            let useref = database.ref(`users/${userID}`);
+            useref.update({status: 'normal'});
+            useref.update({warn_count: 0});
+        }).then(snapShot=>{
+            database.ref(`message`).child(messageid).remove();
+        });
+        
+    }
+}

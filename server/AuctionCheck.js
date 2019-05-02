@@ -73,7 +73,7 @@ module.exports = (data) => {
 			},
 			
 			//	check every 120 seconds for testing
-			1000 * 30
+			1000 * 120
 			
 		)
 		

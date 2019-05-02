@@ -12,7 +12,7 @@ module.exports = (data) => {
 			PARAMETERS:
 				config = {
 				data: {
-						buyer: <Object>,
+						buyer: <String> representing userID of buyer,
 						itemID: <String>,
 						price: float,
 						seller: <String> representing userID of seller,
@@ -35,30 +35,20 @@ module.exports = (data) => {
 					.once('value')
 					.then((itemSnapshot) => {
 						
+						const ITEM = itemSnapshot.val();
+						const ORDER_PATH = 'orders/' +
+																ORDER_INFO.itemID;
+						const NEW_ORDER = {
+							... ORDER_INFO,
+							itemName: ITEM.title
+						}
+						
 						DATABASE
-							.ref('users')
-							.child(ORDER_INFO.seller)
-							.once('value')
-							.then((sellerSnapshot) => {
+							.ref(ORDER_PATH)
+							.set(NEW_ORDER)
+							.then((result) => {
 								
-								const ITEM = itemSnapshot.val();
-								const SELLER = sellerSnapshot.val()
-								const ORDER_PATH = 'orders/' +
-																		ORDER_INFO.itemID;
-								const NEW_ORDER = {
-									... ORDER_INFO,
-									itemName: ITEM.name,
-									sellerUsername: SELLER.username
-								}
-								
-								DATABASE
-									.ref(ORDER_PATH)
-									.set(NEW_ORDER)
-									.then((result) => {
-										
-										resolve();
-										
-									})
+								resolve();
 								
 							})
 						
@@ -93,7 +83,6 @@ module.exports = (data) => {
 					.then((snapshot) => {
 						
 						const PENDING_ORDER = snapshot.val();
-						console.log(PENDING_ORDER);
 						
 						if (PENDING_ORDER === null) {
 					

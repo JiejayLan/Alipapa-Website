@@ -47,7 +47,7 @@ module.exports = (data) => {
 		const STORE = ITEM_MANAGER.Store;
 		const ITEM_ID = req.params.id;
 		const ITEM = req.body.item;
-		const BUYER = req.body.buyer;
+		const BUYER_ID = req.body.buyer;
 		
 		let updatedItem = ITEM;
 		updatedItem.status = 'order';
@@ -64,7 +64,7 @@ module.exports = (data) => {
 				
 				const CREATE_PENDING_CONFIG = {
 					data: {
-						buyer: BUYER,
+						buyer: BUYER_ID,
 						itemID: ITEM_ID,
 						price: ITEM.price.current,
 						seller: ITEM.seller,
@@ -95,7 +95,7 @@ module.exports = (data) => {
 		const STORE = ITEM_MANAGER.Store;
 		const ITEM_ID = req.params.id;
 		const ITEM = req.body.item;
-		const BUYER = req.body.buyer;
+		const BUYER_ID = req.body.buyer;
 		
 		const GET_ITEM_CONFIG = {
 			id: ITEM_ID
@@ -115,7 +115,7 @@ module.exports = (data) => {
 						previous: item.price.current,
 						current: BID_AMOUNT
 					},
-					buyer: BUYER
+					buyer: BUYER_ID
 				}
 				
 				const UPDATE_ITEM_CONFIG = {
