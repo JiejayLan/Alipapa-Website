@@ -40,7 +40,7 @@ module.exports = (data) => {
 																ORDER_INFO.itemID;
 						const NEW_ORDER = {
 							... ORDER_INFO,
-							itemName: ITEM.name
+							itemName: ITEM.title
 						}
 						
 						DATABASE
