@@ -50,7 +50,7 @@ class ItemPage extends React.Component {
 						const SELLER = response.data.seller;
 						
 						const newState = {
-							title: ITEM.name,
+							title: ITEM.title,
 							price: {
 								type: ITEM.price_type,
 								min: ITEM.price.min,
@@ -121,9 +121,9 @@ class ItemPage extends React.Component {
 								ITEM_ID + 
 								'/buy';
 		const POST_DATA = {
-			buyer: SELF.props.user,
+			buyer: SELF.props.user.userID,
 			item: {
-				name: SELF.state.title,
+				title: SELF.state.title,
 				description: SELF.state.description,
 				seller: SELF.state.seller,
 				price_type: SELF.state.price.type,
@@ -225,7 +225,7 @@ class ItemPage extends React.Component {
 									'/bid';
 			
 			const POST_DATA = {
-				buyer: SELF.props.user,
+				buyer: SELF.props.user.userID,
 				bid: BID_AMOUNT
 			}
 			
@@ -240,7 +240,7 @@ class ItemPage extends React.Component {
 							
 							const ITEM = response.data
 							const NEW_STATE = {
-								title: ITEM.name,
+								title: ITEM.title,
 								price: {
 									type: ITEM.price_type,
 									min: ITEM.price.min,
