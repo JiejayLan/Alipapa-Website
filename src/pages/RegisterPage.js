@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import RegisterForm from '../components/RegisterForm';
 import {startAddApplication} from '../actions/application';
+import {usernameUniqueCheck, usernameTabooCheck, usernameBlacklistCheck} from '../actions/usernameCheck';
 
 const RegisterPage = (props) => {
     return (
@@ -14,8 +15,26 @@ const RegisterPage = (props) => {
         <div className="content-container">
           <RegisterForm
             onSubmit={ (application) => {
-              props.startAddApplication(application); 
-              props.history.push('/');
+              usernameBlacklistCheck(application.username).then((index) => {
+                if (index == -1){
+                  usernameTabooCheck(application.username).then((tabooIndex) => {
+                    if (tabooIndex == -1 ){
+                      usernameUniqueCheck(application.username).then((nameIndex)=>{
+                        if (nameIndex == -1){
+                          props.startAddApplication(application); 
+                          props.history.push('/');
+                        } else {
+                          alert('Username should be unique!');
+                        }
+                      });
+                    } else {
+                      alert('Username should not contains taboo words!');
+                    }
+                  });
+                } else if(index != -1) {
+                  alert('You are blocked by the system!')
+                }
+              });
             }}
           />
         </div>

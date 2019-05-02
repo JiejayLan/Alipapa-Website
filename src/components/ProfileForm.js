@@ -41,14 +41,13 @@ class ProfileForm extends React.Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-      this.props.onSubmit({
-        username: this.state.username,
-        password: this.state.password,
-        credit_card: this.state.credit_card,
-        address: this.state.address,
-        phone_number: this.state.phone_number
-      });
-    
+    this.props.onSubmit({
+      username: this.state.username,
+      password: this.state.password,
+      credit_card: this.state.credit_card,
+      address: this.state.address,
+      phone_number: this.state.phone_number
+    });
   };
 
   render(){
