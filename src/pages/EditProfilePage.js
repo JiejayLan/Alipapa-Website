@@ -2,8 +2,9 @@ import React from 'react';
 import {connect} from 'react-redux';
 import ProfileForm from '../components/ProfileForm';
 import {startEditProfile} from '../actions/auth';
+import {usernameUniqueCheck, usernameTabooCheck} from '../actions/usernameCheck';
+import {database} from '../firebase/firebase';
 
-//retrieve data from firebase
 const EditProfilePage = (props) => {
   return (
     <div>
@@ -15,9 +16,21 @@ const EditProfilePage = (props) => {
       <div className="content-container">
         <ProfileForm
           onSubmit={ (auth) => {
-            console.log('reaches before startEditProfile');
-            props.startEditProfile(auth);
-            props.history.push('/account');
+            database.ref(`users/${props.auth.userID}`).update({username: ''});
+            usernameTabooCheck(auth.username).then((tabooIndex) => {
+              if (tabooIndex == -1 ){
+                usernameUniqueCheck(auth.username).then((nameIndex)=>{
+                  if (nameIndex == -1){
+                    props.startEditProfile(auth);
+                    props.history.push('/account');
+                  } else {
+                    alert('Username should be unique!');
+                  }
+                });
+              } else {
+                alert('Username should not contains taboo words!');
+              }
+            });
           }}
         />
       </div>

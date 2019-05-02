@@ -6,6 +6,8 @@ import UserList from '../components/SUhomePage/UserList';
 import UserApplicationList from '../components/SUhomePage/UserApplicationList';
 import ItemApplicationList from '../components/SUhomePage/ItemApplicationList';
 import ComplaintList from '../components/SUhomePage/ComplaintList';
+import SUviewItems from '../components/SUhomePage/SUviewItems';
+import TabooList from '../components/SUhomePage/TabooList';
 import axios from 'axios';
 
 
@@ -13,16 +15,7 @@ class SUhomePage extends React.Component {
   constructor(){
     super();
     this.state = {
-        OUinfo : [
 
-        ],
-        OUapplication : [
-
-        ],
-        itemApplication :[
-
-        ],
-        searchkey : ''
     };
   }
   
@@ -56,8 +49,22 @@ class SUhomePage extends React.Component {
         <br />
         <div className='clearfix'></div>
         <hr />
-        <h2 className='text-center'>Complain</h2>
+        <h2 className='text-center'>Items in System</h2>
+        <SUviewItems />
+        <br />
+        <div className='clearfix'></div>
+        <hr />
+        <h2 className='text-center'>Complaint</h2>
         <ComplaintList />
+        <br />
+        <div className='clearfix'></div>
+        <hr />
+        <h2 className='text-center'>Appeal</h2>
+        <br />
+        <div className='clearfix'></div>
+        <hr />
+        <h2 className='text-center'>Taboo List</h2>
+        <TabooList />
         <br />
         <div className='clearfix'></div>
       </div>
