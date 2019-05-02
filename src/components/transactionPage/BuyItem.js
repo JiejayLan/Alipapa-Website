@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import Modal from 'react-modal';
 import {database} from '../../firebase/firebase';
 import {VIPCheckRating} from '../../actions/VIPCheck';
-import {getUserProfile} from '../../actions/getUserProfile';
 
 class BuyItem extends React.Component {
   constructor(props){
@@ -19,32 +18,19 @@ class BuyItem extends React.Component {
       status: this.props.status
     }
 
+    let sellerName = '';
+    var that = this;
+
+    database.ref(`users/${this.props.sellerID}`).once('value').then((snapshot) => {
+      const SELLER = snapshot.val();
+      sellerName = SELLER.username;
+      console.log(sellerName);
+  
+      that.setState({sellerName});
+    });
+
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
-  }
-
-  //check if this will update name 
-  //await?
-  componentDidMount(){
-    let sellerName = '';
-  //  getUserProfile(this.props.sellerID);
-  //   console.log("after: "+sellerName);
-  //   this.setState(() => {sellerName});
-
-  sellerName = new Promise((resolve, reject) => 
-    database.ref(`users/${this.state.userID}`).once('value', snapshot => 
-      resolve( snapshot.val())
-      )  
-  ).then(result => {
-    sellerName = result.username;
-    console.log(sellerName);
-
-    return sellerName;
-  }).then((response) => {
-    this.setState(() => {sellerName: response});
-  })
-  
-
   }
 
   openModal() {
@@ -94,13 +80,13 @@ class BuyItem extends React.Component {
    return (
   <div className="list-item">
     <div>
+      <h3 className="list-item__subtitle">Order Status: {this.state.status}</h3>
       <div>
         <h3 className="list-item__subtitle">Item Info:</h3>
         <h4 className="list-item__text">title: {this.props.itemName}</h4>
         <h4 className="list-item__text">price: {`$${this.props.price}`}</h4>
         <h4 className="list-item__text">itemID: {this.props.itemID}</h4>
       </div>
-      <h3 className="list-item__subtitle">Order Status: {this.state.status}</h3>
       <div>
         <h3 className="list-item__subtitle">Seller Info:</h3>
         <h4 className="list-item__text">username: {this.state.sellerName}</h4>
