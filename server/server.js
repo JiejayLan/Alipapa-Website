@@ -43,6 +43,8 @@ app.post('/suhome', require('./controller/SUmanage_controller')({firebase}) );
 
 app.post('/transactionHistory', require('./controller/transaction_controller')({firebase}) );
 
+app.post('/account', require('./controller/submittedItem_controller')({firebase}));
+
 //	test endpoints
 app.post('/test', require('./controller/test.js')( {itemManager: ITEM_MANAGER} ));
 

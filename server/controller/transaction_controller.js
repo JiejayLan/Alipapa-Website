@@ -1,3 +1,4 @@
+
 module.exports = (data) => {
   let firebase = data.firebase;
   
@@ -8,10 +9,11 @@ module.exports = (data) => {
         let sellItem = [];
         for (let orderID in orders){
           if(orders[orderID]["seller"] === req.body.userID){
-            sellItem.push(orders[orderID]);
+            const buyerID = orders[orderID]["buyer"];
+              sellItem.push({buyerID, ...orders[orderID]});
           }
         }
-
+          
         res.json(sellItem);
       });
     }
@@ -20,9 +22,9 @@ module.exports = (data) => {
         let orders = snapshot.val();
         let buyItem = [];
         for (let orderID in orders){
-          if(orders[orderID]["buyer"]["userID"] === req.body.userID){
-            const ORDER_DETAIL = orders[orderID];
-            buyItem.push({orderID, ...ORDER_DETAIL});
+          if(orders[orderID]["buyer"] === req.body.userID){
+            const sellerID = orders[orderID]["seller"];
+              buyItem.push({sellerID, ...orders[orderID]});
           }
         }
 
