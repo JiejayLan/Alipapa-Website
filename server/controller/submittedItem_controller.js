@@ -11,7 +11,6 @@ module.exports = (data) => {
             onSellItems.push({itemID, ...totalItems[itemID]});
           }
       }
-
       res.json(onSellItems);
     });
   }
