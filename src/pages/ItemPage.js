@@ -121,7 +121,7 @@ class ItemPage extends React.Component {
 								ITEM_ID + 
 								'/buy';
 		const POST_DATA = {
-			buyer: SELF.props.user,
+			buyer: SELF.props.user.userID,
 			item: {
 				name: SELF.state.title,
 				description: SELF.state.description,
@@ -225,7 +225,7 @@ class ItemPage extends React.Component {
 									'/bid';
 			
 			const POST_DATA = {
-				buyer: SELF.props.user,
+				buyer: SELF.props.user.userID,
 				bid: BID_AMOUNT
 			}
 			
