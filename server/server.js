@@ -29,7 +29,7 @@ app.get("/taboo",taboo_controller.checkTaboo({firebase}));
 app.post("/delete",auth.delete({firebase}));
 
 app.post('/purchase-intention/new', require('./controller/purchase_intention_controller.js')({ itemManager: ITEM_MANAGER }));
-app.post('/process-pending-orders/:decision/:orderId/', require('./controller/process_pending_order_controller.js')({ ITEM_MANAGER, ORDER_MANAGER, MESSAGE_SYSTEM}));
+app.post('/process-pending-orders/:decision/:orderId', require('./controller/process_pending_order_controller.js')({ ITEM_MANAGER, ORDER_MANAGER, MESSAGE_SYSTEM: MESSAGE_SYSTEM(firebase), firebase}));
 
 //a route to controll all message request
 app.use("/message",message_controller(MESSAGE_SYSTEM(firebase)));
@@ -42,6 +42,8 @@ app.use('/controllers/items/:id', require('./controller/item_page_controller.js'
 app.post('/suhome', require('./controller/SUmanage_controller')({firebase}) );
 
 app.post('/transactionHistory', require('./controller/transaction_controller')({firebase}) );
+
+app.post('/account', require('./controller/submittedItem_controller')({firebase}));
 
 //	test endpoints
 app.post('/test', require('./controller/test.js')( {itemManager: ITEM_MANAGER} ));

@@ -2,7 +2,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 import Modal from 'react-modal';
 import {database} from '../../firebase/firebase';
-import {VIPCheckRating, VIPCheckSpending} from '../../actions/VIPCheck';
+import {VIPCheckRating} from '../../actions/VIPCheck';
+import {getUserProfile} from '../../actions/getUserProfile';
 
 class BuyItem extends React.Component {
   constructor(props){
@@ -10,7 +11,8 @@ class BuyItem extends React.Component {
 
     this.state = {
       modalIsOpen: false,
-      seller: this.props.seller,
+      sellerID: this.props.sellerID,
+      sellerName: '',
       userID: this.props.auth.userID,
       orderID: this.props.orderID,
       rating: '',
@@ -19,6 +21,30 @@ class BuyItem extends React.Component {
 
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+  }
+
+  //check if this will update name 
+  //await?
+  componentDidMount(){
+    let sellerName = '';
+  //  getUserProfile(this.props.sellerID);
+  //   console.log("after: "+sellerName);
+  //   this.setState(() => {sellerName});
+
+  sellerName = new Promise((resolve, reject) => 
+    database.ref(`users/${this.state.userID}`).once('value', snapshot => 
+      resolve( snapshot.val())
+      )  
+  ).then(result => {
+    sellerName = result.username;
+    console.log(sellerName);
+
+    return sellerName;
+  }).then((response) => {
+    this.setState(() => {sellerName: response});
+  })
+  
+
   }
 
   openModal() {
@@ -77,8 +103,8 @@ class BuyItem extends React.Component {
       <h3 className="list-item__subtitle">Order Status: {this.state.status}</h3>
       <div>
         <h3 className="list-item__subtitle">Seller Info:</h3>
-        <h4 className="list-item__text">username: {this.props.sellerUsername}</h4>
-        <h4 className="list-item__text">userID: {this.props.seller}</h4>
+        <h4 className="list-item__text">username: {this.state.sellerName}</h4>
+        <h4 className="list-item__text">userID: {this.props.sellerID}</h4>
       </div>
       {
         this.state.status === "completed" ? (

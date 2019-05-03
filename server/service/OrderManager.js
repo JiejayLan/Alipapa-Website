@@ -115,18 +115,99 @@ module.exports = (data) => {
 		
 		/*
 			DESCRIPTION:
-				
+				Returns an order by its ID
 				
 			PARAMETERS:
 				config = {
-					
+					id: <String> ID of an order
 				}
 			
 			RETURN VALUE:
+				Promise<Order>
+				Order: <Object> representing an order; null if the order does not exist
+		*/
+		getOne: (config) => {
+			
+			return new Promise((resolve, reject) => {
 				
+				const ORDER_ID = config.id;
+				
+				DATABASE
+					.ref('orders')
+					.child(ORDER_ID)
+					.once('value')
+					.then((snapshot) => {
+						
+						resolve(snapshot.val());
+						
+					})
+				
+			})
+			
+			
+			
+		},
+		
+		/*
+			DESCRIPTION:
+				Updates an order with new properties.
+				
+			PARAMETERS:
+				config = {
+					id: <String> ID of an order,
+					data: {
+						<Property to update>: <New value>
+					}
+				}
+			
+			RETURN VALUE:
+				Promise<any>
+					Resolves if update is successful,
+					otherwise returns an error.
 		*/
 		update: (config) => {
 			
+			return new Promise((resolve, reject) => {
+				
+				DATABASE
+					.ref('orders')
+					.child(config.id)
+					.once('value')
+					.then((snapshot) => {
+						
+						const ORDER = snapshot.val();
+						if (ORDER !== null) {
+							
+							const UPDATE = config.data;
+							
+							Object.keys(UPDATE).forEach((property) => {
+								
+								if (ORDER.hasOwnProperty(property)) {
+									
+									ORDER[property] = UPDATE[property];
+									
+								}
+								
+							})
+							
+							DATABASE
+								.ref('orders')
+								.child(config.id)
+								.set(ORDER)
+								.then((response) => {
+									
+									resolve()
+									
+								})
+						} else {
+							
+							reject(new Error('Order not found'));
+							
+						}
+						
+					})
+					
+			})
 
 		}
 		
