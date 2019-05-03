@@ -42,7 +42,7 @@ module.exports = (data) => {
 			case 'reject': {
 				
 				const PRE_MESSAGE = `ORDER ${ORDER_ID} REJECTED: `;
-				const NOTE = 'TEMP';
+				const NOTE = req.body.note;
 				const MESSAGE = PRE_MESSAGE + NOTE;
 				
 				//	Check order exists
