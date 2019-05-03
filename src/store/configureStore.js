@@ -15,6 +15,7 @@ const persistConfig = {
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const authPersistedReducer = persistReducer(persistConfig, authReducer);
 const tabooPersistedReducer = persistReducer(persistConfig, tabooReducer);
+
 export default () => {
   let store = createStore(
     combineReducers({

@@ -16,6 +16,7 @@ class sellItemForm extends React.Component {
         };
     }
 
+
     checkBlackList = (title) => {
         return database.ref('blacklist')
             .once('value')
