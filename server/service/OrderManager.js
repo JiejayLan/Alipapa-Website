@@ -150,18 +150,64 @@ module.exports = (data) => {
 		
 		/*
 			DESCRIPTION:
-				
+				Updates an order with new properties.
 				
 			PARAMETERS:
 				config = {
-					
+					id: <String> ID of an order,
+					data: {
+						<Property to update>: <New value>
+					}
 				}
 			
 			RETURN VALUE:
-				
+				Promise<any>
+					Resolves if update is successful,
+					otherwise returns an error.
 		*/
 		update: (config) => {
 			
+			return new Promise((resolve, reject) => {
+				
+				DATABASE
+					.ref('orders')
+					.child(config.id)
+					.once('value')
+					.then((snapshot) => {
+						
+						const ORDER = snapshot.val();
+						if (ORDER !== null) {
+							
+							const UPDATE = config.data;
+							
+							Object.keys(UPDATE).forEach((property) => {
+								
+								if (ORDER.hasOwnProperty(property)) {
+									
+									ORDER[property] = UPDATE[property];
+									
+								}
+								
+							})
+							
+							DATABASE
+								.ref('orders')
+								.child(config.id)
+								.set(ORDER)
+								.then((response) => {
+									
+									resolve()
+									
+								})
+						} else {
+							
+							reject(new Error('Order not found'));
+							
+						}
+						
+					})
+					
+			})
 
 		}
 		
