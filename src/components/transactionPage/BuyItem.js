@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import Modal from 'react-modal';
+import {Link} from 'react-router-dom';
 import {database} from '../../firebase/firebase';
 import {VIPCheckRating} from '../../actions/VIPCheck';
 
@@ -165,6 +166,16 @@ class BuyItem extends React.Component {
         </Modal>
       </div>
         </div>
+        ) : ''
+      }
+
+      {
+        this.state.status === "approved" ? (
+          <div>
+          <Link className="button" to={'/transactionHistory'}>
+            Order Checkout
+          </Link>
+          </div>
         ) : ''
       }
     </div>

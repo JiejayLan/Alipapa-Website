@@ -1,5 +1,6 @@
 import React from 'react';
 import {database} from '../../firebase/firebase';
+import {Link} from 'react-router-dom';
 
 class SellItem extends React.Component {
   constructor(props){
@@ -9,7 +10,8 @@ class SellItem extends React.Component {
       buyerID: this.props.buyerID,
       buyerName: '',
       buyerAddress: '',
-      buyerPhoneNumber: ''
+      buyerPhoneNumber: '',
+      status: this.props.status
     }
 
     let buyerName = '';
@@ -48,6 +50,15 @@ class SellItem extends React.Component {
             phone number: {`${PHONENUMBER.substr(0,3)}-${PHONENUMBER.substr(3,3)}-${PHONENUMBER.substr(6,4)}`}
           </h4>
         </div>
+        {
+          this.state.status === "pending" ? (
+            <div>
+            <Link className="button" to={'/sellerapprove'}>
+              Approve Buyer
+            </Link>
+            </div>
+          ) : ''
+        }
       </div>
     </div>
     );
