@@ -14,7 +14,7 @@ class BuyItem extends React.Component {
       sellerID: this.props.sellerID,
       sellerName: '',
       userID: this.props.auth.userID,
-      orderID: this.props.orderID,
+      orderID: this.props.itemID,
       rating: '',
       status: this.props.status
     }
@@ -41,7 +41,7 @@ class BuyItem extends React.Component {
 
   closeModal() {
     let modalIsOpen = false;
-    const SELLER = this.state.seller;
+    const SELLER = this.state.sellerID;
     const USERID = this.state.userID;
     const RATING = this.state.rating;
     const ORDERID = this.state.orderID;
