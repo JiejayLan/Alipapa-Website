@@ -14,6 +14,7 @@ import RegisterPage from '../pages/RegisterPage';
 import SendMessagePage from '../pages/sendMessagePage';
 import CheckMessagePage from '../pages/checkMessagePage';
 import EditProfilePage from '../pages/EditProfilePage';
+import EditItemPage from '../pages/EditItemPage';
 import SUHomePage from '../pages/SUhomePage';
 import Friend from '../pages/FriendPage';
 import PurchaseIntention from '../pages/PurchaseIntention';
@@ -37,6 +38,7 @@ const AppRouter = () => (
       <PrivateRoute path="/checkMessage" component={CheckMessagePage }/>
       <PrivateRoute path="/friend" component={Friend}/>
       <PublicRoute path="/items/:id" component={ItemPage} exact={true}/>
+      <PrivateRoute path="/editItem/:id" component={EditItemPage}/>
       <PrivateRoute path="/editProfile" component={EditProfilePage}/>
 			<PrivateRoute path="/purchase-intention/new" component={PurchaseIntention} />
       <PrivateRoute path="/account" component={UserInfoPage}/>

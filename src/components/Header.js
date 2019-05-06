@@ -2,9 +2,21 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {logout} from '../actions/auth';
-
+import { database} from '../firebase/firebase';
 
 export const Header = ({startLogout,isAuthenticated,status,userID,user_type}={}) => {
+
+  //this can be used to check new message or warning, for test
+  // database.ref('message')
+  //         .endAt().limitToLast(1).on("child_added", function(snapshot) {
+  //           let message = snapshot.val()
+  //           if(message.receiver === userID){
+  //             // alert("You got a new message")
+  //             // console.log( "You got a new message");
+  //           }
+              
+  // });
+
   if (isAuthenticated){
     if(user_type === "OU" || user_type === "VIP OU"){
       return (  <header className="header">
