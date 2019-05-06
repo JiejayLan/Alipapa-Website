@@ -55,6 +55,8 @@ class SUviewItems extends React.Component {
                     <br /><br />
                     description: {item.description}<br /><br />
                     item type: {item.price_type}<br />
+                    sellerID: {item.seller}<br />
+                    status: {item.status}<br />
                 </div>
                 <div className='card-action'>
                     <button onClick={()=>this.removeHandler(item.uid)}>remove</button>
