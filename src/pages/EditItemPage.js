@@ -2,7 +2,7 @@ import React from 'react';
 import uuid from "uuid";
 import { connect } from 'react-redux';
 import { database } from '../firebase/firebase';
-
+import * as TABOO_FUNCTION from "../function/checkTaboo";
 class editItemForm extends React.Component {
     constructor(props) {
         super(props);
@@ -13,29 +13,38 @@ class editItemForm extends React.Component {
         };
     }
 
-    componentWillMount = () => {
-        console.log("item id is", typeof (this.props.match.params.id));
+    componentWillMount =()=>{
+        TABOO_FUNCTION.checkTaboo()
+        .then(data=>{
+            console.log("taboo",data);
+            this.setState({taboolist:data});
+            console.log("state",this.state);
+        });
+    }
+
+    componentDidMount =  () => {
+
+
         let itemID = this.props.match.params.id;
         database
             .ref('total_items')
             .child(itemID)
             .once('value')
             .then((snapshot) => {
-                console.log(snapshot.val());
                 let title = snapshot.val().title;
+                title = TABOO_FUNCTION.convertTaboo(title,this.state.taboolist);
                 let keywordList = snapshot.val().keywords;
                 let keywords =[];
                 for(let key in keywordList){
                     keywords.push(key);
                 }
                 this.setState({title,keywords,itemID});
-                console.log(this.state);
             })
     }
 
 
     checkBlackList = (title) => {
-        return database.ref('blacklist')
+        return database.ref('/superUser/user_blacklist')
             .once('value')
             .then(function (snapshot) {
                 console.log(snapshot.val());

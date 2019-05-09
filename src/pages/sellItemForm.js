@@ -18,10 +18,9 @@ class sellItemForm extends React.Component {
 
 
     checkBlackList = (title) => {
-        return database.ref('blacklist')
+        return database.ref('/superUser/user_blacklist')
             .once('value')
             .then(function (snapshot) {
-                console.log(snapshot.val());
                 let blacklist = snapshot.val();
                 for(let key in blacklist){
                     if(title === key)
