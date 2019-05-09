@@ -16,15 +16,11 @@ class editItemForm extends React.Component {
     componentWillMount =()=>{
         TABOO_FUNCTION.checkTaboo()
         .then(data=>{
-            console.log("taboo",data);
             this.setState({taboolist:data});
-            console.log("state",this.state);
         });
     }
 
     componentDidMount =  () => {
-
-
         let itemID = this.props.match.params.id;
         database
             .ref('total_items')
@@ -47,7 +43,6 @@ class editItemForm extends React.Component {
         return database.ref('/superUser/user_blacklist')
             .once('value')
             .then(function (snapshot) {
-                console.log(snapshot.val());
                 let blacklist = snapshot.val();
                 for (let key in blacklist) {
                     if (title === key)
@@ -57,18 +52,24 @@ class editItemForm extends React.Component {
             })
     }
 
-
     handleSubmit = async (e) => {
         e.preventDefault();
 
         this.checkBlackList(this.state.title)
             .then((isBlack) => {
-                console.log(isBlack);
                 if (isBlack)
                     alert("The item is in blacklist");
                 else {
+                    let container = this.state;
+                    
+                    let keywords = this.state.keywords;
+                    let newword = {};
+                    for(let key in keywords){
+                        newword[keywords[key]] = true;
+                    }
+                    container.keywords = newword;
                     database.ref('total_items/'+this.state.itemID)
-                        .update({...this.state })
+                        .update(container)
                         .then(snapshot => {
                         });
              
