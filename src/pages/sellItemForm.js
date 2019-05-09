@@ -18,10 +18,9 @@ class sellItemForm extends React.Component {
 
 
     checkBlackList = (title) => {
-        return database.ref('blacklist')
+        return database.ref('/superUser/user_blacklist')
             .once('value')
             .then(function (snapshot) {
-                console.log(snapshot.val());
                 let blacklist = snapshot.val();
                 for(let key in blacklist){
                     if(title === key)
@@ -50,9 +49,19 @@ class sellItemForm extends React.Component {
                             return fileData.ref.getDownloadURL();
                         }).then(imageURL=>{
                         this.setState({pictureURL:imageURL});
+
+                        let container = this.state;
+                        container.sellerID = sellerID;
+                        let keywords = this.state.keywords;
+                        let newword = {};
+                        for(let key in keywords){
+                            newword[keywords[key]] = true;
+                        }
+                        container.keywords = newword
+                            
                         //upload to firebase database 
                         database.ref('item_application')
-                                .push({sellerID,...this.state})
+                                .push(container)
                                 .then(snapshot=>{
                                     console.log(snapshot);
                                     // <Redirect to='/sellnewitem' />
