@@ -77,7 +77,7 @@ class editItemForm extends React.Component {
                 }
             })
 
-
+            this.props.history.push('/account');
     }
 
 
