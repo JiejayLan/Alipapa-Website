@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import * as firebase from "firebase";
-import { viewItemApplication, DenyItemApplication } from '../../actions/SUaction';
+import { viewItemApplication, DenyItemApplication, ApproveItemApplication } from '../../actions/SUaction';
 import axios from 'axios';
 
 class ItemApplicationList extends React.Component {
@@ -33,6 +33,17 @@ class ItemApplicationList extends React.Component {
         }
     };
 
+    approveHandler = (uid) => {
+        if(confirm("Are you sure to approve?")){
+            this.props.ApproveItemApplication(this.state[uid]);
+
+            delete this.state[uid];
+
+            let newState = this.state;
+            this.setState({...newState});
+        }
+    };
+
     renderApplicationList = () => {
         const Itemkeys = Object.keys(this.state);
         let Itemlist = [];
@@ -51,7 +62,7 @@ class ItemApplicationList extends React.Component {
                     {application.title}<br />
                 </div>
                 <div className='card-action'>
-                    <button>approve</button>
+                    <button onClick={()=>this.approveHandler(application.uid)}>approve</button>
                     <button onClick={()=>this.rejectHandler(application.uid)}>reject</button>
                 </div>
             </div>
@@ -81,7 +92,8 @@ class ItemApplicationList extends React.Component {
 const mapDispatchToProps = (dispatch) => {
     return {
         viewItemApplication: (application) => dispatch( viewItemApplication(application)),
-        DenyItemApplication: (application) => dispatch( DenyItemApplication(application))
+        DenyItemApplication: (application) => dispatch( DenyItemApplication(application)),
+        ApproveItemApplication: (application) => dispatch( ApproveItemApplication(application))
     };
 };
 

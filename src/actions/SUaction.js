@@ -102,20 +102,99 @@ export const viewItemApplication = (itemAppli) => {
     }
 }
 
-export const ApproveItemApplication = (itemAppli) => {
+export const ApproveItemApplication = (application ={}) => {
     return (dispatch, getState) => {
 
-        dispatch({
-            type: 'APP_ITEM_APP',
-            itemAppli
-        })
+        let id = application.uid;
+
+        if(application.priceNature === 'Range_Price'){
+            let {
+                description = '',
+                keywords =[],
+                price = '',
+                sellerID = '',
+                title = '' 
+            } = application;
+        
+
+            const newItem = { description, itemID:'', keywords, price: {current: price, max: price, min: price, previous: price}, 
+                price_type: 'ranged', seller: sellerID, status: good, title: title };
+
+            let key = database.ref('total_items').push(newItem);
+            let uid = key.key;
+            database.ref('total_items').child(uid).update({itemID: uid});
+
+            notfyKeyUser(keywords);
+        }
+        else if(application.priceNature === 'Fixed_Price'){
+            let {
+                description = '',
+                keywords =[],
+                price = '',
+                sellerID = '',
+                title = '' 
+            } = application;
+        
+
+            const newItem = { description, keywords, price: {current: price, max: price, min: price, previous: price}, 
+                price_type: 'fixed', seller: sellerID, status: good, title: title };
+
+            let key = database.ref('total_items').push(newItem);
+            let uid = key.key;
+            database.ref('total_items').child(uid).update({itemID: uid});
+
+            notfyKeyUser(keywords);
+        }
+        database.ref('item_application').child(id).remove();
+
     }
+};
+
+export const notfyKeyUser = (keywords = []) =>{
+    if(keywords === null){
+        return;
+    }
+    else{
+        database.ref('keywords').once('value', snapShot=>{
+            
+            let allkeyword = snapShot.val();
+            let keys = Object.keys(allkeyword);
+            
+            for(let i = 0; i < keywords.length; i++){
+                for(let j = 0; j < keys.length; j++){
+                    
+                    if(keys[j] === keywords[i]){
+                        
+                        let users = Object.keys(allkeyword[keys[j]]);
+                        
+                        for(let k = 0; k < users.length; k++){
+                            let newMessage = {
+                                description: `A item with the keyword that you are looking for (${keys[j]}) has been put on sale, go check it out!`,
+                                messageType: 'message',
+                                receiver: user[k],
+                                sender: 'userID1'
+                            };
+                            database.ref('message').push(newMessage);
+                        };
+                    };
+                };
+            };
+        });
+    };
 };
 
 export const DenyItemApplication = (itemAppli) => {
     return (dispatch, getState) => {
         const key = itemAppli;
 
+        database.ref('item_application').child(key).once('value', snapShot=>{
+            let application = snapShot.val();
+            let seller = application.sellerID;
+
+            database.ref('user').child(seller).update({warn_count: warn_count+1});
+        });
+        
+        
         database.ref('item_application').child(key).remove().then(function() {
             console.log("Remove succeeded.")
           })
@@ -162,7 +241,7 @@ export const justifyComp = (compid) => {
             let comp = snapShot.val();
             let userID = comp.receiver;
 
-            database.ref('user').child(userID).update({warn_count: warn_count+1});
+            database.ref('user').child(userID).update({warn_count: warn_count+0.5});
         })
     }
 };

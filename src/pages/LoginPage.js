@@ -14,13 +14,6 @@ class LoginPage extends React.Component {
     };
   }
 
-  componentDidMount = ()=>{
-        //store taboolist into redux
-        this.checkTaboo().then((taboo)=>{
-          this.props.checkTaboo(taboo);
-        });
-  }
-
   handleSubmit = () => {
     //Set up correct username and password for login convenience
     axios.post('/login', {

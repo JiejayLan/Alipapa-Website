@@ -54,12 +54,8 @@ class SUhomePage extends React.Component {
         <br />
         <div className='clearfix'></div>
         <hr />
-        <h2 className='text-center'>Complaint</h2>
+        <h2 className='text-center'>Complaint and Appeal</h2>
         <ComplaintList />
-        <br />
-        <div className='clearfix'></div>
-        <hr />
-        <h2 className='text-center'>Appeal</h2>
         <br />
         <div className='clearfix'></div>
         <hr />

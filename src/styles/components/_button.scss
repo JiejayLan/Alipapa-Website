@@ -9,12 +9,24 @@
   line-height: 1;
   padding: $s-size;
   margin:0;
-  max-width: 15%;
+  max-width: 20%;
   text-decoration: none;
+
+  &:hover {
+    background: $blue;
+    text-decoration: none;
+    color: white;
+  }
 }
 
 .button--link {
   background: none;
+
+  &:hover {
+    background: none;
+    text-decoration: none;
+    color: white;
+  }
 }
 
 .button--secondary {
