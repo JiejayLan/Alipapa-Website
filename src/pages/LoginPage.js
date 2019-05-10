@@ -62,24 +62,24 @@ class LoginPage extends React.Component {
       <div className="box-layout">
         <div className="box-layout__box">
 
-          <label>
-            UserName:
-              <input type="text" name={"username"} onChange={() => {
+          <label className="label">
+            Username:
+              <input className="text-input" type="text" name={"username"} onChange={() => {
               this.setState({ "username": event.target.value });
             }}
             />
           </label>
 
-          <label>
-            password:
-              <input type="text" name={"password"} onChange={() => {
+          <label className="label">
+            Password:
+              <input className="text-input" type="text" name={"password"} onChange={() => {
               this.setState({ "password": event.target.value });
             }}
             />
           </label>
 
           <div>
-            <button type="button" onClick={() => this.handleSubmit()} >submit</button>
+            <button className="button--alt" type="button" onClick={() => this.handleSubmit()} >Submit</button>
           </div>
 
         </div>

@@ -136,7 +136,7 @@ class sellItemForm extends React.Component {
                             (seperate by space ^ ^)
                 </label>
                         <label className="label">
-                            price:
+                            Price:
                     <input type="number" required name={"price"} className="number-input"
                                 onChange={() => {
                                     this.setState({ "price": event.target.value });

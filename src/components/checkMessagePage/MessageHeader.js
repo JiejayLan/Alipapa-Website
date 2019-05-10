@@ -11,10 +11,10 @@ import Paper from '@material-ui/core/Paper';
 const MessageHeader = (props)=>{
 
     return (
-        <div >
+        <div>
             <TableRow>
-                <TableCell align="right">sender</TableCell>
-                <TableCell align="right">description</TableCell>
+                <TableCell align="right">Sender</TableCell>
+                <TableCell align="right">Description</TableCell>
           </TableRow>
         </div>
     )
