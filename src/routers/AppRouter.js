@@ -45,7 +45,7 @@ const AppRouter = () => (
 			<PrivateRoute path="/purchase-intention/new" component={PurchaseIntention} />
       <PrivateRoute path="/account" component={UserInfoPage}/>
       <PrivateRoute path="/transactionHistory" component={TransactionHistory}/>
-      <PrivateRoute path="/sellerapprove" component={SellerApproveItemPage}/>
+      <PrivateRoute path="/sellerapprove/:orderid" component={SellerApproveItemPage}/>
       <PrivateRoute path="/randomPrize" component={RandomPrize}/>
       <Route component={NotFoundPage}/>
     </Switch>
