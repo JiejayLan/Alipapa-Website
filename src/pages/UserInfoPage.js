@@ -73,6 +73,12 @@ class UserInfoPage extends React.Component{
           </div>
 
           <div className="list-header list-body">
+            <Link className="list-item__title--link" to="/purchase-intention/new">
+              <h1 className="list-item__title ">Submit Purchase Intention</h1>
+            </Link>
+          </div>
+
+          <div className="list-header list-body">
             <Link className="list-item__title--link" to="/sendMessage">
               <h1 className="list-item__title ">Send Message</h1>
             </Link>
