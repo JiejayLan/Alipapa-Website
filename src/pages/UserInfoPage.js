@@ -60,10 +60,34 @@ class UserInfoPage extends React.Component{
             </div>
           </div>
           
-          <div className="list-header">
+          <div className="list-header list-body">
               <Link className="list-item__title--link" to="/transactionHistory">
                 <h1 className="list-item__title ">View Transaction History</h1>
               </Link>
+          </div>
+          
+          <div className="list-header list-body">
+            <Link className="list-item__title--link" to="/sellnewitem">
+              <h1 className="list-item__title ">Submit New Item</h1>
+            </Link>
+          </div>
+
+          <div className="list-header list-body">
+            <Link className="list-item__title--link" to="/sendMessage">
+              <h1 className="list-item__title ">Send Message</h1>
+            </Link>
+          </div>
+
+          <div className="list-header list-body">
+            <Link className="list-item__title--link" to="/checkMessage">
+              <h1 className="list-item__title ">Check Message</h1>
+            </Link>
+          </div>
+          
+          <div className="list-header list-body">
+            <Link className="list-item__title--link" to="/friend">
+              <h1 className="list-item__title ">Friendlist</h1>
+            </Link>
           </div>
         </div>
       </div>
