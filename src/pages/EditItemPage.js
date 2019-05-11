@@ -14,28 +14,34 @@ class editItemForm extends React.Component {
     }
 
     componentWillMount =()=>{
-        TABOO_FUNCTION.checkTaboo()
-        .then(data=>{
-            this.setState({taboolist:data});
-        });
+        
+
     }
 
     componentDidMount =  () => {
-        let itemID = this.props.match.params.id;
-        database
-            .ref('total_items')
-            .child(itemID)
-            .once('value')
-            .then((snapshot) => {
-                let title = snapshot.val().title;
-                title = TABOO_FUNCTION.convertTaboo(title,this.state.taboolist);
-                let keywordList = snapshot.val().keywords;
-                let keywords =[];
-                for(let key in keywordList){
-                    keywords.push(key);
-                }
-                this.setState({title,keywords,itemID});
-            })
+        TABOO_FUNCTION.checkTaboo()
+        .then(data=>{
+            this.setState({taboolist:data});
+            
+            let itemID = this.props.match.params.id;
+            database
+                .ref('total_items')
+                .child(itemID)
+                .once('value')
+                .then((snapshot) => {
+                    let title = snapshot.val().title;
+                    console.log("taboo",this.state.taboolist);
+                    title = TABOO_FUNCTION.convertTaboo(title,data);
+                    let keywordList = snapshot.val().keywords;
+                    let keywords =[];
+                    for(let key in keywordList){
+                        keywords.push(key);
+                    }
+                    this.setState({title,keywords,itemID});
+                })
+        });
+
+
     }
 
 
@@ -78,6 +84,7 @@ class editItemForm extends React.Component {
             })
 
             this.props.history.push('/account');
+            window.location.reload(true);
     }
 
 

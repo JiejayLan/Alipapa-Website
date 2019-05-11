@@ -4,20 +4,21 @@ import React from 'react';
 const MessageForm = (props)=>{
 
     let formOption ="";
-    let description =<label>
+    let description =<label className="label">
                         Description
-                        <textarea required name = "description" onChange={ props.changed } />
+                        <br/>
+                        <textarea className="textarea" required name = "description" onChange={ props.changed }/>
                     </label> 
-    let compliant = <label>
-                        Who you want to compliant?
+    let compliant = <label className="label">
+                        Who do you want to compliant?
                         <input required name = "complaintUser" onChange={ props.changed } />
                     </label> 
-    let explain =   <label>
-                        Who you want to explain?
+    let explain =   <label className="label">
+                        Who do you want to explain to?
                         <input required name = "explainUser" onChange={ props.changed } />
                     </label> 
-    let receiver =  <label>
-                        receiver
+    let receiver =  <label className="label">
+                        Receiver
                         <input required name ="receiver" onChange={ props.changed } />
                     </label> 
           
@@ -46,11 +47,11 @@ const MessageForm = (props)=>{
     }
     return (
         <div>
-            <button name = "confirmedType" value={false} onClick={props.back}> back</button>
+            <button className="button--secondary" name = "confirmedType" value={false} onClick={props.back}> Back</button>
             <form onSubmit={props.handleSubmit} className="form">
                 {formOption} 
                 <br/>
-                <button type="submit"  className="button" >submit</button>
+                <button type="submit"  className="button" >Submit</button>
             </form>
         </div>
     )

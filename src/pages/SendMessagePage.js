@@ -98,9 +98,16 @@ class MessageForm extends React.Component {
                 </MessageOption>
 
         return (
-            <div className="content-container">
-                <h1 className="page-header">Message Form</h1>               
-                {renderComponent}
+            <div>
+                <div className="page-header">
+                    <div className="content-container"> 
+                        <h1 className="page-header__title">Message Form</h1> 
+                    </div>
+                </div>   
+                
+                <div className="content-container">
+                    {renderComponent}
+                </div>
             </div>
         );
     }

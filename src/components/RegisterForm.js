@@ -8,6 +8,7 @@ class RegisterForm extends React.Component {
       username: props.auth ? props.auth.username : '',
       credit_card: props.auth ? props.auth.credit_card : '',
       address: props.auth ? props.auth.address : '',
+      address_state: '',
       phone_number: props.auth ? props.auth.phone_number : ''
     };
   }
@@ -27,6 +28,11 @@ class RegisterForm extends React.Component {
       this.setState(() => ({address}));
   };
 
+  onSelectStateChange = (e) => {
+    const address_state = e.target.value;
+    this.setState(() => ({address_state}));
+  };
+
   onPhoneNumberChange = (e) => {
     const phone_number = e.target.value;
       this.setState(() => ({phone_number}));
@@ -34,18 +40,25 @@ class RegisterForm extends React.Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-      this.props.onSubmit({
-        username: this.state.username,
-        credit_card: this.state.credit_card,
-        address: this.state.address,
-        phone_number: this.state.phone_number
-      });
+
+      if(this.state.address_state === '') {
+        alert('Please confirm your state');
+      } else {
+        this.props.onSubmit({
+          username: this.state.username,
+          credit_card: this.state.credit_card,
+          address: this.state.address,
+          address_state: this.state.address_state,
+          phone_number: this.state.phone_number
+        });
+    }
   };
 
   render(){
+    const STATE_ARR = [ 'AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FM', 'FL', 'GA', 'GU', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MH', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'MP', 'OH', 'OK', 'OR', 'PW', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY' ];
+
     return (
       <form className="form" onSubmit={this.onSubmit}>
-        {this.state.error && <p className="form__error">{this.state.error}</p>}
         <input
           type="text"
           placeholder="Name"
@@ -67,13 +80,30 @@ class RegisterForm extends React.Component {
         />
         <input
           type="text"
-          placeholder="Address"
+          placeholder="Full Address"
           className="text-input"
           value={this.state.address}
           onChange={this.onAddressChange}
           required
-          title="address"
+          title="Full address"
         />
+
+        <select className="select" required="required" onChange={this.onSelectStateChange}>
+          <option 
+            disabled="disabled" 
+            selected="selected"
+          >
+            Please confirm your state
+          </option>
+          {
+            STATE_ARR.map((state) => (
+              <option key={state} value={state}>
+                {state}
+              </option>
+            ))
+          }
+        </select>
+
         <input
           type="text"
           placeholder="Phone number"
