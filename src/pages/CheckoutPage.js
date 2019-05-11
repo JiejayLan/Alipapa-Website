@@ -16,7 +16,12 @@ class OrderConfirmation extends React.Component {
 		//	Initial state
 		this.state = {
 			status: 'loading',
-			order: undefined
+			order: undefined,
+			message: {
+				className: '',
+				text: '',
+				timeout: undefined
+			},
 		}
 		
 		
@@ -35,7 +40,7 @@ class OrderConfirmation extends React.Component {
 						
 						this.setState({
 						
-							status: 'good',
+							status: response.data.order.status === 'completed' ? 'completed' : 'good',
 							order: response.data.order,
 							item: response.data.item,
 							orderSummary: response.data.orderSummary
@@ -50,8 +55,89 @@ class OrderConfirmation extends React.Component {
 				
 			})
 		
+		this.onPlaceYourOrder = this.onPlaceYourOrder.bind(this);
 	}
 	
+	onPlaceYourOrder(event) {
+		const SELF = this;
+		const URL = `/controllers/checkout/${SELF.props.match.params.orderid}`;
+		const POST_DATA = {
+			orderId: SELF.props.match.params.orderid,
+			order: SELF.state.order,
+			orderSummary: SELF.state.orderSummary
+		}
+
+		axios
+			.post(URL, POST_DATA)
+			.then((response) => {
+				
+				const RESPONSE_STATUS_CODE = response.status;
+				
+				switch(RESPONSE_STATUS_CODE) {
+					
+					case 200: {
+						
+						//	Successfully completed order
+						clearTimeout(this.state.message.timeout);
+						this.setState({
+							status: 'completed',
+							message: {
+								className: 'text-success',
+								text: 'ORDER PLACED!',
+								timeout: setTimeout(() => {
+									this.setState({
+										message: {
+											className: '',
+											text: '',
+											timeout: undefined
+										}
+									})
+								}, 2000)
+							}
+						})
+						
+						
+						
+						break;
+					}
+
+					
+				}
+				
+			})
+			.catch((error) => {
+				
+				const RESPONSE_STATUS_CODE = error.response.status;
+				const RESPONSE_MESSAGE = error.response.data;
+				
+				switch(RESPONSE_STATUS_CODE) {
+					
+					case 403: {
+						
+						clearTimeout(this.state.message.timeout)
+						this.setState({
+							message: {
+								className: 'text-danger',
+								text: RESPONSE_MESSAGE,
+								timeout: setTimeout(() => {
+									this.setState({
+										message: {
+											className: '',
+											text: '',
+											timeout: undefined
+										}
+									})
+								}, 2000)
+							}
+						})
+						
+					}
+					
+				}
+				
+			})
+		
+	}
 	
 	
 	render() {
@@ -112,17 +198,21 @@ class OrderConfirmation extends React.Component {
 										<a href={ITEM_LINK}>{ITEM_TITLE}</a>
 									</h2>
 								</div>
-								<div>
-								
-								</div>
 							</Col>
 							
 							<Col sm={5}>
 								<Row>
 									<Col className='text-center'>
-										<Button variant='warning' className='btn-lg'>
-											<h2>PLACE YOUR ORDER</h2>
+										<Button variant='warning' className='btn-lg' onClick={this.onPlaceYourOrder} disabled={this.state.status === 'completed'}>
+											<h2>{this.state.status === 'completed' ? 'COMPLETED' : 'PLACE YOUR ORDER'}</h2>
 										</Button>
+									</Col>
+								</Row>
+								<Row>
+									<Col className='text-center'>
+										<h3 className={this.state.message.className}>
+											{this.state.message.text}
+										</h3>
 									</Col>
 								</Row>
 								
@@ -158,7 +248,7 @@ class OrderConfirmation extends React.Component {
 									</Col>
 									
 									<Col sm={6} className='text-right'>
-										<h2>{this.state.orderSummary.afterTaxTotal}</h2>
+										<h2>{`$${this.state.orderSummary.afterTaxTotal}`}</h2>
 									</Col>
 								</Row>
 								
