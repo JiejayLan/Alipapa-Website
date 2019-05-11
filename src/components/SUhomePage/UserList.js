@@ -55,6 +55,49 @@ class UserList extends React.Component {
         }
     }
 
+    async transactionHandler(uid){
+        this.showTrans = true;
+        let sellingHis;
+        let buyingHis;
+
+        await axios.all([
+            axios.post('/transactionHistory', {
+              userID: uid,
+              datatype: 'SELLING_ITEMS'
+            }),
+            axios.post('/transactionHistory', {
+              userID: uid,
+              datatype: 'BUYING_ITEMS'
+            })
+          ]).then(axios.spread( (sellRes, buyRes) => {
+            console.log(sellRes.data);
+            console.log(buyRes.data);
+            sellingHis = sellRes.data;
+            buyingHis = buyRes.data;
+          })).catch( err =>{
+            console.log(err);
+          });
+        
+        let name = this.state[uid].username;
+
+        if(sellingHis.length === 0 && buyingHis.length === 0){
+            alert(name + ' has no any selling and buying history!');
+        }
+        else if(sellingHis.length === 0){
+            let buying = JSON.stringify(buyingHis);
+            alert(name + ' has no selling history, here is the buying transaction:' + buying);
+        }
+        else if(buyingHis.length === 0){
+            let selling = JSON.stringify(sellingHis);
+            alert(name + ' has no buying history, here is the selling transaction:' + selling);
+        }
+        else{
+            let buying = JSON.stringify(buyingHis);
+            let selling = JSON.stringify(sellingHis);
+            alert(this.state[uid].username+"'s transaction history:"+ ' Buying: '+ buying + ' Selling: '+selling );
+        }
+    }
+
     setRedirect = () => {
         
         if(confirm('Are you sure to warn this user. This will redirect you to the message system! Please remember the username!')){
@@ -112,6 +155,7 @@ class UserList extends React.Component {
                     <button onClick={()=>this.inspectUser(user.userID)}>inspect</button>
                     <button onClick={this.setRedirect}>warn</button>
                     <button onClick={()=>this.removeUserHandler(user.userID)}>remove</button>
+                    <button onClick={()=>this.transactionHandler(user.userID)}>transaction</button>
                 </div>
             </div>
             </div>
