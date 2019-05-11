@@ -123,7 +123,7 @@ export const ApproveItemApplication = (application ={}) => {
                 title = '' 
             } = application;
         
-            let hotness = 1 + Math.floor(Math.random() * 10);  
+            let hotness = 1 + Math.floor(Math.random() * 6);  
 
             const newItem = { description, itemID:'', url: pictureURL, hotness: hotness, keywords, 
                 price: {current: price, max: price, min: price, previous: price}, 
@@ -145,7 +145,7 @@ export const ApproveItemApplication = (application ={}) => {
                 title = '' 
             } = application;
         
-            let hotness = 1 + Math.floor(Math.random() * 10);  
+            let hotness = 1 + Math.floor(Math.random() * 6);  
 
             const newItem = { description, keywords, url: pictureURL, hotness: hotness,
                 price: {current: price, max: price, min: price, previous: price}, 
