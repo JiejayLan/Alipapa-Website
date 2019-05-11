@@ -18,7 +18,7 @@ export const Header = ({startLogout,isAuthenticated,status,userID,user_type}={})
   // });
 
   if (isAuthenticated){
-    if(user_type === "OU" || user_type === "VIP OU"){
+    if(user_type === "OU" || user_type === "VIP OU" || user_type === "newUser"){
       return (  <header className="header">
       <div className="content-container">
         <div className="header__content">
