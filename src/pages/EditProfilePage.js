@@ -16,10 +16,6 @@ const EditProfilePage = (props) => {
       <div className="content-container">
         <ProfileForm
           onSubmit={ (auth) => {
-            if (props.auth.user_type === "newUser"){
-              database.ref(`users/${props.auth.userID}`).update({user_type: "OU"});
-            }
-
             database.ref(`users/${props.auth.userID}`).update({username: ''});
             usernameTabooCheck(auth.username).then((tabooIndex) => {
               if (tabooIndex == -1 ){
