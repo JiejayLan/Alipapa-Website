@@ -59,6 +59,13 @@ class OrderConfirmation extends React.Component {
 	}
 	
 	onPlaceYourOrder(event) {
+		
+		if (this.state.status === 'pending')
+			return;
+		
+		this.setState({
+			status: 'pending'
+		})
 		const SELF = this;
 		const URL = `/controllers/checkout/${SELF.props.match.params.orderid}`;
 		const POST_DATA = {
@@ -116,6 +123,7 @@ class OrderConfirmation extends React.Component {
 						
 						clearTimeout(this.state.message.timeout)
 						this.setState({
+							status: 'good',
 							message: {
 								className: 'text-danger',
 								text: RESPONSE_MESSAGE,
