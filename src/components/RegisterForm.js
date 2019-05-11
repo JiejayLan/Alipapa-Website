@@ -40,13 +40,18 @@ class RegisterForm extends React.Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-      this.props.onSubmit({
-        username: this.state.username,
-        credit_card: this.state.credit_card,
-        address: this.state.address,
-        address_state: this.state.address_state,
-        phone_number: this.state.phone_number
-      });
+
+      if(this.state.address_state === '') {
+        alert('Please confirm your state');
+      } else {
+        this.props.onSubmit({
+          username: this.state.username,
+          credit_card: this.state.credit_card,
+          address: this.state.address,
+          address_state: this.state.address_state,
+          phone_number: this.state.phone_number
+        });
+    }
   };
 
   render(){
@@ -84,7 +89,12 @@ class RegisterForm extends React.Component {
         />
 
         <select className="select" required="required" onChange={this.onSelectStateChange}>
-          <option value="Please confrim your state">Please confirm your state</option>
+          <option 
+            disabled="disabled" 
+            selected="selected"
+          >
+            Please confirm your state
+          </option>
           {
             STATE_ARR.map((state) => (
               <option key={state} value={state}>

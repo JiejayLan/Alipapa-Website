@@ -47,6 +47,10 @@ class ProfileForm extends React.Component {
 
   onSubmit = (e) => {
     e.preventDefault();
+
+    if(this.state.address_state === '') {
+      alert('Please confirm your state');
+    } else {
     this.props.onSubmit({
       username: this.state.username,
       password: this.state.password,
@@ -55,6 +59,7 @@ class ProfileForm extends React.Component {
       address_state: this.state.address_state,
       phone_number: this.state.phone_number
     });
+    }
   };
 
   render(){
@@ -100,7 +105,12 @@ class ProfileForm extends React.Component {
         />
 
         <select className="select" required="required" onChange={this.onSelectStateChange}>
-        <option value="Please confrim your state">Please confirm your state</option>
+          <option 
+            disabled="disabled" 
+            selected="selected"
+          >
+            Please confirm your state
+          </option>
         {
           STATE_ARR.map((state) => (
             <option key={state} value={state}>
