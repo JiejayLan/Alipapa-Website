@@ -25,6 +25,9 @@ export const warnUser = (userid) =>{
             if(suspend && user.status !== 'suspended'){
                 ref.update({status: 'suspended'});
             }
+            if(user.user_type === 'VIP OU'){
+                ref.update({status: 'OU'});
+            }
             ref.update( {warn_count : warns} )
         })
     }
@@ -51,13 +54,16 @@ export const ApproveUserApplication = (application={}) => {
         const key = application.uid;
         let {
             address = '',
+            address_state ='',
             credit_card = '',
             password = '', 
             phone_number = '',
             username = '' 
         } = application;
 
-        const newUser = {address, credit_card, grade:{}, password, phone_number, 
+        let balance = 10 + Math.floor(Math.random() * 500);  
+
+        const newUser = {address, address_state, balance: balance, credit_card, grade:{}, password, phone_number, 
             rating: 0, status: 'normal', total_spending: 0, userID, user_type: 'OU', 
             username, warn_count: 0};
 
@@ -111,13 +117,14 @@ export const ApproveItemApplication = (application ={}) => {
             let {
                 description = '',
                 keywords =[],
+                pictureURL ='',
                 price = '',
                 sellerID = '',
                 title = '' 
             } = application;
         
 
-            const newItem = { description, itemID:'', keywords, price: {current: price, max: price, min: price, previous: price}, 
+            const newItem = { description, itemID:'', pictureURL, keywords, price: {current: price, max: price, min: price, previous: price}, 
                 price_type: 'ranged', seller: sellerID, status: good, title: title };
 
             let key = database.ref('total_items').push(newItem);
@@ -130,14 +137,15 @@ export const ApproveItemApplication = (application ={}) => {
             let {
                 description = '',
                 keywords =[],
+                pictureURL ='',
                 price = '',
                 sellerID = '',
                 title = '' 
             } = application;
         
 
-            const newItem = { description, keywords, price: {current: price, max: price, min: price, previous: price}, 
-                price_type: 'fixed', seller: sellerID, status: good, title: title };
+            const newItem = { description, keywords, pictureURL, price: {current: price, max: price, min: price, previous: price}, 
+                price_type: 'fixed', seller: sellerID, status: 'good', title: title };
 
             let key = database.ref('total_items').push(newItem);
             let uid = key.key;
@@ -171,7 +179,7 @@ export const notfyKeyUser = (keywords = []) =>{
                             let newMessage = {
                                 description: `A item with the keyword that you are looking for (${keys[j]}) has been put on sale, go check it out!`,
                                 messageType: 'message',
-                                receiver: user[k],
+                                receiver: users[k],
                                 sender: 'userID1'
                             };
                             database.ref('message').push(newMessage);

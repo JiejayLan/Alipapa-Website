@@ -27,7 +27,7 @@ class SUviewItems extends React.Component {
         else if(confirm("Are you sure to remove this item?")){
             if(confirm("The item removed will be add to black list")){
                 
-                this.props.addItemToBl(this.state[uid].name);
+                this.props.addItemToBl(this.state[uid].title);
                 this.props.removeItem(uid);
 
                 delete this.state[uid];
@@ -51,9 +51,8 @@ class SUviewItems extends React.Component {
             <div className='col-9 mx-auto col-md-6 col-lg-3 my-3 rounded float-left' key={item.uid}>
             <div className='card'>
                 <div className='card-content'>
-                    <span className='card-title'>{item.name}</span>
+                    <span className='card-title'>{item.title}</span>
                     <br /><br />
-                    description: {item.description}<br /><br />
                     item type: {item.price_type}<br />
                     sellerID: {item.seller}<br />
                     status: {item.status}<br />
