@@ -2,8 +2,6 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 
 const SubmittedItemApp = ({itemID,title, keywords}) => {
-  //change "to=" attribute to redirect to edit item form
-  
   const KEYWORDS = keywords ?  Object.keys(keywords) : [''] ;
   console.log(KEYWORDS);
   return (
