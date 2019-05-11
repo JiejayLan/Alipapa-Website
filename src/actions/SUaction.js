@@ -123,8 +123,10 @@ export const ApproveItemApplication = (application ={}) => {
                 title = '' 
             } = application;
         
+            let hotness = 1 + Math.floor(Math.random() * 10);  
 
-            const newItem = { description, itemID:'', pictureURL, keywords, price: {current: price, max: price, min: price, previous: price}, 
+            const newItem = { description, itemID:'', url: pictureURL, hotness: hotness, keywords, 
+                price: {current: price, max: price, min: price, previous: price}, 
                 price_type: 'ranged', seller: sellerID, status: good, title: title };
 
             let key = database.ref('total_items').push(newItem);
@@ -143,8 +145,10 @@ export const ApproveItemApplication = (application ={}) => {
                 title = '' 
             } = application;
         
+            let hotness = 1 + Math.floor(Math.random() * 10);  
 
-            const newItem = { description, keywords, pictureURL, price: {current: price, max: price, min: price, previous: price}, 
+            const newItem = { description, keywords, url: pictureURL, hotness: hotness,
+                price: {current: price, max: price, min: price, previous: price}, 
                 price_type: 'fixed', seller: sellerID, status: 'good', title: title };
 
             let key = database.ref('total_items').push(newItem);

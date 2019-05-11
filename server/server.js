@@ -42,6 +42,8 @@ app.use('/controllers/items/:id', require('./controller/item_page_controller.js'
 
 app.post('/suhome', require('./controller/SUmanage_controller')({firebase}) );
 
+app.post('/home', require('./controller/homepage_controller')({firebase}));
+
 app.post('/transactionHistory', require('./controller/transaction_controller')({firebase}) );
 
 app.post('/account', require('./controller/submittedItem_controller')({firebase}));

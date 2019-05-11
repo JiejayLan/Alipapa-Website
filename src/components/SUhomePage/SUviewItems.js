@@ -43,12 +43,12 @@ class SUviewItems extends React.Component {
         let Itemlist = [];
 
         for(let i = 0; i < Itemkeys.length; i++){
-            this.state[Itemkeys[i]].uid = Itemkeys[i];
+
             Itemlist.push(this.state[Itemkeys[i]]);
         }
 
         let jsxOUlist = Itemlist.map( (item) =>
-            <div className='col-9 mx-auto col-md-6 col-lg-3 my-3 rounded float-left' key={item.uid}>
+            <div className='col-9 mx-auto col-md-6 col-lg-3 my-3 rounded float-left' key={item.itemID}>
             <div className='card'>
                 <div className='card-content'>
                     <span className='card-title'>{item.title}</span>
