@@ -33,6 +33,12 @@
   @extend .button;
   max-width: 50%;
   background: #888888;
+
+  &:hover {
+    background: #888888;
+    text-decoration: none;
+    color: white;
+  }
 }
 
 .button--alt{

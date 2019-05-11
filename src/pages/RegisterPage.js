@@ -9,7 +9,7 @@ const RegisterPage = (props) => {
       <div>
         <div className="page-header">
           <div className="content-container">
-            <h1 className="page-header__title">Register Page</h1>
+            <h1 className="page-header__title">Register</h1>
           </div>
         </div> 
         <div className="content-container">

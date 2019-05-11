@@ -18,7 +18,7 @@ export const Header = ({startLogout,isAuthenticated,status,userID,user_type}={})
   // });
 
   if (isAuthenticated){
-    if(user_type === "OU" || user_type === "VIP OU"){
+    if(user_type === "OU" || user_type === "VIP OU" || user_type === "newUser"){
       return (  <header className="header">
       <div className="content-container">
         <div className="header__content">
@@ -54,17 +54,18 @@ export const Header = ({startLogout,isAuthenticated,status,userID,user_type}={})
 
   }
   else{
-    return (  <header className="header">
+    return (  
+      <header className="header">
     <div className="content-container">
       <div className="header__content">
         <Link className="header__title" to="/">
           <h1>Alipapa</h1>
         </Link>
-        <Link className="header__title" to="/register">
-          <h1>sign up</h1>
+        <Link className="header__link" to="/register">
+          Register
         </Link>
-        <Link className="header__title" to="/login">
-          <h1>sign in</h1>
+        <Link className="header__link" to="/login">
+         Login
         </Link>
       </div>
     </div>

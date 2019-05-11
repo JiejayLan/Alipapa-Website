@@ -8,6 +8,7 @@
 
 .select {
   @extend .text-input;
+  margin-right: $m-size;
 }
 
 .textarea {

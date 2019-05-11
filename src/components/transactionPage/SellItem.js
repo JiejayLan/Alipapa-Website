@@ -31,6 +31,7 @@ class SellItem extends React.Component {
 
   render() {
     const PHONENUMBER = this.state.buyerPhoneNumber;
+    const ORDERID = this.props.itemID;
     return (
       <div className="list-item">
       <div>
@@ -39,7 +40,7 @@ class SellItem extends React.Component {
           <h3 className="list-item__subtitle">Order Info:</h3>
           <h4 className="list-item__text">title: {this.props.itemName}</h4>
           <h4 className="list-item__text">price: {`$${this.props.price}`}</h4>
-          <h4 className="list-item__text">itemID: {this.props.itemID}</h4>
+          <h4 className="list-item__text">itemID: {ORDERID}</h4>
         </div>
         <div>
           <h3 className="list-item__subtitle">Buyer Info:</h3>
@@ -53,7 +54,7 @@ class SellItem extends React.Component {
         {
           this.state.status === "pending" ? (
             <div>
-            <Link className="button" to={'/sellerapprove'}>
+            <Link className="button" to={`/sellerapprove/${ORDERID}`}>
               Approve Buyer
             </Link>
             </div>
