@@ -21,6 +21,7 @@ import PurchaseIntention from '../pages/PurchaseIntention';
 import UserInfoPage from '../pages/UserInfoPage';
 import TransactionHistory from '../components/transactionPage/TransactionHistory';
 import SellerApproveItemPage from '../pages/SellerApproveItemPage';
+import CheckoutPage from '../pages/CheckoutPage.js';
 import RandomPrize from '../components/RandomPrize';
 
 
@@ -46,6 +47,7 @@ const AppRouter = () => (
       <PrivateRoute path="/account" component={UserInfoPage}/>
       <PrivateRoute path="/transactionHistory" component={TransactionHistory}/>
       <PrivateRoute path="/sellerapprove/:orderid" component={SellerApproveItemPage}/>
+			<PrivateRoute path="/checkout/:orderid" component={CheckoutPage}/>
       <PrivateRoute path="/randomPrize" component={RandomPrize}/>
       <Route component={NotFoundPage}/>
     </Switch>

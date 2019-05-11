@@ -102,7 +102,7 @@ module.exports = (firebase) => {
 		checkFriend: async (config) => {
 			let userID = config.userID;
 			let friendName = config.friendName;
-			let friendID = await checkID(friendName);
+			let friendID = config.friendID || await checkID(friendName);
 			return (
 				DATABASE
 					.ref('friends/' + userID + "/" + friendID)
