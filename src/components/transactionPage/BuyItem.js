@@ -172,7 +172,7 @@ class BuyItem extends React.Component {
       {
         this.state.status === "approved" ? (
           <div>
-          <Link className="button" to={'/transactionHistory'}>
+          <Link className="button" to={`/checkout/${ORDERID}`}>
             Order Checkout
           </Link>
           </div>

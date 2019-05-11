@@ -12,9 +12,10 @@ export const startAddApplication = (applicationData = {}) => {
       password = '',
       credit_card = '', 
       address = '',
+      address_state = '',
       phone_number = '' 
     } = applicationData;
-    const application = { username, password, credit_card, address, phone_number };
+    const application = { username, password, credit_card, address, address_state, phone_number };
 
    return database.ref('user_application').push(application).then((ref) => {
       dispatch(addApplication({
