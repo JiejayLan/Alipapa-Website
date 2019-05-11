@@ -8,25 +8,41 @@ export const viewUser = (users) => {
     }
 };
 
-export const warnUser = (userid) =>{
+export const warnUser = (username) =>{
     return (dispatch, getState) =>{
-        let ref = database.ref(`users/${userid}`);
-        
-        ref.once('value', snapShot =>{
-            let user = snapShot.val();
-            let warns = user.warn_count;
-            let suspend = false;
-            
-            warns += 1;
-            if(warns >= 2){
-                suspend = true;
+
+        database.ref('users').once('value', snapShot=>{
+            let keys = Object.keys(snapShot.val());
+            let alluser = snapShot.val();
+            let userid;
+
+            for(let i =0; i < keys.length; i++){
+                if(username === alluser[keys[i]].username){
+                    userid = alluser[keys[i]].userID
+                }
             }
 
-            if(suspend && user.status !== 'suspended'){
-                ref.update({status: 'suspended'});
-            }
-            ref.update( {warn_count : warns} )
-        })
+            let ref = database.ref(`users/${userid}`);
+        
+            ref.once('value', snapShot =>{
+                let user = snapShot.val();
+                let warns = user.warn_count;
+                let suspend = false;
+                
+                warns += 1;
+                if(warns >= 2){
+                    suspend = true;
+                }
+
+                if(suspend && user.status !== 'suspended'){
+                    ref.update({status: 'suspended'});
+                }
+                if(user.user_type === 'VIP OU'){
+                    ref.update({user_type: 'OU'});
+                }
+                ref.update( {warn_count : warns} )
+            })
+        });
     }
 }
 
@@ -51,14 +67,17 @@ export const ApproveUserApplication = (application={}) => {
         const key = application.uid;
         let {
             address = '',
+            address_state ='',
             credit_card = '',
             password = '', 
             phone_number = '',
             username = '' 
         } = application;
 
-        const newUser = {address, credit_card, grade:{}, password, phone_number, 
-            rating: 0, status: 'normal', total_spending: 0, userID, user_type: 'OU', 
+        let balance = 10 + Math.floor(Math.random() * 500);  
+
+        const newUser = {address, address_state, balance: balance, credit_card, grade:{}, password, phone_number, 
+            rating: 0, status: 'normal', total_spending: 0, user_type: 'OU', 
             username, warn_count: 0};
 
         database.ref('user_application').child(key).remove().then(function() {
@@ -68,16 +87,9 @@ export const ApproveUserApplication = (application={}) => {
             console.log("Remove failed: " + error.message)
           });
 
-        return database.ref('users').push(newUser).then((ref) => {
-            console.log(ref);
-            dispatch({
-              type: 'APP_USER_APP',
-              application: {
-              userID: key,
-              ...newUser
-              }
-            });
-        });
+        let id = database.ref('users').push(newUser);
+        let uid = id.key;
+        database.ref('users').child(uid).update({userID: uid});
     };
 };
 
@@ -111,13 +123,16 @@ export const ApproveItemApplication = (application ={}) => {
             let {
                 description = '',
                 keywords =[],
+                pictureURL ='',
                 price = '',
                 sellerID = '',
                 title = '' 
             } = application;
         
+            let hotness = 1 + Math.floor(Math.random() * 6);  
 
-            const newItem = { description, itemID:'', keywords, price: {current: price, max: price, min: price, previous: price}, 
+            const newItem = { description, itemID:'', url: pictureURL, hotness: hotness, keywords, 
+                price: {current: price, max: price, min: price, previous: price}, 
                 price_type: 'ranged', seller: sellerID, status: good, title: title };
 
             let key = database.ref('total_items').push(newItem);
@@ -130,14 +145,17 @@ export const ApproveItemApplication = (application ={}) => {
             let {
                 description = '',
                 keywords =[],
+                pictureURL ='',
                 price = '',
                 sellerID = '',
                 title = '' 
             } = application;
         
+            let hotness = 1 + Math.floor(Math.random() * 6);  
 
-            const newItem = { description, keywords, price: {current: price, max: price, min: price, previous: price}, 
-                price_type: 'fixed', seller: sellerID, status: good, title: title };
+            const newItem = { description, keywords, url: pictureURL, hotness: hotness,
+                price: {current: price, max: price, min: price, previous: price}, 
+                price_type: 'fixed', seller: sellerID, status: 'good', title: title };
 
             let key = database.ref('total_items').push(newItem);
             let uid = key.key;
@@ -171,7 +189,7 @@ export const notfyKeyUser = (keywords = []) =>{
                             let newMessage = {
                                 description: `A item with the keyword that you are looking for (${keys[j]}) has been put on sale, go check it out!`,
                                 messageType: 'message',
-                                receiver: user[k],
+                                receiver: users[k],
                                 sender: 'userID1'
                             };
                             database.ref('message').push(newMessage);
