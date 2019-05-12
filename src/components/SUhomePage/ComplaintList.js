@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import * as firebase from "firebase";
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
-import { justifyComp, removeComp, checkUsername, ApealApprove } from '../../actions/SUaction';
+import { justifyComp, removeComp, ApealApprove } from '../../actions/SUaction';
 
 class ComplaintList extends React.Component {
     constructor(props) {
@@ -102,9 +102,12 @@ class ComplaintList extends React.Component {
                     {application.description}<br /><br />
                 </div>
                 <div className='card-action'>
-                    <button onClick={()=>this.justifyHandler(application.uid)}>justify</button>
-                    <button onClick={this.setRedirect}>investigate</button>
-                    <button onClick={()=>this.removeHandler(application.uid)}>remove</button>
+                    <button className="btn btn-outline-success" 
+                        onClick={()=>this.justifyHandler(application.uid)}>justify</button>
+                    <button className='btn btn-outline-info' 
+                        onClick={this.setRedirect}>investigate</button>
+                    <button className="btn btn-outline-danger" 
+                        onClick={()=>this.removeHandler(application.uid)}>remove</button>
                 </div>
             </div>
             </div>

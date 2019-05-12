@@ -58,7 +58,8 @@ class SUviewItems extends React.Component {
                     status: {item.status}<br />
                 </div>
                 <div className='card-action'>
-                    <button onClick={()=>this.removeHandler(item.uid)}>remove</button>
+                    <button className="btn btn-outline-danger" 
+                        onClick={()=>this.removeHandler(item.itemID)}>remove</button>
                 </div>
             </div>
             </div>

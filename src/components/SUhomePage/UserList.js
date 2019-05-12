@@ -152,10 +152,14 @@ class UserList extends React.Component {
                     {user.status}
                 </div>
                 <div className='card-action'>
-                    <button onClick={()=>this.inspectUser(user.userID)}>inspect</button>
-                    <button onClick={this.setRedirect}>warn</button>
-                    <button onClick={()=>this.removeUserHandler(user.userID)}>remove</button>
-                    <button onClick={()=>this.transactionHandler(user.userID)}>transaction</button>
+                    <button className='btn btn-outline-info'
+                        onClick={()=>this.inspectUser(user.userID)}>inspect</button>
+                    <button className="btn btn-outline-warning" 
+                        onClick={this.setRedirect}>warn</button>
+                    <button className="btn btn-outline-danger" 
+                        onClick={()=>this.removeUserHandler(user.userID)}>remove</button>
+                    <button className="btn btn-outline-success" 
+                        onClick={()=>this.transactionHandler(user.userID)}>transaction</button>
                 </div>
             </div>
             </div>
