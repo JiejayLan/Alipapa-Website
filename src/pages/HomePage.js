@@ -41,6 +41,7 @@ class Homepage extends React.Component {
             <div style={divstyle}>
                 <input style={sbarstyle} type='text' placeholder='search...' 
                     onChange={(e)=>this.setState({searchKeyword: e.target.value})} />
+                <button className='btn btn-outline-info btn-lg'>search</button>
             </div>
             </form>
             <ItemList />
