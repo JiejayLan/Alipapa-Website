@@ -23,7 +23,6 @@ import UserInfoPage from '../pages/UserInfoPage';
 import TransactionHistory from '../components/transactionPage/TransactionHistory';
 import SellerApproveItemPage from '../pages/SellerApproveItemPage';
 import CheckoutPage from '../pages/CheckoutPage.js';
-import RandomPrize from '../components/RandomPrize';
 
 
 export const history = createHistory();
@@ -49,7 +48,6 @@ const AppRouter = () => (
       <PrivateRoute path="/transactionHistory" component={TransactionHistory}/>
       <PrivateRoute path="/sellerapprove/:orderid" component={SellerApproveItemPage}/>
 			<PrivateRoute path="/checkout/:orderid" component={CheckoutPage}/>
-      <PrivateRoute path="/randomPrize" component={RandomPrize}/>
       <Route component={NotFoundPage}/>
     </Switch>
   </div>
