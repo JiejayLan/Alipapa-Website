@@ -129,11 +129,14 @@ export const ApproveItemApplication = (application ={}) => {
                 title = '' 
             } = application;
         
-            let hotness = 1 + Math.floor(Math.random() * 6);  
+            let hotness = 1 + Math.floor(Math.random() * 5);  
+            
+            let today = new Date();
+            let endtime = today.setDate( today.getDate() + 3 );
 
-            const newItem = { description, itemID:'', url: pictureURL, hotness: hotness, keywords, 
+            const newItem = { bidEnd: endtime, description, itemID:'', url: pictureURL, hotness: hotness, keywords, 
                 price: {current: price, max: price, min: price, previous: price}, 
-                price_type: 'ranged', seller: sellerID, status: good, title: title };
+                price_type: 'ranged', seller: sellerID, status: 'good', title: title };
 
             let key = database.ref('total_items').push(newItem);
             let uid = key.key;
@@ -151,7 +154,7 @@ export const ApproveItemApplication = (application ={}) => {
                 title = '' 
             } = application;
         
-            let hotness = 1 + Math.floor(Math.random() * 6);  
+            let hotness = 1 + Math.floor(Math.random() * 5);  
 
             const newItem = { description, keywords, url: pictureURL, hotness: hotness,
                 price: {current: price, max: price, min: price, previous: price}, 
@@ -168,20 +171,21 @@ export const ApproveItemApplication = (application ={}) => {
     }
 };
 
-export const notfyKeyUser = (keywords = []) =>{
+export const notfyKeyUser = (keywords = {}) =>{
     if(keywords === null){
         return;
     }
     else{
         database.ref('keywords').once('value', snapShot=>{
-            
+            let keywordkey = Object.keys(keywords);
+
             let allkeyword = snapShot.val();
             let keys = Object.keys(allkeyword);
             
-            for(let i = 0; i < keywords.length; i++){
+            for(let i = 0; i < keywordkey.length; i++){
                 for(let j = 0; j < keys.length; j++){
                     
-                    if(keys[j] === keywords[i]){
+                    if(keys[j] === keywordkey[i]){
                         
                         let users = Object.keys(allkeyword[keys[j]]);
                         
