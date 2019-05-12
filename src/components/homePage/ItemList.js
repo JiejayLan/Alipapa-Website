@@ -45,9 +45,9 @@ class ItemList extends React.Component {
                     </div>
                     <div className='card-footer d-flex justify-content-between'>
                         <p className='align-self-center mb-0'>{item.title}</p>
-                        <h5 className='text-blue font-italic mb-0'>${item.price.current}</h5>
+                        <h5 className='text-blue font-italic mb-0'><span>&#36;</span>{item.price.current}</h5>
                     </div>
-                    <p className='float-left'>Hotness: <Hotness count={item.hotness}/></p>
+                    <p className='float-left'>&nbsp;&nbsp;Hotness: <Hotness count={item.hotness}/></p>
             </div>
 
         </div>

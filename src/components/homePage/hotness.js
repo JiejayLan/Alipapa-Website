@@ -15,7 +15,7 @@ class Hotness extends React.Component {
         let lis = fireList.map( (fire) =>{
             return(
             <span className="glyphicon"
-                key={fire}>&#xe104;</span>)
+                key={fire}>&#xe006;</span>)
 
         })
         return lis;
