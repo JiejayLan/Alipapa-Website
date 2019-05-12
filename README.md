@@ -29,7 +29,7 @@ yarn run install
     FIREBASE_MESSAGING_SENDER_ID=values copy from firebase without double quotes
 ```
 
-5. run command to start development build
+5. run command to start development build and server
 
 ```
 npm run deve
