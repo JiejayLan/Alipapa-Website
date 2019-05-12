@@ -3,17 +3,22 @@ visit [our Wiki Page](https://github.com/JiejayLan/CSC322_group_project/wiki/Doc
 
 ---
 ### Getting started
-I. clone repo
+1. clone repo
 
-II. setup local and remote branch 
+2. download [Node.js](https://nodejs.org/en/download/)
 
-III. using npm or yarn to install all dependencies on your machine 
+3. using npm (pre-installed by Node.js) or [yarn](https://yarnpkg.com/en/docs/install) to install all dependencies on your machine 
+```
+npm install
+```
 
-IV. setup .env.development and .env.test by heading to console of firebase
-1. create .env.development and .env.test at root of project folder
-2. open console of firebase
-3. click Mini-eByMazon and click </> 
-4. setup key-value pair inside .env.development in following format
+```
+yarn run install
+```
+
+4. setup .env file 
++ create .env root of project folder
++ setup key-value pair inside .env 
 
 ```
     FIREBASE_API=values copy from firebase without double quotes
@@ -24,20 +29,41 @@ IV. setup .env.development and .env.test by heading to console of firebase
     FIREBASE_MESSAGING_SENDER_ID=values copy from firebase without double quotes
 ```
 
-5. click Mini-eByMazon Test and click </>
-6. setup key-value pair inside .env.test in the same format in step 4 with values for Mini-eByMazon Test
+5. run command to start development build
+
+```
+npm run deve
+```
+
+```
+yarn run deve
+```
+
+6. head to *localhost:3000* in browser 
 
 ---
-### Suggested Tools
-React Developer Tools and Redux DevTools installed for Google Chrome
+### Suggested Development Tools
++ [Google Chrome](https://www.google.com/chrome/?brand=CHBD&gclid=CjwKCAjwiN_mBRBBEiwA9N-e_o67fh9PIVCvzcc-1Pd5aOS8SW0lGWgABeyPNdGAVv7BAmR4bDBk-BoC-KQQAvD_BwE&gclsrc=aw.ds) 
++ [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
++ [Redux DevTools](https://github.com/zalmoxisus/redux-devtools-extension)
 
 ---
 ### How to login
-For login page, you dont't need to enter any username or password, because I set up a corrrect default username("jay") and password("123") in login-page react state.
++ SU login
+    - username: SU
+    - password: 123
+    
++ OU login 
++ VIP OU 
+    - username: Voldemort
+    - password: 123
 
----
-### Suggestion for development
-1. "npm run deve" for development //still can't set up the reload package to reload the page automatically
-2. put component and pages into different folders
-3. don't connet to firebase from client side.You should add a route controller on the server folder. You can take a look at how I write the login page
++ OU
++ nan
+    - username: nan
+    - password: 123
+    
++ jay
+    - username: jay
+    - password: 123
 
