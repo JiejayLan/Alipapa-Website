@@ -30,14 +30,17 @@ class MessageForm extends React.Component {
     }
 
     handleUpdate = (event) => {
+        
         this.setState({
           [event.target.name]: event.target.value
         })
+        console.log(this.state)
     }
 
     //event for back button
     handleback = () => {
-        if(this.props.user.user_type == 'OU')
+        console.log(this.state);
+        if(this.props.user.user_type == 'OU' || this.props.user.user_type == 'VIP')
             this.setState({messageType:"appeal",confirmedType:"false"});
         else
             this.setState({messageType:"warning",confirmedType:"false"});

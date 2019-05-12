@@ -13,11 +13,6 @@ class editItemForm extends React.Component {
         };
     }
 
-    componentWillMount =()=>{
-        
-
-    }
-
     componentDidMount =  () => {
         TABOO_FUNCTION.checkTaboo()
         .then(data=>{
@@ -40,11 +35,8 @@ class editItemForm extends React.Component {
                     this.setState({title,keywords,itemID});
                 })
         });
-
-
     }
-
-
+    
     checkBlackList = (title) => {
         return database.ref('/superUser/user_blacklist')
             .once('value')
@@ -84,6 +76,7 @@ class editItemForm extends React.Component {
             })
 
             this.props.history.push('/account');
+            window.location.reload(true);
     }
 
 

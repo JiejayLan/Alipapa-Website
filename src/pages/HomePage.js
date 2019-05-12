@@ -1,5 +1,5 @@
 import React from 'react';
-import ItemList from '../components/ItemList';
+import ItemList from '../components/homePage/ItemList';
 import { connect } from 'react-redux';
 import * as firebase from "firebase";
 import {database,storage} from '../firebase/firebase';
@@ -12,15 +12,6 @@ class Homepage extends React.Component {
             total_items : {},
             searchKeyword: ''
         };
-
-        /*axios.post('/suhome', { datatype: 'OU'}).then( (resp)=>{
-            //console.log(resp.data);
-            let data = {...resp.data};
-            this.setState({total_items:{...resp.data}});
-
-        }).catch( err =>{
-            console.log(err);
-        });*/
 
     }
     
@@ -50,9 +41,10 @@ class Homepage extends React.Component {
             <div style={divstyle}>
                 <input style={sbarstyle} type='text' placeholder='search...' 
                     onChange={(e)=>this.setState({searchKeyword: e.target.value})} />
+                <button className='btn btn-outline-info btn-lg'>search</button>
             </div>
             </form>
-
+            <ItemList />
             {/*<ItemList items={this.state.total_items} keyword={this.state.searchKeyword} />*/}
             
         </div>

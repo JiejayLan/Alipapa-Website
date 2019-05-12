@@ -27,7 +27,7 @@ class SUviewItems extends React.Component {
         else if(confirm("Are you sure to remove this item?")){
             if(confirm("The item removed will be add to black list")){
                 
-                this.props.addItemToBl(this.state[uid].name);
+                this.props.addItemToBl(this.state[uid].title);
                 this.props.removeItem(uid);
 
                 delete this.state[uid];
@@ -43,23 +43,23 @@ class SUviewItems extends React.Component {
         let Itemlist = [];
 
         for(let i = 0; i < Itemkeys.length; i++){
-            this.state[Itemkeys[i]].uid = Itemkeys[i];
+
             Itemlist.push(this.state[Itemkeys[i]]);
         }
 
         let jsxOUlist = Itemlist.map( (item) =>
-            <div className='col-9 mx-auto col-md-6 col-lg-3 my-3 rounded float-left' key={item.uid}>
+            <div className='col-9 mx-auto col-md-6 col-lg-3 my-3 rounded float-left' key={item.itemID}>
             <div className='card'>
                 <div className='card-content'>
-                    <span className='card-title'>{item.name}</span>
+                    <span className='card-title'>{item.title}</span>
                     <br /><br />
-                    description: {item.description}<br /><br />
                     item type: {item.price_type}<br />
                     sellerID: {item.seller}<br />
                     status: {item.status}<br />
                 </div>
                 <div className='card-action'>
-                    <button onClick={()=>this.removeHandler(item.uid)}>remove</button>
+                    <button className="btn btn-outline-danger" 
+                        onClick={()=>this.removeHandler(item.itemID)}>remove</button>
                 </div>
             </div>
             </div>

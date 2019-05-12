@@ -22,6 +22,7 @@ class ItemPage extends React.Component {
 				max: undefined,
 				current: undefined
 			},
+			url: undefined,
 			keywords: undefined,
 			description: undefined,
 			seller: undefined,
@@ -57,6 +58,7 @@ class ItemPage extends React.Component {
 								max: ITEM.price.max,
 								current: ITEM.price.current
 							},
+							url: ITEM.url,
 							keywords: ITEM.keywords,
 							description: ITEM.description,
 							seller: ITEM.seller,
@@ -315,6 +317,7 @@ class ItemPage extends React.Component {
 		const SELLER = this.state.seller;
 		const SELLER_RATING = this.state.sellerRating || 0;
 		const DESCRIPTION = this.state.description;
+		const IMAGE_URL = this.state.url || '/images/no-image-available.jpg';
 		
 		const USER_IS_AUTHENTICATED = this.props.isAuthenticated;
 		const ITEM_NOT_FOUND = SELLER ? false : true;
@@ -395,7 +398,7 @@ class ItemPage extends React.Component {
 						<Row>
 							<Col sm={6}>
 								<div>
-									<img className='img-fluid' src='https://images-na.ssl-images-amazon.com/images/I/91t4TlUrzuL._SL1500_.jpg' />
+									<img className='img-fluid' src={IMAGE_URL} />
 								</div>
 								<div>
 									{

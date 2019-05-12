@@ -148,6 +148,9 @@ module.exports = (data) => {
 									} else {
 										
 										//	item does not exist
+										res
+											.status(500)
+											.end('ITEM NOT FOUND')
 										
 									}
 									
@@ -157,6 +160,9 @@ module.exports = (data) => {
 						} else {
 							
 							//	order does not exist
+							res
+								.status(400)
+								.end('Order not found')
 							
 						}
 						
