@@ -32,7 +32,8 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
   },
   table: {
-    width: '30%',
+    width: '80%',
+    fontSize:"1.5em"
   }
 });
 
@@ -68,37 +69,6 @@ class MessageForm extends React.Component {
     this.setState({ warning });
 
   }
-
-  componentDidMount = () => {
-    //test for a chat room
-    // firebase.firestore().collection('messages').add({
-    //   name: "jay",
-    //   text: "hi",
-    //   profilePicUrl: "newul",
-    //   timestamp: firebase.firestore.FieldValue.serverTimestamp()
-    // }).catch(function(error) {
-    //   console.error('Error writing new message to Firebase Database', error);
-    // });
-
-
-    // var query = firebase.firestore()
-    //   .collection('messages')
-    //   .limit(12);
-
-    // // Start listening to the query.
-    // query.onSnapshot(function (snapshot) {
-    //   snapshot.docChanges().forEach(function (change) {
-    //     if (change.type === 'removed') {
-    //       console.log(change.doc.id);
-       
-    //     } else {
-    //       var message = change.doc.data();
-    //       console.log(message);
-    //     }
-    //   });
-    // });
-  }
-
 
   componentWillMount() {
 
@@ -159,6 +129,7 @@ class MessageForm extends React.Component {
       <div className={classes.root}>
         <AppBar position="static" color="default">
           <Tabs
+            variant="fullWidth" 
             value={value}
             onChange={this.handleChange}
             indicatorColor="primary"
@@ -171,7 +142,8 @@ class MessageForm extends React.Component {
             <Tab label="Complain" />
           </Tabs>
         </AppBar>
-        {value === 0 && <TabContainer>
+        {value === 0 && 
+        <TabContainer >
           <Paper className={classes.table} >
             <Table >
               <TableHead><MessageHeader /></TableHead>
@@ -186,7 +158,9 @@ class MessageForm extends React.Component {
             </Table>
           </Paper>
         </TabContainer>}
-        {value === 1 && <TabContainer>
+
+        {value === 1 && 
+        <TabContainer>
           <Paper className={classes.table} >
             <Table >
               <TableHead><MessageHeader /></TableHead>
@@ -201,7 +175,9 @@ class MessageForm extends React.Component {
             </Table>
           </Paper>
         </TabContainer>}
-        {value === 2 && <TabContainer>
+
+        {value === 2 && 
+        <TabContainer>
           <Paper className={classes.table} >
             <Table >
               <TableHead><MessageHeader /></TableHead>

@@ -13,11 +13,6 @@ class editItemForm extends React.Component {
         };
     }
 
-    componentWillMount =()=>{
-        
-
-    }
-
     componentDidMount =  () => {
         TABOO_FUNCTION.checkTaboo()
         .then(data=>{
@@ -38,12 +33,10 @@ class editItemForm extends React.Component {
                         keywords.push(key);
                     }
                     this.setState({title,keywords,itemID});
+                    console.log(this.state)
                 })
         });
-
-
     }
-
 
     checkBlackList = (title) => {
         return database.ref('/superUser/user_blacklist')
@@ -60,14 +53,13 @@ class editItemForm extends React.Component {
 
     handleSubmit = async (e) => {
         e.preventDefault();
-
+        console.log("submit");
         this.checkBlackList(this.state.title)
             .then((isBlack) => {
                 if (isBlack)
                     alert("The item is in blacklist");
                 else {
                     let container = this.state;
-                    
                     let keywords = this.state.keywords;
                     let newword = {};
                     for(let key in keywords){
@@ -77,14 +69,15 @@ class editItemForm extends React.Component {
                     database.ref('total_items/'+this.state.itemID)
                         .update(container)
                         .then(snapshot => {
+                            this.props.history.push('/account');
+                            window.location.reload(true);
                         });
              
                     alert("update successfully");
                 }
             })
 
-            this.props.history.push('/account');
-            window.location.reload(true);
+
     }
 
 

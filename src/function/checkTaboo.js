@@ -10,7 +10,7 @@ export const convertTaboo = (word, [...tabooList]) => {
 
 //return taboolist
 export const checkTaboo = () => {
-    return(  
+    return (
         axios.get('/taboo')
             .then(function (response) {
                 // console.log(response.data);
@@ -18,7 +18,8 @@ export const checkTaboo = () => {
             })
             .catch(function (error) {
                 console.log(error);
-            }))
+            })
+    )
 }
 
 

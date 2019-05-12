@@ -12,9 +12,9 @@ const MessageHeader = (props)=>{
 
     return (
         <div>
-            <TableRow>
-                <TableCell align="right">Sender</TableCell>
-                <TableCell align="right">Description</TableCell>
+            <TableRow >
+                <TableCell style={{fontSize:"1em"}} align="right">Sender</TableCell>
+                <TableCell style={{fontSize:"1em"}} align="right">Description</TableCell>
           </TableRow>
         </div>
     )
