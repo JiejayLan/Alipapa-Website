@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import RandomPrize from '../components/RandomPrize';
 
 
 class OrderConfirmation extends React.Component {
@@ -205,6 +206,8 @@ class OrderConfirmation extends React.Component {
 									<h2>
 										<a href={ITEM_LINK}>{ITEM_TITLE}</a>
 									</h2>
+									<hr/>
+									<RandomPrize/>
 								</div>
 							</Col>
 							

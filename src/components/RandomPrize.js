@@ -1,6 +1,8 @@
 import React from 'react';
 import { database } from '../firebase/firebase';
 import { connect } from 'react-redux';
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
 
 class RandomPrize extends React.Component {
   constructor(props) {
@@ -64,21 +66,21 @@ class RandomPrize extends React.Component {
     const RANDOM_PRIZE = this.state.randomPrize;
 
     return (
-      <div className="content-container">
+      <div>
         {
           this.state.displayButton === true ? (        
-            <div className="content-container">
+            <div>
               <h2 className="form__error">Before Checkout, Win a Prize!</h2>
-              <button className="button" onClick={this.pickPrize}>
+              <Button variant='primary' className='btn-lg' onClick={this.pickPrize}>
                 Try Your Luck
-              </button>
+              </Button>
            </div>
           ) : ''
         }
           
         {
           !!(RANDOM_PRIZE) ? (
-            <div className="content-container">
+            <div>
               <h2 className="form__error">Randomizing Prize...</h2>
               <h2 className="form__error">{RANDOM_PRIZE}</h2>
             </div>
@@ -87,7 +89,7 @@ class RandomPrize extends React.Component {
 
         {
           !!(PRIZE) ? (
-            <div className="content-container">
+            <div>
               {
                 PRIZE.charAt(0) === '$' ? (
                   <h2 className="form__error">
