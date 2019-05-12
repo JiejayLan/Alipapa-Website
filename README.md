@@ -17,7 +17,7 @@ yarn run install
 ```
 
 4. setup .env file 
-+ create .env root of project folder
++ create .env at root of project folder
 + setup key-value pair inside .env 
 
 ```
