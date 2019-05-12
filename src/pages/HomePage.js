@@ -35,7 +35,7 @@ class Homepage extends React.Component {
         return (
         <div>
             <div className='text-center' style={divstyle}>
-              <h1>AliPaPa</h1>
+              <h1>Alipapa</h1>
               <p>Let shopping sets you free</p>
             </div>
             <form>
