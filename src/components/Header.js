@@ -7,7 +7,7 @@ import { database} from '../firebase/firebase';
 export const Header = ({startLogout,isAuthenticated,status,userID,user_type}={}) => {
 
   if (isAuthenticated){
-    if(user_type === "OU" || user_type === "VIP"){
+    if(user_type === "OU" || user_type === "VIP OU"){
       return (  <header className="header">
       <div className="content-container">
         <div className="header__content">
