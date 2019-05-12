@@ -22,6 +22,7 @@ const RegisterPage = (props) => {
                       usernameUniqueCheck(application.username).then((nameIndex)=>{
                         if (nameIndex == -1){
                           props.startAddApplication(application); 
+                          alert('User Application submitted!');
                           props.history.push('/');
                         } else {
                           alert('Username should be unique!');
