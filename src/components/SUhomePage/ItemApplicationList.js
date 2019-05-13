@@ -24,7 +24,7 @@ class ItemApplicationList extends React.Component {
 
     rejectHandler = (uid) => {
         if(confirm("Are you sure to reject?")){
-            this.props.warnUserbyID(this.state[uid].sellerID);
+            this.props.warnUserbyID(this.state[uid].sellerID, 1);
             this.props.DenyItemApplication(uid);
 
             delete this.state[uid];
@@ -101,7 +101,7 @@ const mapDispatchToProps = (dispatch) => {
         viewItemApplication: (application) => dispatch( viewItemApplication(application)),
         DenyItemApplication: (application) => dispatch( DenyItemApplication(application)),
         ApproveItemApplication: (application) => dispatch( ApproveItemApplication(application)),
-        warnUserbyID: (userid) => dispatch( warnUserbyID(userid) )
+        warnUserbyID: (userid, number) => dispatch( warnUserbyID(userid, number) )
     };
 };
 

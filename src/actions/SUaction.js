@@ -8,15 +8,17 @@ export const viewUser = (users) => {
     }
 };
 
-export const warnUserbyID = (uid) => {
+export const warnUserbyID = (uid, warnamount) => {
     return (dispatch, getState) =>{
+        let w = warnamount;
+
         let ref = database.ref('users').child(uid);
         ref.once('value', snapShot=>{
             let user = snapShot.val();
             let warns = user.warn_count;
             let suspend = false;
             
-            warns += 1;
+            warns += w;
             if(warns >= 2){
                 suspend = true;
             }
@@ -274,14 +276,9 @@ export const addItemToBl = (itemname) => {
 
 export const justifyComp = (compid) => {
     return (dispatch, getState) =>{
+
         database.ref('message').child(compid).update({status: 'justified'});
 
-        database.ref('message').child(compid).once('value', snapShot=>{
-            let comp = snapShot.val();
-            let userID = comp.receiver;
-
-            database.ref('user').child(userID).update({warn_count: warn_count+0.5});
-        })
     }
 };
 
