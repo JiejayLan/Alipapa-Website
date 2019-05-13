@@ -20,8 +20,8 @@ class SUviewItems extends React.Component {
         });
     };
 
-    removeHandler = (uid) => {
-        if( this.state[uid].status === 'order' ){
+    removeHandler = (uid, status) => {
+        if( status === 'order' ){
             alert('This item is already in the order stage, go to message system and discuss with seller/buyer');
         }
         else if(confirm("Are you sure to remove this item?")){
@@ -59,7 +59,7 @@ class SUviewItems extends React.Component {
                 </div>
                 <div className='card-action'>
                     <button className="btn btn-outline-danger" 
-                        onClick={()=>this.removeHandler(item.itemID)}>remove</button>
+                        onClick={()=>this.removeHandler(item.itemID, item.status)}>remove</button>
                 </div>
             </div>
             </div>
