@@ -69,11 +69,12 @@ class editItemForm extends React.Component {
                     database.ref('total_items/'+this.state.itemID)
                         .update(container)
                         .then(snapshot => {
+                            alert("update successfully");
                             this.props.history.push('/account');
                             window.location.reload(true);
                         });
              
-                    alert("update successfully");
+                    
                 }
             })
 
