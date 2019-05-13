@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import * as firebase from "firebase";
-import { viewItemApplication, DenyItemApplication, ApproveItemApplication } from '../../actions/SUaction';
+import { viewItemApplication, DenyItemApplication, ApproveItemApplication, warnUserbyID } from '../../actions/SUaction';
 import axios from 'axios';
 
 class ItemApplicationList extends React.Component {
@@ -24,6 +24,7 @@ class ItemApplicationList extends React.Component {
 
     rejectHandler = (uid) => {
         if(confirm("Are you sure to reject?")){
+            this.props.warnUserbyID(this.state[uid].sellerID);
             this.props.DenyItemApplication(uid);
 
             delete this.state[uid];
@@ -99,7 +100,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         viewItemApplication: (application) => dispatch( viewItemApplication(application)),
         DenyItemApplication: (application) => dispatch( DenyItemApplication(application)),
-        ApproveItemApplication: (application) => dispatch( ApproveItemApplication(application))
+        ApproveItemApplication: (application) => dispatch( ApproveItemApplication(application)),
+        warnUserbyID: (userid) => dispatch( warnUserbyID(userid) )
     };
 };
 

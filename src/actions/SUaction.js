@@ -8,6 +8,28 @@ export const viewUser = (users) => {
     }
 };
 
+export const warnUserbyID = (uid) => {
+    return (dispatch, getState) =>{
+        let ref = database.ref('users').child(uid);
+        ref.once('value', snapShot=>{
+            let user = snapShot.val();
+            let warns = user.warn_count;
+            let suspend = false;
+            
+            warns += 1;
+            if(warns >= 2){
+                suspend = true;
+            }
+            if(suspend && user.status !== 'suspended'){
+                ref.update({status: 'suspended'});
+            }
+            if(user.user_type === 'VIP OU'){
+                ref.update({user_type: 'OU'});
+            }
+            ref.update( {warn_count : warns} )
+        }) 
+    }
+}
 export const warnUser = (username) =>{
     return (dispatch, getState) =>{
 
@@ -73,11 +95,11 @@ export const ApproveUserApplication = (application={}) => {
             username = '' 
         } = application;
 
-        let password = username;
+        let passw = username;
 
         let balance = 10 + Math.floor(Math.random() * 500);  
 
-        const newUser = {address, address_state, balance: balance, credit_card, grade:{}, password: password, phone_number, 
+        const newUser = {address, address_state, balance: balance, credit_card, grade:{}, password: passw, phone_number, 
             rating: 0, status: 'normal', total_spending: 0, user_type: 'OU', 
             username, warn_count: 0};
 
@@ -195,7 +217,7 @@ export const notfyKeyUser = (keywords = {}) =>{
                                 description: `A item with the keyword that you are looking for (${keys[j]}) has been put on sale, go check it out!`,
                                 messageType: 'message',
                                 receiver: users[k],
-                                sender: 'userID1'
+                                sender: 'userID3'
                             };
                             database.ref('message').push(newMessage);
                         };
@@ -209,14 +231,6 @@ export const notfyKeyUser = (keywords = {}) =>{
 export const DenyItemApplication = (itemAppli) => {
     return (dispatch, getState) => {
         const key = itemAppli;
-
-        database.ref('item_application').child(key).once('value', snapShot=>{
-            let application = snapShot.val();
-            let seller = application.sellerID;
-
-            database.ref('user').child(seller).update({warn_count: warn_count+1});
-        });
-        
         
         database.ref('item_application').child(key).remove().then(function() {
             console.log("Remove succeeded.")
