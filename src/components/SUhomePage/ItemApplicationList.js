@@ -49,7 +49,9 @@ class ItemApplicationList extends React.Component {
         let Itemlist = [];
 
         for(let i = 0; i < Itemkeys.length; i++){
+            
             this.state[Itemkeys[i]].uid = Itemkeys[i];
+
             Itemlist.push(this.state[Itemkeys[i]]);
         }
 
@@ -59,11 +61,15 @@ class ItemApplicationList extends React.Component {
                 <div className='card-content'>
                     <span className='card-title'>Item Application:</span>
                     <br />
-                    {application.title}<br />
+                    tittle: {application.title}<br />
+                    price: {application.price}<br />
+                    price_type: {application.priceNature}<br />
                 </div>
                 <div className='card-action'>
-                    <button onClick={()=>this.approveHandler(application.uid)}>approve</button>
-                    <button onClick={()=>this.rejectHandler(application.uid)}>reject</button>
+                    <button className="btn btn-outline-success" 
+                        onClick={()=>this.approveHandler(application.uid)}>approve</button>
+                    <button className="btn btn-outline-danger" 
+                        onClick={()=>this.rejectHandler(application.uid)}>reject</button>
                 </div>
             </div>
             </div>

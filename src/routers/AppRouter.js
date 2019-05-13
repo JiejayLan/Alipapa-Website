@@ -17,12 +17,12 @@ import EditProfilePage from '../pages/EditProfilePage';
 import EditItemPage from '../pages/EditItemPage';
 import SUHomePage from '../pages/SUhomePage';
 import Friend from '../pages/FriendPage';
+import HomeSearchPage from '../pages/homeSearchPage';
 import PurchaseIntention from '../pages/PurchaseIntention';
 import UserInfoPage from '../pages/UserInfoPage';
 import TransactionHistory from '../components/transactionPage/TransactionHistory';
 import SellerApproveItemPage from '../pages/SellerApproveItemPage';
 import CheckoutPage from '../pages/CheckoutPage.js';
-import RandomPrize from '../components/RandomPrize';
 
 
 export const history = createHistory();
@@ -35,7 +35,7 @@ const AppRouter = () => (
       <LoginRoute path="/login" component={LoginPage} exact={true}/>
       <PublicRoute path="/" component={HomePage} exact={true}/>
       <SuperRoute path="/suhome" component={SUHomePage}/>
-      {/*<PrivateRoute path="/suhome" component={SUHomePage}/>*/}
+      <PublicRoute path="/home/:keyword" component={HomeSearchPage}/>
       <PrivateRoute path="/sellnewitem" component={sellingForm} exact={true}/>
       <PrivateRoute path="/sendMessage" component={SendMessagePage} exact={true}/>
       <PrivateRoute path="/checkMessage" component={CheckMessagePage }/>
@@ -48,7 +48,6 @@ const AppRouter = () => (
       <PrivateRoute path="/transactionHistory" component={TransactionHistory}/>
       <PrivateRoute path="/sellerapprove/:orderid" component={SellerApproveItemPage}/>
 			<PrivateRoute path="/checkout/:orderid" component={CheckoutPage}/>
-      <PrivateRoute path="/randomPrize" component={RandomPrize}/>
       <Route component={NotFoundPage}/>
     </Switch>
   </div>

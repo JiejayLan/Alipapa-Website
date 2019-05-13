@@ -65,8 +65,10 @@ class UserApplicationList extends React.Component {
                     {application.phone_number}<br />
                 </div>
                 <div className='card-action'>
-                    <button onClick={()=>this.approveHandler(application.uid)}>approve</button>
-                    <button onClick={()=>this.rejectHandler(application.uid)}>reject</button>
+                    <button className="btn btn-outline-success" 
+                        onClick={()=>this.approveHandler(application.uid)}>approve</button>
+                    <button className="btn btn-outline-danger" 
+                        onClick={()=>this.rejectHandler(application.uid)}>reject</button>
                 </div>
             </div>
             </div>

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as firebase from "firebase";
 import {database,storage} from '../firebase/firebase';
 import axios from 'axios';
+import {Link} from 'react-router-dom';
 
 class Homepage extends React.Component {
     constructor(){
@@ -34,17 +35,23 @@ class Homepage extends React.Component {
         return (
         <div>
             <div className='text-center' style={divstyle}>
-              <h1>AliPaPa</h1>
+              <h1>Alipapa</h1>
               <p>Let shopping sets you free</p>
             </div>
             <form>
             <div style={divstyle}>
                 <input style={sbarstyle} type='text' placeholder='search...' 
                     onChange={(e)=>this.setState({searchKeyword: e.target.value})} />
+                { (this.state.searchKeyword !== '') && (
+                <Link className="list-item__title--link" to={`/home/${this.state.searchKeyword}`}>
+                    <button className='btn btn-outline-info btn-lg'>search</button>
+                </Link>)}
+                { (this.state.searchKeyword === '') && (
+                    <button className='btn btn-outline-info btn-lg'>search</button>
+                )}
             </div>
             </form>
             <ItemList />
-            {/*<ItemList items={this.state.total_items} keyword={this.state.searchKeyword} />*/}
             
         </div>
         );

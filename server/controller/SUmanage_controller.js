@@ -21,9 +21,10 @@ module.exports = ( data ) => {
             });
         }
         else if( req.body.datatype === 'ITEMAPP' ){
-            firebase.database.ref(`/item_application`).once('value').then((snapshot)=> {       
+            
+            firebase.database.ref(`/item_application`).once('value').then((snapshot)=> {
                 let itemApplications = snapshot.val();
-      
+                
                 res.json(itemApplications);
             });
         }
