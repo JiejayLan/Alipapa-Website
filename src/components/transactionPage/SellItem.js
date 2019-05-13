@@ -54,7 +54,7 @@ class SellItem extends React.Component {
         {
           this.state.status === "pending" ? (
             <div>
-            <Link className="button" to={`/sellerapprove/${ORDERID}`}>
+            <Link className="button--alt" to={`/sellerapprove/${ORDERID}`}>
               Approve Buyer
             </Link>
             </div>

@@ -98,7 +98,7 @@ class BuyItem extends React.Component {
         <div>
         <div>
         <button className="button" onClick={this.openModal}>
-          Grade seller
+          Grade Seller
         </button>
         <Modal 
           isOpen={this.state.modalIsOpen}
@@ -172,7 +172,7 @@ class BuyItem extends React.Component {
       {
         this.state.status === "approved" ? (
           <div>
-          <Link className="button" to={`/checkout/${this.state.orderID}`}>
+          <Link className="button--alt" to={`/checkout/${this.state.orderID}`}>
             Order Checkout
           </Link>
           </div>
