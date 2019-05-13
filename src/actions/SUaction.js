@@ -69,14 +69,15 @@ export const ApproveUserApplication = (application={}) => {
             address = '',
             address_state ='',
             credit_card = '',
-            password = '', 
             phone_number = '',
             username = '' 
         } = application;
 
+        let password = username;
+
         let balance = 10 + Math.floor(Math.random() * 500);  
 
-        const newUser = {address, address_state, balance: balance, credit_card, grade:{}, password, phone_number, 
+        const newUser = {address, address_state, balance: balance, credit_card, grade:{}, password: password, phone_number, 
             rating: 0, status: 'normal', total_spending: 0, user_type: 'OU', 
             username, warn_count: 0};
 
@@ -249,7 +250,9 @@ export const addUserToBl = (username) => {
 
 export const addItemToBl = (itemname) => {
     return (dispatch, getState) => {
-
+        if(itemname.length > 30){
+            itemname = itemname.slice(0,29);
+        }
         database.ref('superUser/item_blacklist').child(itemname).set(true);
     }
 };
