@@ -24,16 +24,16 @@ const MessageForm = (props)=>{
           
     // console.log(props.userType, props.messageType)
 
-    if((props.userType === "OU" ||props.userType === "VIP")  && props.messageType== "appeal"){
+    if((props.userType === "OU" ||props.userType === "VIP OU")  && props.messageType== "appeal"){
         formOption = description;
     }
-    else if((props.userType === "OU" ||props.userType === "VIP") && props.messageType == "complain"){
+    else if((props.userType === "OU" ||props.userType === "VIP OU") && props.messageType == "complain"){
         formOption = <div>
                         {compliant}
                         {description}    
                     </div>
     }
-    else if((props.userType === "OU" ||props.userType === "VIP")  && props.messageType == "explain"){
+    else if((props.userType === "OU" ||props.userType === "VIP OU")  && props.messageType == "explain"){
         formOption = <div>
                         {explain}
                         {description}    
