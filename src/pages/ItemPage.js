@@ -62,6 +62,7 @@ class ItemPage extends React.Component {
 							keywords: ITEM.keywords,
 							description: ITEM.description,
 							seller: ITEM.seller,
+							sellerName: SELLER.username,
 							sellerRating: SELLER.rating,
 							status: ITEM.status,
 							bidEnd: ITEM.bidEnd,
@@ -315,6 +316,7 @@ class ItemPage extends React.Component {
 		const MESSAGE_TEXT = this.state.message.text;
 		const MESSAGE_CLASS = this.state.message.className;
 		const SELLER = this.state.seller;
+		const SELLER_NAME = this.state.sellerName;
 		const SELLER_RATING = this.state.sellerRating || 0;
 		const DESCRIPTION = this.state.description;
 		const IMAGE_URL = this.state.url || '/images/no-image-available.jpg';
@@ -441,7 +443,7 @@ class ItemPage extends React.Component {
 											<Row>
 												<Col xs={{ offset: 1}}>
 													<span className='h3'>
-														{SELLER}
+														{SELLER_NAME}
 													</span>
 												</Col>
 											</Row>

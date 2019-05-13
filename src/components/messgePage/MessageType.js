@@ -11,7 +11,7 @@ const MessageType = (props)=>{
         </select>
     else
         options =            
-            <select className="select" name="messageType">          
+            <select style ={{fontSize:"15px", fontWeight:"600", margin:"10px"}} className="select" name="messageType">          
                 <option value="appeal">appeal</option>
                 <option value="complain">complaint</option>
                 <option value="explain">explain</option>
@@ -19,7 +19,7 @@ const MessageType = (props)=>{
             </select>
 
     return (
-        <div onChange={ props.changed }>
+        <div onChange={ props.changed } >
                 {options}
             <button 
                 className= "button"

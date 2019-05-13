@@ -63,11 +63,12 @@ class sellItemForm extends React.Component {
                         database.ref('item_application')
                                 .push(container)
                                 .then(snapshot=>{
-                                    console.log(snapshot);
+                                    alert("Submit successfully");
+                                    this.props.history.push('/account');
+                                    window.location.reload(true);
                                     // <Redirect to='/sellnewitem' />
                                 });  
                     });   
-                    alert("Submit successfully"); 
                 }
         })
         
