@@ -7,7 +7,7 @@ visit [our Wiki Page](https://github.com/JiejayLan/CSC322_group_project/wiki/Doc
 
 2. download [Node.js](https://nodejs.org/en/download/)
 
-3. using npm (pre-installed by Node.js) or [yarn](https://yarnpkg.com/en/docs/install) to install all dependencies on your machine 
+3. using npm (pre-installed by Node.js) or [yarn](https://yarnpkg.com/en/docs/install) to install all dependencies
 ```
 npm install
 ```
