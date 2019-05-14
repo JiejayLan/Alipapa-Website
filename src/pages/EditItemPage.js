@@ -39,7 +39,7 @@ class editItemForm extends React.Component {
     }
 
     checkBlackList = (title) => {
-        return database.ref('/superUser/user_blacklist')
+        return database.ref('/superUser/item_blacklist')
             .once('value')
             .then(function (snapshot) {
                 let blacklist = snapshot.val();
