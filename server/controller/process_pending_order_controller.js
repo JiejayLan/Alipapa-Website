@@ -18,23 +18,41 @@ module.exports = (data) => {
 			case 'approve': {
 				
 				ORDER_MANAGER
-				.createApprovedOrder({
-					id: ORDER_ID
+				.getOne({ id: ORDER_ID})
+				.then((order) => {
+					
+					if (order.status === 'pending') {
+						
+						ORDER_MANAGER
+							.createApprovedOrder({
+								id: ORDER_ID
+							})
+							.then((response) => {
+								
+								res
+									.status(201)
+									.end()
+								
+							})
+							.catch((error) => {
+								
+								res
+									.status(400)
+									.json(error)
+								
+							})
+						
+					} else {
+						
+						//	Order not in pre-process state
+						res
+							.status(403)
+							.end('Order already processed.')
+						
+					}
+					
 				})
-				.then((response) => {
-					
-					res
-						.status(201)
-						.end()
-					
-				})
-				.catch((error) => {
-					
-					res
-						.status(400)
-						.json(error)
-					
-				})
+				
 					
 				break;
 			}
@@ -52,7 +70,7 @@ module.exports = (data) => {
 						
 						const ITEM_ID = order.itemID;
 						
-						if (order !== null) {
+						if (order !== null && order.status === 'pending') {
 							
 							//	Check item exists
 							ITEM_MANAGER
@@ -162,7 +180,7 @@ module.exports = (data) => {
 							//	order does not exist
 							res
 								.status(400)
-								.end('Order not found')
+								.end('Could not process order')
 							
 						}
 						

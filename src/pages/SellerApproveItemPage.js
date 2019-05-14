@@ -6,7 +6,12 @@ class SellerApproveItemPage extends React.Component {
     super(props);
 
     this.state = {
-      note: ''
+      note: '',
+			message: {
+				text: ''
+			},
+			timeout: undefined,
+			status: 'good'
     }
 		
 		this.onApproveClick = this.onApproveClick.bind(this);
@@ -19,6 +24,13 @@ class SellerApproveItemPage extends React.Component {
 	
 	onApproveClick = (e) => {
 		
+		if (this.state.status !== 'good')
+			return;
+		
+		this.setState({
+			status: 'pending'
+		})
+		
 		const ORDER_ID = this.props.match.params.orderid;
 		const URL = `/process-pending-orders/approve/${ORDER_ID}`;
 		const POST_DATA = {};
@@ -27,15 +39,50 @@ class SellerApproveItemPage extends React.Component {
 			.post(URL, POST_DATA)
 			.then((response) => {
 				
-				//	display success
+				clearTimeout(this.state.timeout);
+				this.setState({
+					message: {
+						text: 'Success, redirecting...',
+					}
+				})
 				
-				//	redirect?
+				setTimeout(() => {
+					window.location = '/transactionhistory'
+				}, 2000)
+				
+				
+				
+			})
+			.catch((error) => {
+				
+				clearTimeout(this.state.timeout);
+				this.setState({
+					message: {
+						text: error.response.data,
+						state: 'good'
+					}
+				})
+				
+				setTimeout(() => {
+					this.setState({
+						message: {
+							text: ''
+						}
+					})
+				}, 2000)
 				
 			})
 		
 	}
 	
 	onRejectClick = (e) => {
+		
+		if (this.state.status !== 'good')
+			return;
+		
+		this.setState({
+			status: 'pending'
+		})
 		
 		const NOTE = this.state.note.trim();
 		if (!NOTE)
@@ -51,15 +98,43 @@ class SellerApproveItemPage extends React.Component {
 			.post(URL, POST_DATA)
 			.then((response) => {
 				
-				//	display success
+				clearTimeout(this.state.timeout);
+				this.setState({
+					message: {
+						text: 'Success, redirecting...'
+					}
+				})
 				
-				//	redirect?
+				setTimeout(() => {
+					window.location = '/transactionhistory'
+				}, 2000)
+				
+				
+			})
+			.catch((error) => {
+				
+				clearTimeout(this.state.timeout)
+				this.setState({
+					message: {
+						text: error.response.data,
+						state: 'good'
+					}
+				})
+				
+				setTimeout(() => {
+					this.setState({
+						message: {
+							text: ''
+						}
+					})
+				}, 2000)
 				
 			})
 		
 	}
 
   render() {
+		
     return (
       <div>
         <div className="page-header">
@@ -70,6 +145,9 @@ class SellerApproveItemPage extends React.Component {
 
           <div className="content-container">
             <div className="form">
+							<div>
+								{this.state.message.text}
+							</div>
 							<div >
 								<button className="button" onClick={this.onApproveClick}>Approve</button>
 							</div>
