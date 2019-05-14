@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import * as firebase from "firebase";
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
-import { justifyComp, removeComp, ApealApprove } from '../../actions/SUaction';
+import { justifyComp, removeComp, ApealApprove, warnUserbyID } from '../../actions/SUaction';
 
 class ComplaintList extends React.Component {
     constructor(props) {
@@ -41,8 +41,12 @@ class ComplaintList extends React.Component {
             alert('Already justified!');
         }
         else if(confirm('Make sure you contact the user to investigate the complain before confirm it')){
+            this.props.warnUserbyID(this.state[uid].complaintUser, 0.5);
             this.props.justifyComp(uid);
-            this.setState({...this.state});
+
+            let newstate = this.state;
+            newstate[uid].status = 'justified';
+            this.setState({...newstate});
         };
     }
 
@@ -97,7 +101,7 @@ class ComplaintList extends React.Component {
                     <span className='card-title'>{application.messageType}:</span>
                     <br />
                     sender: {application.sender}<br />
-                    receiver: {application.receiver}<br />
+                    receiver: {application.complaintUser}<br />
                     status: {application.status}<br /><br />
                     {application.description}<br /><br />
                 </div>
@@ -179,7 +183,8 @@ const mapDispatchToProps = (dispatch) => {
         viewItemApplication: (application) => dispatch( viewItemApplication(application)),
         justifyComp: (compid) => dispatch( justifyComp(compid) ),
         removeComp: (compid) => dispatch( removeComp(compid) ),
-        ApealApprove: (appid) => dispatch( ApealApprove(appid) )
+        ApealApprove: (appid) => dispatch( ApealApprove(appid) ),
+        warnUserbyID: (userid, number) => dispatch( warnUserbyID(userid, number) )
     };
 };
 
