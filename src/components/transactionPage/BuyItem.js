@@ -97,7 +97,7 @@ class BuyItem extends React.Component {
         this.state.status === "completed" ? (
         <div>
         <div>
-        <button className="button" onClick={this.openModal}>
+        <button className="button--alt" onClick={this.openModal}>
           Grade Seller
         </button>
         <Modal 
