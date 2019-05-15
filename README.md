@@ -56,11 +56,10 @@ yarn run deve
     - password: 123
     
 + OU login 
-    + VIP OU 
+    + Voldemort
         - username: Voldemort
         - password: 123
 
-    + OU
     + nan
         - username: nan
         - password: 123
