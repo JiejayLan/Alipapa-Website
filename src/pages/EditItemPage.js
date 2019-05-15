@@ -25,7 +25,7 @@ class editItemForm extends React.Component {
                 .once('value')
                 .then((snapshot) => {
                     let title = snapshot.val().title;
-                    console.log("taboo",this.state.taboolist);
+                    console.log("title",title);
                     title = TABOO_FUNCTION.convertTaboo(title,data);
                     let keywordList = snapshot.val().keywords;
                     let keywords =[];
