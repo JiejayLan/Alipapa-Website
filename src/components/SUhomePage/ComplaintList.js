@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import * as firebase from "firebase";
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
-import { justifyComp, removeComp, ApealApprove, warnUserbyID } from '../../actions/SUaction';
+import { justifyComp, removeComp, ApealApprove, warnUserbyID, AppealReject } from '../../actions/SUaction';
 
 class ComplaintList extends React.Component {
     constructor(props) {
@@ -69,6 +69,16 @@ class ComplaintList extends React.Component {
     Appealhandler = (appid) => {
         if(confirm('Sure want to approve this appeal?')){
             this.props.ApealApprove(appid);
+
+            delete this.state[appid];
+            let newState = this.state;
+            this.setState({...newState});
+        }
+    }
+
+    Appealreject = (appid) => {
+        if(confirm('Sure to reject this appeal?')){
+            this.props.AppealReject(appid, this.state[appid].sender);
 
             delete this.state[appid];
             let newState = this.state;
@@ -148,7 +158,7 @@ class ComplaintList extends React.Component {
                 </div>
                 <div className='card-action'>
                     <button onClick={()=>this.Appealhandler(application.uid)}>approve</button>
-                    <button onClick={()=>this.removeHandler(application.uid)}>reject</button>
+                    <button onClick={()=>this.Appealreject(application.uid)}>reject</button>
                 </div>
             </div>
             </div>
@@ -184,7 +194,8 @@ const mapDispatchToProps = (dispatch) => {
         justifyComp: (compid) => dispatch( justifyComp(compid) ),
         removeComp: (compid) => dispatch( removeComp(compid) ),
         ApealApprove: (appid) => dispatch( ApealApprove(appid) ),
-        warnUserbyID: (userid, number) => dispatch( warnUserbyID(userid, number) )
+        warnUserbyID: (userid, number) => dispatch( warnUserbyID(userid, number) ),
+        AppealReject: (appid, userid) => dispatch( AppealReject(appid, userid ) )
     };
 };
 
