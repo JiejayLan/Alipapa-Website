@@ -52,7 +52,7 @@ class ComplaintList extends React.Component {
 
     investigateRedirect = () => {
         if(this.redirect){
-            return <Redirect to='/message' />
+            return <Redirect to='/sendmessage' />
         };
     }
 
