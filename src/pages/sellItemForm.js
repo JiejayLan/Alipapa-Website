@@ -18,7 +18,7 @@ class sellItemForm extends React.Component {
 
 
     checkBlackList = (title) => {
-        return database.ref('/superUser/user_blacklist')
+        return database.ref('/superUser/item_blacklist')
             .once('value')
             .then(function (snapshot) {
                 let blacklist = snapshot.val();
@@ -140,7 +140,7 @@ class sellItemForm extends React.Component {
                             Price:
                     <input type="number" required name={"price"} className="number-input"
                                 onChange={() => {
-                                    this.setState({ "price": event.target.value });
+                                    this.setState({ "price": parseInt(event.target.value) });
                                 }} />
                         </label>
 

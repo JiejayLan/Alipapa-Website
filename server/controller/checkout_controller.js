@@ -124,8 +124,8 @@ module.exports = (data) => {
 		//	check balance
 		//		1. 403: if not enough money
 		//		2. 200: update order and user balance
-		
 		const BUYER_ID = req.body.order.buyer;
+		const SELLER_ID = req.body.order.seller;
 		const ORDER_ID = req.body.orderId;
 		
 		DATABASE
@@ -135,39 +135,58 @@ module.exports = (data) => {
 			.then((snapshot) => {
 				
 				const BUYER = snapshot.val();
-				const ORDER_TOTAL = req.body.orderSummary.afterTaxTotal;
+				const ORDER_TOTAL = parseFloat(req.body.orderSummary.afterTaxTotal);
 				
 				if (BUYER.balance >= ORDER_TOTAL) {
 					
-					const NEW_BALANCE = BUYER.balance - ORDER_TOTAL;
+					const NEW_BUYER_BALANCE = BUYER.balance - ORDER_TOTAL;
 					ORDER_MANAGER
 						.getOne({id: ORDER_ID})
 						.then((order) => {
 							
 							if (order.status === 'approved') {
-								
 								DATABASE
-									.ref('users')
-									.child(BUYER_ID)
+									.ref(`users/${BUYER_ID}`)
 									.update({
-										balance: NEW_BALANCE
+										balance: NEW_BUYER_BALANCE, 
+										total_spending: BUYER.total_spending += ORDER_TOTAL
 									})
 									.then((response) => {
 										
-										ORDER_MANAGER
-											.update({
-												id: ORDER_ID,
-												data: {
-													status: 'completed'
-												}
-											})
-											.then(() => {
+										DATABASE
+											.ref('users')
+											.child(SELLER_ID)
+											.once('value')
+											.then((sellerSnapshot) => {
 												
-												res
-													.status(200)
-													.end();
+												const NEW_SELLER_BALANCE = sellerSnapshot.val().balance + ORDER_TOTAL;
+												
+												DATABASE
+													.ref('users')
+													.child(SELLER_ID)
+													.update({ balance: NEW_SELLER_BALANCE })
+													.then((response) => {
+														
+														ORDER_MANAGER
+															.update({
+																id: ORDER_ID,
+																data: {
+																	status: 'completed'
+																}
+															})
+															.then(() => {
+																
+																res
+																	.status(200)
+																	.end();
+																
+															})
+														
+													})
 												
 											})
+										
+										
 										
 									})
 								
