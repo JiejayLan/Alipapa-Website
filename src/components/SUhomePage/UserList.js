@@ -50,6 +50,7 @@ class UserList extends React.Component {
         }
         else{
             let grade = JSON.stringify(this.state[uid].grade);
+            grade = grade.replace(/[{,]/g,'\n');
 
             alert(name +' has ' + warns + ' warning(s), the rating is '+ rating+ 'and is conducted by '+grade);
         }
@@ -57,8 +58,8 @@ class UserList extends React.Component {
 
     async transactionHandler(uid){
         this.showTrans = true;
-        let sellingHis;
-        let buyingHis;
+        let sellingHis = [];
+        let buyingHis = [];
 
         await axios.all([
             axios.post('/transactionHistory', {
@@ -70,10 +71,22 @@ class UserList extends React.Component {
               datatype: 'BUYING_ITEMS'
             })
           ]).then(axios.spread( (sellRes, buyRes) => {
-            console.log(sellRes.data);
-            console.log(buyRes.data);
-            sellingHis = sellRes.data;
-            buyingHis = buyRes.data;
+            
+            let selldata = sellRes.data;
+            let buydata = buyRes.data;
+            
+            for(let i = 0; i< selldata.length; i++){
+                sellingHis.push({itemName:selldata[i].itemName,
+                    price:selldata[i].price,
+                })
+            }
+
+            for(let i = 0; i< buydata.length; i++){
+                buyingHis.push({itemName:buydata[i].itemName,
+                    price:buydata[i].price,
+                })
+            }
+
           })).catch( err =>{
             console.log(err);
           });
@@ -85,16 +98,20 @@ class UserList extends React.Component {
         }
         else if(sellingHis.length === 0){
             let buying = JSON.stringify(buyingHis);
-            alert(name + ' has no selling history, here is the buying transaction:' + buying);
+            buying = buying.replace(/[{]/g,'\n');
+            alert(name + ' has no selling history, here is the buying transaction: ' + buying);
         }
         else if(buyingHis.length === 0){
             let selling = JSON.stringify(sellingHis);
-            alert(name + ' has no buying history, here is the selling transaction:' + selling);
+            selling = selling.replace(/[{]/g,'\n');
+            alert(name + ' has no buying history, here is the selling transaction: ' + selling);
         }
         else{
             let buying = JSON.stringify(buyingHis);
+            buying = buying.replace(/[{]/g,'\n');
             let selling = JSON.stringify(sellingHis);
-            alert(this.state[uid].username+"'s transaction history:"+ ' Buying: '+ buying + ' Selling: '+selling );
+            selling = selling.replace(/[{]/g,'\n');
+            alert(this.state[uid].username+"'s transaction history:"+ '\nBuying: '+ buying + '\nSelling: '+selling );
         }
     }
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import * as firebase from "firebase";
-import { removeItem, addItemToBl } from '../../actions/SUaction';
+import { removeItem, addItemToBl, checkUsername } from '../../actions/SUaction';
 import axios from 'axios';
 
 class SUviewItems extends React.Component {
@@ -11,20 +11,28 @@ class SUviewItems extends React.Component {
             
         };
 
-        axios.post('/suhome', { datatype: 'ITEMS'}).then( (resp)=>{
-            
-            this.setState({...resp.data});
+        axios.post('/suhome', { datatype: 'ITEMS'}).then( async (resp)=>{
+            let obj = resp.data;
+            let objkeys = Object.keys(obj);
+
+            for( let i = 0; i < objkeys.length; i++ ){
+                if(obj[objkeys[i]].status === 'order'){
+                    delete obj[objkeys[i]];
+                }
+                else{
+                   let sellername = await checkUsername(obj[objkeys[i]].seller);
+                   obj[objkeys[i]].sellername = sellername;
+                }
+            }
+            this.setState({...obj});
 
         }).catch( err =>{
             console.log(err);
         });
     };
 
-    removeHandler = (uid, status) => {
-        if( status === 'order' ){
-            alert('This item is already in the order stage, go to message system and discuss with seller/buyer');
-        }
-        else if(confirm("Are you sure to remove this item?")){
+    removeHandler = (uid) => {
+        if(confirm("Are you sure to remove this item?")){
             if(confirm("The item removed will be add to black list")){
                 
                 this.props.addItemToBl(this.state[uid].title);
@@ -54,7 +62,7 @@ class SUviewItems extends React.Component {
                     <span className='card-title'>{item.title}</span>
                     <br /><br />
                     item type: {item.price_type}<br />
-                    sellerID: {item.seller}<br />
+                    seller: {item.sellername}<br />
                     status: {item.status}<br />
                 </div>
                 <div className='card-action'>

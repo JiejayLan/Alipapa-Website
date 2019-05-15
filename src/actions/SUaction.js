@@ -11,7 +11,15 @@ export const viewUser = (users) => {
 export const warnUserbyID = (uid, warnamount) => {
     return (dispatch, getState) =>{
         let w = warnamount;
-
+        if(w === 1){
+            let warning = {
+                description: 'Your item application just got rejected, warn you not to do that agian ok?',
+                messageType: 'warning',
+                receiver: uid,
+                sender:'userID3'
+            }
+            database.ref('message').push(warning);
+        }
         let ref = database.ref('users').child(uid);
         ref.once('value', snapShot=>{
             let user = snapShot.val();
@@ -349,5 +357,18 @@ export const ApealApprove = (messageid) => {
             database.ref(`message`).child(messageid).remove();
         });
         
+    }
+}
+
+export const AppealReject = (messageid, userid) => {
+    return (dispatch, getState) =>{
+        database.ref('message').child(messageid).remove().then(function() {
+            console.log("Remove succeeded.")
+          })
+          .catch(function(error) {
+            console.log("Remove failed: " + error.message)
+          });
+
+        database.ref('users').child(userid).update({status: 'delete'});
     }
 }

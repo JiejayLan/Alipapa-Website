@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import * as firebase from "firebase";
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
-import { justifyComp, removeComp, ApealApprove, warnUserbyID } from '../../actions/SUaction';
+import { justifyComp, removeComp, ApealApprove, warnUserbyID, AppealReject, checkUsername} from '../../actions/SUaction';
 
 class ComplaintList extends React.Component {
     constructor(props) {
@@ -13,10 +13,30 @@ class ComplaintList extends React.Component {
         };
         this.redirect = false;
 
-        axios.post('/suhome', { datatype: 'COMP'}).then( (resp)=>{
+        axios.post('/suhome', { datatype: 'COMP'}).then( async (resp)=>{
             //this.props.viewItemApplication(resp.data);
-            
-            this.setState({...resp.data});
+            let obj = resp.data;
+            let objkeys = Object.keys(obj);
+
+            for(let i = 0; i < objkeys.length; i++){
+
+                if(obj[objkeys[i]].messageType === 'complain'){
+                    let sender = await checkUsername(obj[objkeys[i]].sender);
+                    obj[objkeys[i]].sendername = sender;
+
+                    let complaintUser = await checkUsername(obj[objkeys[i]].complaintUser);
+                    obj[objkeys[i]].complaintUsername = complaintUser;
+                }
+                else if(obj[objkeys[i]].messageType === 'appeal'){
+                    let sender = await checkUsername(obj[objkeys[i]].sender);
+                    obj[objkeys[i]].sendername = sender;
+                }
+                else{
+                    delete obj[objkeys[i]];
+                    continue;
+                }
+            }
+            this.setState({...obj});
 
         }).catch( err =>{
             console.log(err);
@@ -76,6 +96,16 @@ class ComplaintList extends React.Component {
         }
     }
 
+    Appealreject = (appid) => {
+        if(confirm('Sure to reject this appeal?')){
+            this.props.AppealReject(appid, this.state[appid].sender);
+
+            delete this.state[appid];
+            let newState = this.state;
+            this.setState({...newState});
+        }
+    }
+
     renderComplaintList() {
         const Compkeys = Object.keys(this.state);
         let Complist = [];
@@ -100,8 +130,8 @@ class ComplaintList extends React.Component {
                 <div className='card-content'>
                     <span className='card-title'>{application.messageType}:</span>
                     <br />
-                    sender: {application.sender}<br />
-                    receiver: {application.complaintUser}<br />
+                    sender: {application.sendername}<br />
+                    receiver: {application.complaintUsername}<br />
                     status: {application.status}<br /><br />
                     {application.description}<br /><br />
                 </div>
@@ -142,13 +172,13 @@ class ComplaintList extends React.Component {
                 <div className='card-content'>
                     <span className='card-title'>{application.messageType}:</span>
                     <br />
-                    username: {application.sender}<br />
+                    username: {application.sendername}<br />
                     <br />
                     {application.description}<br /><br />
                 </div>
                 <div className='card-action'>
                     <button onClick={()=>this.Appealhandler(application.uid)}>approve</button>
-                    <button onClick={()=>this.removeHandler(application.uid)}>reject</button>
+                    <button onClick={()=>this.Appealreject(application.uid)}>reject</button>
                 </div>
             </div>
             </div>
@@ -184,7 +214,8 @@ const mapDispatchToProps = (dispatch) => {
         justifyComp: (compid) => dispatch( justifyComp(compid) ),
         removeComp: (compid) => dispatch( removeComp(compid) ),
         ApealApprove: (appid) => dispatch( ApealApprove(appid) ),
-        warnUserbyID: (userid, number) => dispatch( warnUserbyID(userid, number) )
+        warnUserbyID: (userid, number) => dispatch( warnUserbyID(userid, number) ),
+        AppealReject: (appid, userid) => dispatch( AppealReject(appid, userid ) )
     };
 };
 
