@@ -39,7 +39,9 @@ npm run deve
 yarn run deve
 ```
 
-6. head to *localhost:3000* in browser 
+6. wait until webpack build information shows up on terminal
+
+7. head to *localhost:3000* in browser 
 
 ---
 ### Suggested Development Tools
