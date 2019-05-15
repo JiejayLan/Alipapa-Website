@@ -17,17 +17,7 @@ yarn run install
 ```
 
 4. setup .env file 
-+ create .env at root of project folder
-+ setup key-value pair inside .env 
-
-```
-    FIREBASE_API=values copy from firebase without double quotes
-    FIREBASE_AUTH_DOMAIN=values copy from firebase without double quotes
-    FIREBASE_DATABASE_URL=values copy from firebase without double quotes
-    FIREBASE_PROJECT_ID=values copy from firebase without double quotes
-    FIREBASE_STORAGE_BUCKET=values copy from firebase without double quotes
-    FIREBASE_MESSAGING_SENDER_ID=values copy from firebase without double quotes
-```
++ add .env file at root of project folder
 
 5. run command to start development build and server
 
