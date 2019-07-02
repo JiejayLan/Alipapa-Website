@@ -1,7 +1,5 @@
 var firebase = require("firebase");
 
-require("dotenv").config();
-
 const config = {
   apiKey: "AIzaSyAptktEUMMsGMBe2Xkn8N-5C15Q5byy67o",
   authDomain: "mini - ebymazon - test.firebaseapp.com",
