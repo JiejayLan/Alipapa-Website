@@ -10,7 +10,7 @@
     "dev-server": "webpack-dev-server",
     "deve": "start npm run build:dev && start npm run start",
     "start": "nodemon server/server.js",
-    "heroku-postbuild": "yarn run build:prod"
+    "heroku-postbuild": "npm run deve"
   },
   "dependencies": {
     "@material-ui/core": "^3.9.3",
