@@ -1,3 +1,7 @@
+### Website
+visit [our Website](https://alipapa-buy.herokuapp.com/)
+https://alipapa-buy.herokuapp.com/
+
 ### Report and Documents
 visit [our Wiki Page](https://github.com/JiejayLan/CSC322_group_project/wiki/Documents)
 
