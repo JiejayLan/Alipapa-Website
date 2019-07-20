@@ -1,13 +1,35 @@
+# Alipapa
+
+Alipapa is an online shopping site that allow users to sell and bid/buy almost anything.
+
+## Demo
+
+<img src='./gif_demo/customer_view.gif' alt='customer View' />
+<img src='./gif_demo/SU_view.gif' alt='SU View' />
+
+
+#### Here's how Alipapa works:
+
+1. A seller lists an item on Alipapa, almost anything from antiques to cars, books to sporting goods. The seller chooses to accept only bids for the item (an auction-style listing) or to offer the Buy It Now option, which allows buyers to purchase the item right away at a fixed price.
+
+2. In an online auction, the bidding opens at a price the seller specifies and remains on Aplipapa for a certain number of days. Buyers then place bids on the item. When the listing ends, the buyer with the highest bid wins.
+
+3. In a Buy It Now listing, the first buyer willing to pay the seller's price gets the item.
+
+
 ## Refer here for our website
 
 https://alipapa-buy.herokuapp.com/
 
-- SU login
+
+## Sample Accounts for Login
+
+- Super User login
 
   - username: SU
   - password: 123
 
-- OU login
+- Ordinary User login
 
   - Voldemort
 
@@ -22,23 +44,6 @@ https://alipapa-buy.herokuapp.com/
   - jay
     - username: jay
     - password: 123
-
-## Background:
-
-Alipapa is an online shopping site that allow users to sell and buy almost anything!
-
-#### Here's how Alipapa works:
-
-1. A seller lists an item on Alipapa, almost anything from antiques to cars, books to sporting goods. The seller chooses to accept only bids for the item (an auction-style listing) or to offer the Buy It Now option, which allows buyers to purchase the item right away at a fixed price.
-
-2. In an online auction, the bidding opens at a price the seller specifies and remains on Aplipapa for a certain number of days. Buyers then place bids on the item. When the listing ends, the buyer with the highest bid wins.
-
-3. In a Buy It Now listing, the first buyer willing to pay the seller's price gets the item.
-
-## Demo
-
-<img src='./gif_demo/customer_view.gif' alt='customer View' />
-<img src='./gif_demo/SU_view.gif' alt='SU View' />
 
 ## Tools Used
 
@@ -88,8 +93,8 @@ yarn run deve
 
 ---
 
-## Suggested Development Tools
+## Acknowledgments
 
-- [Google Chrome](https://www.google.com/chrome/?brand=CHBD&gclid=CjwKCAjwiN_mBRBBEiwA9N-e_o67fh9PIVCvzcc-1Pd5aOS8SW0lGWgABeyPNdGAVv7BAmR4bDBk-BoC-KQQAvD_BwE&gclsrc=aw.ds)
-- [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
-- [Redux DevTools](https://github.com/zalmoxisus/redux-devtools-extension)
+
+
+
