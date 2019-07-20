@@ -18,26 +18,19 @@
 
 ## Sample Accounts for Login
 
-- Super User login
+#### Super User login
 
-  - username: SU
-  - password: 123
+Username | Password
+-------- | --------
+SU | 123
 
-- Ordinary User login
+#### Ordinary User login
 
-  - Voldemort
-
-    - username: Voldemort
-    - password: 123
-
-  - nan
-
-    - username: nan
-    - password: 123
-
-  - jay
-    - username: jay
-    - password: 123
+Username | Password
+-------- | --------
+Voldemort | 123
+nan | 123
+jay | 123
 
 ## Built With
 
