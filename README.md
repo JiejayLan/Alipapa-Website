@@ -1,6 +1,6 @@
 # Alipapa
 
-[Alipapa](https://alipapa-buy.herokuapp.com/) is an online shopping site that allow users to sell and bid/buy almost anything.
+[Alipapa](https://alipapa-buy.herokuapp.com/) is an e-commerce platform that allow users to sell and bid/buy almost anything.
 
 ## Demo
 
