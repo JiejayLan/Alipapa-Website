@@ -1,6 +1,6 @@
 # Alipapa
 
-Alipapa is an online shopping site that allow users to sell and bid/buy almost anything.
+[Alipapa](https://alipapa-buy.herokuapp.com/) is an online shopping site that allow users to sell and bid/buy almost anything.
 
 ## Demo
 
@@ -16,46 +16,17 @@ Alipapa is an online shopping site that allow users to sell and bid/buy almost a
 
 3. In a Buy It Now listing, the first buyer willing to pay the seller's price gets the item.
 
+## Built With
 
-## Refer here for our website
-
-https://alipapa-buy.herokuapp.com/
-
-
-## Sample Accounts for Login
-
-- Super User login
-
-  - username: SU
-  - password: 123
-
-- Ordinary User login
-
-  - Voldemort
-
-    - username: Voldemort
-    - password: 123
-
-  - nan
-
-    - username: nan
-    - password: 123
-
-  - jay
-    - username: jay
-    - password: 123
-
-## Tools Used
-
-1. _React.js_
-1. _Redux_
-1. _Firebase_
-
-## Report and Documents
-
-visit [our Wiki Page](https://github.com/JiejayLan/CSC322_group_project/wiki/Documents)
-
----
++ [Axios](https://github.com/axios/axios) - Promise based HTTP client
++ [Boostrap](https://getbootstrap.com/) - Front-end framework
++ [Express](https://expressjs.com/) - Server side framework
++ [Firebase](https://firebase.google.com/) - Realtime database
++ [Material-UI](https://material-ui.com/) - React UI framework
++ [React](https://reactjs.org/) - Building user interfaces
++ [Redux](https://redux.js.org/) - Manage application state
++ [Sass](https://sass-lang.com/) - Style sheet
++ [Webpack](https://webpack.js.org/) - Module bundler
 
 ## Getting started
 
@@ -87,13 +58,40 @@ npm run deve
 yarn run deve
 ```
 
-6. wait until webpack build information shows up on terminal
+6. wait until webpack finish development build 
 
 7. head to _localhost:3000_ in browser
 
 ---
 
-## Acknowledgments
+## Sample Accounts for Login
+
+- Super User login
+
+  - username: SU
+  - password: 123
+
+- Ordinary User login
+
+  - Voldemort
+
+    - username: Voldemort
+    - password: 123
+
+  - nan
+
+    - username: nan
+    - password: 123
+
+  - jay
+    - username: jay
+    - password: 123
+
+## Report and Documents
+
+visit [our Wiki Page](https://github.com/JiejayLan/CSC322_group_project/wiki/Documents) 
+
+
 
 
 
