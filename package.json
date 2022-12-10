@@ -24,7 +24,7 @@
     "babel-preset-react": "6.24.1",
     "body-parser": "^1.19.0",
     "css-loader": "2.1.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "firebase": "^5.11.1",
     "history": "4.7.2",
